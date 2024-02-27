@@ -16,20 +16,44 @@ jobs:
           go-version: '1.21.x'
       - name: Install dependencies
         run: go get ./src
-      - name: Build
-        run: go build -C ./src -o ../tech_radar
+      - name: Build Linux
+        run: go build -C ./src -o ../tech_radar_lin
+      - name: Build Mac
+        run: |
+          env GOARCH=386
+        
+          go build -C ./src -o ../tech_radar_mac
+      - name: Build Win
+        run: |
+          env GOOS=windows
+
+          env GOARCH=amd64
+
+          go build -C ./src -o ../tech_radar.exe
       - name: Test with the Go CLI
         run: go test ./test
       - name: publish project
         shell: bash
         run: |
           tag=$(git describe --tags --abbrev=0)
-          release_name="Tech_Radar-$tag"
+          #linux build
+          release_name_linux="Tech_Radar-$tag-linux"
 
-          tar -czvf "${release_name}.tar.gz" ./tech_radar
+          tar -czvf "${release_name_linux}.tar.gz" ./tech_radar_lin
+
+          #windows build
+          release_name_win="Tech_Radar-$tag-win"
+          7z a -tzip "${release_name_win}.zip" ./tech_radar.exe
+
+          #mac build
+          release_name_mac="Tech_Radar-$tag-mac"
+          tar -czvf "${release_name_mac}.tar.gz" ./tech_radar_mac
+
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
-          files: "*.tar.gz"
+          files: 
+            - "*.tar.gz"
+            - "*.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

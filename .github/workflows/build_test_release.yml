@@ -19,17 +19,9 @@ jobs:
       - name: Build Linux
         run: go build -C ./src -o ../tech_radar_lin
       - name: Build Mac
-        run: |
-          env GOARCH=386
-        
-          go build -C ./src -o ../tech_radar_mac
+        run: env GOOS=linux GOARCH=386 go build -C ./src -o ../tech_radar_mac
       - name: Build Win
-        run: |
-          env GOOS=windows
-
-          env GOARCH=amd64
-
-          go build -C ./src -o ../tech_radar.exe
+        run: env GOOS=windows GOARCH=amd64 go build -C ./src -o ../tech_radar.exe
       - name: Test with the Go CLI
         run: go test ./test
       - name: publish project

@@ -1,0 +1,36 @@
+name: Build_Test_Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+
+jobs:
+  build_test_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21.x'
+      - name: Install dependencies
+        run: go get ./src
+      - name: Build
+        run: go build -C ./src -o ../dist/tech_radar
+      - name: Test with the Go CLI
+        run: go test ./test
+      - name: publish project
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          release_name="Tech_Radar-$tag"
+
+          tar -czvf "${release_name}.tar.gz" ./dist/tech_radar
+      - name: Release project
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "*.tar.gz"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: go get .
       - name: Build
-        run: go build ./src -o ./dist/Main 
+        run: go build ./src -o ./dist/tech_radar
       - name: Test with the Go CLI
         run: go test ./test
       - name: publish project
@@ -27,10 +27,10 @@ jobs:
           tag=$(git describe --tags --abbrev=0)
           release_name="Tech_Radar-$tag"
 
-          tar -czvf "${release_name}.tar.gz" 
+          tar -czvf "${release_name}.tar.gz" ./dist/tech_radar
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
-          files: "*.zip"
+          files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

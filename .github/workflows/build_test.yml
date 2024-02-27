@@ -20,6 +20,6 @@ jobs:
       - name: Install dependencies
         run: go get .
       - name: Build
-        run: cd src && go build || cd ../
+        run: go build ./src
       - name: Test with the Go CLI
-        run: cd test && go test
+        run: go test ./test

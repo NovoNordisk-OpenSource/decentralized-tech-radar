@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: go get ./src
       - name: Build
-        run: go build ./src -o ./dist/tech_radar
+        run: go build -C ./src -o ../dist/tech_radar
       - name: Test with the Go CLI
         run: go test ./test
       - name: publish project

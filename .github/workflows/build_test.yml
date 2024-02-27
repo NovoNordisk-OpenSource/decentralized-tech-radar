@@ -20,6 +20,6 @@ jobs:
       - name: Install dependencies
         run: go get ./src
       - name: Build
-        run: go build ./src
+        run: go build -C ./src
       - name: Test with the Go CLI
         run: go test ./test

@@ -43,7 +43,7 @@ jobs:
 
           #windows build
           release_name_win="Tech_Radar-$tag-win"
-          7z a -tzip "${release_name_win}.zip" ./tech_radar.exe
+          tar -czvf "${release_name_win}.tar.gz" ./tech_radar.exe
 
           #mac build
           release_name_mac="Tech_Radar-$tag-mac"
@@ -52,8 +52,6 @@ jobs:
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
-          files: 
-            - "*.tar.gz"
-            - "*.zip"
+          files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

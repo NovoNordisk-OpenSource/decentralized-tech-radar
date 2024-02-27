@@ -1,8 +1,6 @@
 package test
 
 import (
-	"fmt"
-	"os/exec"
 	"testing"
 
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SayHello"

@@ -1,6 +1,7 @@
 package view
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -89,4 +90,87 @@ func MakeHtml(htmldata string) {
 	}
 
 
+}
+
+type Blips struct {
+	Quadrant int    `json:"quadrant"`
+	Ring     int    `json:"ring"`
+	Label    string `json:"label"`
+	Active   bool   `json:"active"`
+	Moved    int    `json:"moved"`
+}
+type Data struct {
+	Date  string  `json:"date"`
+	Blips []Blips `json:"entries"`
+}
+
+func MakeHtmlJson(htmldata string) {
+	const tmpl = `
+	<html>
+		<head>
+			<title>Header 1</title>
+			<link rel="stylesheet" href="css/style.css" type="text/css">
+		</head>
+		<body>
+			<h1 class="pageTitle">Header 1</h1>
+			<ul>
+				{{range .Blips}}
+						<li>Quadrant: {{.Quadrant}}</li>
+						<li>Ring: {{.Ring}}</li>
+						<li>Label: {{.Label}}</li>
+						<li>Active: {{.Active}}</li>
+						<li>Moved: {{.Moved}}</li>
+				{{end}}
+			</ul>
+		</body>
+	</html>
+	`
+
+	//open the json
+	jsonfile, err := os.ReadFile("View/Blips/data.json")
+	if err != nil {
+		panic(err)
+	}
+
+	//decode json
+	var decodeData Data
+	err = json.Unmarshal([]byte(jsonfile), &decodeData)
+	if err != nil {
+		panic(err)
+	}
+	// Make and parse the HTML template
+	t, err := template.New("index").Parse(tmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Initialze a struct storing page data and todo data
+	jsondata := Data{
+		//show a list of data
+		Blips: []Blips{},
+	}
+
+	for _, element := range decodeData.Blips {
+		jsondata.Blips = append(jsondata.Blips, element)
+	}
+
+	//remove the index file if there's an old one
+	if _, err := os.Stat("index.html"); !errors.Is(err, os.ErrNotExist) {
+		if err := os.Remove("index.html"); err != nil {
+			fmt.Print(err)
+		}
+	}
+
+	// Open index.html for writing (create if it doesn't exist)
+	file, err := os.OpenFile("index.html", os.O_WRONLY|os.O_CREATE, 0644) // 0644 grants the owner read and write access
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	//execute the html and data
+	err = t.Execute(file, jsondata)
+	if err != nil {
+		panic(err)
+	}
 }

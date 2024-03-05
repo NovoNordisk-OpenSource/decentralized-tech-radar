@@ -68,14 +68,9 @@ func TestReadJsonSpec(t *testing.T) {
 
 	// Check correctness 
 	for i := 0; i < len(testBlips.Blips); i++ {
-		currentTestBlip := testBlips.Blips[i]
-		currentGottenBlip := gottenBlips.Blips[i]
-		nameMatch := currentGottenBlip.Name == currentTestBlip.Name
-		quadrantMatch := currentGottenBlip.Quadrant == currentTestBlip.Quadrant
-		ringMatch := currentGottenBlip.Ring == currentTestBlip.Ring
-		if !(nameMatch && quadrantMatch && ringMatch) {
+		if gottenBlips.Blips[i] != testBlips.Blips[i] {
 			t.Error("Read blips differs from expected")
-		} 
+		}
 	}
 }
 
@@ -89,13 +84,8 @@ func TestReadCsvSpec(t *testing.T) {
 	
 	// Check correctness
 	for i := 0; i < len(testBlips.Blips); i++ {
-		currentTestBlip := testBlips.Blips[i]
-		currentGottenBlip := gottenBlips.Blips[i]
-		nameMatch := currentGottenBlip.Name == currentTestBlip.Name
-		quadrantMatch := currentGottenBlip.Quadrant == currentTestBlip.Quadrant
-		ringMatch := currentGottenBlip.Ring == currentTestBlip.Ring
-		if !(nameMatch && quadrantMatch && ringMatch) {
+		if gottenBlips.Blips[i] != testBlips.Blips[i] {
 			t.Error("Read blips differs from expected")
-		} 
+		}
 	}
 }

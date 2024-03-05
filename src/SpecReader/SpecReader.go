@@ -3,6 +3,7 @@ package SpecReader
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gocarina/gocsv"
 	"io"
 	"os"
 )
@@ -14,9 +15,33 @@ type Blips struct {
 }
 
 type Blip struct {
-	Name     string `json:"name"`
-	Quadrant int8   `json:"quadrant"`
-	Ring     int8   `json:"ring"`
+	Name     string `json:"name" csv:"name"`
+	Quadrant int8   `json:"quadrant" csv:"quadrant"`
+	Ring     int8   `json:"ring" csv:"ring"`
+}
+
+// Read csv spec file and create Blips from that
+func ReadCsvSpec(filePath string) Blips {
+	// Open file
+	csvFile, err := os.Open(filePath)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Opened csv file!")
+	defer csvFile.Close()
+
+	// Read file
+	var smallBlips []Blip
+	err = gocsv.UnmarshalFile(csvFile, &smallBlips)
+	if err != nil {
+		panic(err)
+	}
+	
+	blips := Blips {
+		Blips: smallBlips,
+	}
+
+	return blips
 }
 
 // Read json spec file and create Blips from that
@@ -26,6 +51,7 @@ func ReadJsonSpec(filePath string) Blips {
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println("Opened json file!")
 	defer jsonFile.Close()
 
 	// Read file

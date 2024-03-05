@@ -26,9 +26,9 @@ type TechList struct {
 }
 
 type PageData struct {
-	PageTitle string // header 1
-	Greeting  string // greeting placeholder text
-	TechList  []TechList
+	PageTitle string     // page title
+	Greeting  string     // greeting placeholder text
+	TechList  []TechList // list of items
 }
 
 // https://www.educative.io/answers/what-is-html-template-in-golang
@@ -51,7 +51,7 @@ func makeHtml(htmldata string) {
 					{{end}}
 				{{end}}
 			</ul>
-			<a href="https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/" title="Tech radar" ref="rel">Tech radar repo</a>
+			<a href="//github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/" title="Tech radar" ref="rel">Tech radar repo</a>
 		</body>
 	</html>
 	`

@@ -62,7 +62,7 @@ jobs:
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
-          body: $changelogs
+          body: ${changelog}
           files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

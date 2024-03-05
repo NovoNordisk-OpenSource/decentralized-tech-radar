@@ -29,7 +29,7 @@ jobs:
             style: Code Style
             revert: Reverts
       - name: Put changelog into file
-        run: touch changelog.txt && echo ${{steps.changelog.outputs.changelog}} > changelog.txt && cat changelog.txt
+        run: touch changelog.txt && echo "${{steps.changelog.outputs.changelog}}" > changelog.txt && cat changelog.txt
       - name: Setup Go
         uses: actions/setup-go@v4
         with:

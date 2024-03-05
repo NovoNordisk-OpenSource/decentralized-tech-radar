@@ -45,6 +45,7 @@ jobs:
       - name: publish project
         shell: bash
         run: |
+            ls -la
             tag=$(git describe --tags --abbrev=0)
             #linux build
             release_name_linux="Tech_Radar-$tag-linux"
@@ -62,7 +63,7 @@ jobs:
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
-          body: ${changelog}
+          body: changelog
           files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

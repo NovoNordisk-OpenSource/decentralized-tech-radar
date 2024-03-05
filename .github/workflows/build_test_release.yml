@@ -28,6 +28,8 @@ jobs:
             cd: CD
             style: Code Style
             revert: Reverts
+      - name: Put changelog into file
+        run: touch changelog.txt && echo $changelog > changelog.txt && cat changelog.txt
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
@@ -63,7 +65,7 @@ jobs:
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
-          body: changelog
+          body_path: changelog.txt
           files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

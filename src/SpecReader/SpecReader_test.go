@@ -4,53 +4,90 @@ import (
 	"encoding/json"
 	"os"
 	"testing"
+
+	"github.com/gocarina/gocsv"
 )
 
+// Set up common test data
 var testFileName string = "ForTesting"
-var testBlips Blips
+var blip1 Blip = Blip{
+	Name:     "IAmInQuadrant3Ring2",
+	Quadrant: 3,
+	Ring:     2,
+}
+var blip2 Blip = Blip{
+	Name:     "IAmInQuadrant2Ring0",
+	Quadrant: 2,
+	Ring:     0,
+}
+var blip3 Blip = Blip{
+	Name:     "IAmInQuadrant1Ring3",
+	Quadrant: 1,
+	Ring:     3,
+}
+var testBlips Blips = Blips{
+	Blips: []Blip{blip1, blip2, blip3},
+}
+
+func createCsvFile() {
+	csvFile, err := os.Create(testFileName + ".csv")
+	if err != nil {
+		panic(err)
+	}
+	defer csvFile.Close()
+	err = gocsv.MarshalFile(testBlips.Blips, csvFile)
+	if err != nil {
+		panic(err)
+	}
+}
 
 func createJsonFile() {
-	blip1 := Blip{
-		Name:     "IAmInQuadrant3Ring2",
-		Quadrant: 3,
-		Ring:     2,
-	}
-	blip2 := Blip{
-		Name:     "IAmInQuadrant2Ring0",
-		Quadrant: 2,
-		Ring:     0,
-	}
-	blip3 := Blip{
-		Name:     "IAmInQuadrant1Ring3",
-		Quadrant: 1,
-		Ring:     3,
-	}
-	testBlips = Blips{
-		Blips: []Blip{blip1, blip2, blip3},
-	}
-
 	jsonString, err := json.Marshal(testBlips)
 	if err != nil {
 		panic(err)
 	}
 
-	os.WriteFile(testFileName + ".json", jsonString, 0666)
-}
-
-func CleanUp() {
-	err := os.Remove(testFileName + ".json")
+	err = os.WriteFile(testFileName + ".json", jsonString, 0666)
 	if err != nil {
 		panic(err)
 	}
 }
 
+func CleanUp() {
+	os.Remove(testFileName + ".json")
+	os.Remove(testFileName + ".csv")
+}
+
 func TestReadJsonSpec(t *testing.T) {
-	// Setup
+	// Set up
 	createJsonFile()
 	defer CleanUp()
 
-	// Run test
+	// Run function
 	gottenBlips := ReadJsonSpec(testFileName + ".json")
+
+	// Check correctness 
+	for i := 0; i < len(testBlips.Blips); i++ {
+		currentTestBlip := testBlips.Blips[i]
+		currentGottenBlip := gottenBlips.Blips[i]
+		nameMatch := currentGottenBlip.Name == currentTestBlip.Name
+		quadrantMatch := currentGottenBlip.Quadrant == currentTestBlip.Quadrant
+		ringMatch := currentGottenBlip.Ring == currentTestBlip.Ring
+		if !(nameMatch && quadrantMatch && ringMatch) {
+			t.Error("Read blips differs from expected")
+		} 
+	}
+}
+
+func TestReadCsvSpec(t *testing.T) {
+	// Set up
+	createCsvFile()
+	defer CleanUp()
+
+	// Run test
+	gottenBlips := ReadCsvSpec(testFileName + ".csv")
+	
+	// Check correctness
 	for i := 0; i < len(testBlips.Blips); i++ {
 		currentTestBlip := testBlips.Blips[i]
 		currentGottenBlip := gottenBlips.Blips[i]

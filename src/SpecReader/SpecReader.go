@@ -8,8 +8,6 @@ import (
 	"os"
 )
 
-// Code inspired from:
-// https://tutorialedge.net/golang/parsing-json-with-golang/
 type Blips struct {
 	Blips []Blip `json:"Blips"`
 }
@@ -21,6 +19,8 @@ type Blip struct {
 }
 
 // Read csv spec file and create Blips from that
+// Code inspired from:
+// https://stackoverflow.com/questions/20768511/unmarshal-csv-record-into-struct-in-go
 func ReadCsvSpec(filePath string) Blips {
 	// Open file
 	csvFile, err := os.Open(filePath)
@@ -36,8 +36,8 @@ func ReadCsvSpec(filePath string) Blips {
 	if err != nil {
 		panic(err)
 	}
-	
-	blips := Blips {
+
+	blips := Blips{
 		Blips: smallBlips,
 	}
 
@@ -45,6 +45,8 @@ func ReadCsvSpec(filePath string) Blips {
 }
 
 // Read json spec file and create Blips from that
+// Code inspired from:
+// https://tutorialedge.net/golang/parsing-json-with-golang/
 func ReadJsonSpec(filePath string) Blips {
 	// Open file
 	jsonFile, err := os.Open(filePath)

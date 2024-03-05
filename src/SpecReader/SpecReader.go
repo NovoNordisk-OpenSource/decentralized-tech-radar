@@ -26,7 +26,7 @@ func ReadJsonSpec(filePath string) Blips {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("File was opened!")
+	defer jsonFile.Close()
 
 	// Read file
 	byteValue, _ := io.ReadAll(jsonFile)
@@ -34,9 +34,6 @@ func ReadJsonSpec(filePath string) Blips {
 	var blips Blips
 
 	json.Unmarshal(byteValue, &blips)
-
-	// Clean up
-	jsonFile.Close()
 
 	return blips
 }

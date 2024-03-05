@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Auto Changelog
         uses: ardalanamini/auto-changelog@v4.0.1
+        id  : changelog
       - name: Setup Go
         uses: actions/setup-go@v4
         with:

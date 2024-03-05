@@ -10,59 +10,59 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Auto Changelog
+        uses: ardalanamini/auto-changelog@v4.0.1
+        id  : changelog
+        with:
+          github-token            : ${{ secrets.GITHUB_TOKEN }}
+          commit-types            : |
+            feat: New Features
+            fix: Bug Fixes
+            build: Build System & Dependencies
+            perf: Performance Improvements
+            docs: Documentation
+            test: Tests
+            refactor: Refactors
+            chore: Chores
+            ci: CI
+            cd: CD
+            style: Code Style
+            revert: Reverts
       - name: Setup Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21.x'
-        - name: Install dependencies
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21.x'
+      - name: Install dependencies
         run: go get ./src
-        - name: Build Linux
+      - name: Build Linux
         run: go build -C ./src -o ../tech_radar_lin
-        - name: Test with the Go CLI
+      - name: Test with the Go CLI
         run: go test ./test
-        - name: Build Mac
+      - name: Build Mac
         run: env GOOS=darwin GOARCH=amd64 go build -C ./src -o ../tech_radar_mac
-        - name: Build Win
+      - name: Build Win
         run: env GOOS=windows GOARCH=amd64 go build -C ./src -o ../tech_radar.exe
-        - name: publish project
+      - name: publish project
         shell: bash
         run: |
-        tag=$(git describe --tags --abbrev=0)
-        #linux build
-        release_name_linux="Tech_Radar-$tag-linux"
-        
-        tar -czvf "${release_name_linux}.tar.gz" ./tech_radar_lin
-        
-        #windows build
-        release_name_win="Tech_Radar-$tag-win"
-        tar -czvf "${release_name_win}.tar.gz" ./tech_radar.exe
-        
-        #mac build
-        release_name_mac="Tech_Radar-$tag-mac"
-        tar -czvf "${release_name_mac}.tar.gz" ./tech_radar_mac
-        
-        - name: Auto Changelog
-          uses: ardalanamini/auto-changelog@v4.0.1
-          id  : changelog
-          with:
-            github-token            : ${{ secrets.GITHUB_TOKEN }}
-            commit-types            : |
-              feat: New Features
-              fix: Bug Fixes
-              build: Build System & Dependencies
-              perf: Performance Improvements
-              docs: Documentation
-              test: Tests
-              refactor: Refactors
-              chore: Chores
-              ci: CI
-              cd: CD
-              style: Code Style
-              revert: Reverts
-        - name: Release project
+            tag=$(git describe --tags --abbrev=0)
+            #linux build
+            release_name_linux="Tech_Radar-$tag-linux"
+            
+            tar -czvf "${release_name_linux}.tar.gz" ./tech_radar_lin
+            
+            #windows build
+            release_name_win="Tech_Radar-$tag-win"
+            tar -czvf "${release_name_win}.tar.gz" ./tech_radar.exe
+            
+            #mac build
+            release_name_mac="Tech_Radar-$tag-mac"
+            tar -czvf "${release_name_mac}.tar.gz" ./tech_radar_mac
+          
+      - name: Release project
         uses: softprops/action-gh-release@v1
         with:
           files: "*.tar.gz"
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             

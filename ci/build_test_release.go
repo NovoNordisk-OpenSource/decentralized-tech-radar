@@ -25,29 +25,29 @@ func main() {
 	// at /src in the container
 	source := client.Container().
 		From("golang:1.21").
-		WithDirectory("/src", client.Host().Directory(".", dagger.HostDirectoryOpts{
-			Exclude: []string{"ci/"},
-		})).WithMountedCache("/src/dagger_dep_cache/go_dep", goCache)
+		WithDirectory("/d_src", client.Host().Directory(".", dagger.HostDirectoryOpts{
+			Exclude: []string{},
+		})).WithMountedCache("/d_src/ci/cache", goCache)
 
 	geese := []string{"darwin", "linux", "windows"}
 	goarch := "amd64"
 
 	// set the working directory in the container
 	// install application dependencies
-	runner := source.WithWorkdir("/src").
+	runner := source.WithWorkdir("/d_src").
 		WithExec([]string{"go", "mod", "tidy"})
 
 	// run application tests
-	test := runner.WithWorkdir("/src/src_code/go_src").WithExec([]string{"go", "test"})
-
-	buildDir := test.Directory("/src/")
+	test := runner.WithWorkdir("/d_src/src").WithExec([]string{"go", "test"})
+	build := test.WithWorkdir("/d_src/src")
+	buildDir := test.Directory("/d_src/src/")
 
 	for _, goos := range geese {
 		path := fmt.Sprintf("/dist/")
 		filename := fmt.Sprintf("/dist/tech_radar_%s", goos)
 		// build application
 		// write the build output to the host
-		build := test.
+		build = build.
 			WithEnvVariable("GOOS", goos).
 			WithEnvVariable("GOARCH", goarch).
 			WithExec([]string{"go", "build", "-o", filename})

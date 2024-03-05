@@ -37,9 +37,17 @@ func createJsonFile() {
 	os.WriteFile(testFileName + ".json", jsonString, 0666)
 }
 
+func CleanUp() {
+	err := os.Remove(testFileName + ".json")
+	if err != nil {
+		panic(err)
+	}
+}
+
 func TestReadJsonSpec(t *testing.T) {
 	// Setup
 	createJsonFile()
+	defer CleanUp()
 
 	// Run test
 	gottenBlips := ReadJsonSpec(testFileName + ".json")
@@ -52,10 +60,5 @@ func TestReadJsonSpec(t *testing.T) {
 		if !(nameMatch && quadrantMatch && ringMatch) {
 			t.Error("Read blips differs from expected")
 		} 
-	}
-	// Clean up
-	err := os.Remove(testFileName + ".json")
-	if err != nil {
-		panic(err)
 	}
 }

@@ -31,7 +31,7 @@ jobs:
       - name: Put changelog into file
         run: touch changelog.txt && echo "${{steps.changelog.outputs.changelog}}" > changelog.txt && cat changelog.txt
       - name: Setup Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: '1.21.x'
       - name: Install dependencies

@@ -18,4 +18,4 @@ jobs:
         with:
           go-version: '1.21.x'
       - run: go get dagger.io/dagger@latest
-      - run: go run ci/build_test.go
+      - run: go run ci/test_on_push.go

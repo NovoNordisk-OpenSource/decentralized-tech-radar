@@ -1,0 +1,11 @@
+﻿@startuml
+start
+:On push to branch main;
+if (Build Go-project) then (Build fails)
+    end
+else (Build succeeds)
+if (Test Go-project) then (Test succeed)
+    stop
+else (Test failed)
+    end
+@enduml

@@ -1,0 +1,20 @@
+﻿@startuml
+start
+:On tag-push to any branch;
+if (Build Linux binary) then (Build fails)
+    end
+else (Build succeeds)
+    if (Test Go-project) then (Test failed)
+        end
+    else (Test succeeds)
+    if (Build binaries for other OS) then (Build fails)
+        end
+    else (All builds succeed)
+    if (Compress all binaries into seperate tar-files) then (Compression fails)
+        end
+    else (Compression succeeds)
+    if (Releases via GitHub Softprops) then (Access forbidden)
+        end 
+    else (Access granted)
+stop
+@enduml

@@ -2,18 +2,22 @@ package SpecReader
 
 import (
 	"fmt"
-	"github.com/gocarina/gocsv"
 	"os"
+
+	"github.com/gocarina/gocsv"
 )
 
 type Blips struct {
-	Blips []Blip 
+	Blips []Blip
 }
 
 type Blip struct {
-	Name     string `csv:"name"`
-	Quadrant int8   `csv:"quadrant"`
-	Ring     int8   `csv:"ring"`
+	Name        string `csv:"name"`
+	Quadrant    string `csv:"quadrant"`
+	Ring        string `csv:"ring"`
+	IsNew       bool   `csv:"isNew"`
+	Moved       int8   `csv:"moved"`
+	Description string `csv:"description"`
 }
 
 // Read csv spec file and create Blips from that

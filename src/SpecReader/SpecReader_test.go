@@ -11,18 +11,27 @@ import (
 var testFileName string = "ForTesting"
 var blip1 Blip = Blip{
 	Name:     "IAmInQuadrant3Ring2",
-	Quadrant: 3,
-	Ring:     2,
+	Quadrant: "Language",
+	Ring:     "Assess",
+	IsNew: true,
+	Moved: 0,
+	Description: "This is description",
 }
 var blip2 Blip = Blip{
 	Name:     "IAmInQuadrant2Ring0",
-	Quadrant: 2,
-	Ring:     0,
+	Quadrant: "Tool",
+	Ring:     "Hold",
+	IsNew: true,
+	Moved: 1,
+	Description: "This is description also",
 }
 var blip3 Blip = Blip{
 	Name:     "IAmInQuadrant1Ring3",
-	Quadrant: 1,
-	Ring:     3,
+	Quadrant: "Language",
+	Ring:     "Adopt",
+	IsNew: false,
+	Moved: 2,
+	Description: "This is description not",
 }
 var testBlips Blips = Blips{
 	Blips: []Blip{blip1, blip2, blip3},

@@ -1,10 +1,12 @@
 package main
 
-import (
+import  (
 	"flag"
 	"fmt"
 
+
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
+	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 )
 
 func main() {

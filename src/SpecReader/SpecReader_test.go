@@ -1,7 +1,6 @@
 package SpecReader
 
 import (
-	"encoding/json"
 	"os"
 	"testing"
 
@@ -41,37 +40,8 @@ func createCsvFile() {
 	}
 }
 
-func createJsonFile() {
-	jsonString, err := json.Marshal(testBlips)
-	if err != nil {
-		panic(err)
-	}
-
-	err = os.WriteFile(testFileName + ".json", jsonString, 0666)
-	if err != nil {
-		panic(err)
-	}
-}
-
 func CleanUp() {
-	os.Remove(testFileName + ".json")
 	os.Remove(testFileName + ".csv")
-}
-
-func TestReadJsonSpec(t *testing.T) {
-	// Set up
-	createJsonFile()
-	defer CleanUp()
-
-	// Run function
-	gottenBlips := ReadJsonSpec(testFileName + ".json")
-
-	// Check correctness 
-	for i := 0; i < len(testBlips.Blips); i++ {
-		if gottenBlips.Blips[i] != testBlips.Blips[i] {
-			t.Error("Read blips differs from expected")
-		}
-	}
 }
 
 func TestReadCsvSpec(t *testing.T) {

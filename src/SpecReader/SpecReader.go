@@ -1,21 +1,19 @@
 package SpecReader
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/gocarina/gocsv"
-	"io"
 	"os"
 )
 
 type Blips struct {
-	Blips []Blip `json:"Blips"`
+	Blips []Blip 
 }
 
 type Blip struct {
-	Name     string `json:"name" csv:"name"`
-	Quadrant int8   `json:"quadrant" csv:"quadrant"`
-	Ring     int8   `json:"ring" csv:"ring"`
+	Name     string `csv:"name"`
+	Quadrant int8   `csv:"quadrant"`
+	Ring     int8   `csv:"ring"`
 }
 
 // Read csv spec file and create Blips from that
@@ -40,28 +38,6 @@ func ReadCsvSpec(filePath string) Blips {
 	blips := Blips{
 		Blips: smallBlips,
 	}
-
-	return blips
-}
-
-// Read json spec file and create Blips from that
-// Code inspired from:
-// https://tutorialedge.net/golang/parsing-json-with-golang/
-func ReadJsonSpec(filePath string) Blips {
-	// Open file
-	jsonFile, err := os.Open(filePath)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println("Opened json file!")
-	defer jsonFile.Close()
-
-	// Read file
-	byteValue, _ := io.ReadAll(jsonFile)
-
-	var blips Blips
-
-	json.Unmarshal(byteValue, &blips)
 
 	return blips
 }

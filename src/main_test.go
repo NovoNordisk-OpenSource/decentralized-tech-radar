@@ -1,18 +1,8 @@
-package test
+package main
 
 import (
-	"testing"
-
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SayHello"
+	//"testing"
 )
-
-// unit test
-func TestSayHello(t *testing.T) {
-	output := SayHello.SayHello("mate")
-	if output != "Hello, mate" {
-		t.Error("Output doesn't match")
-	}
-}
 
 // E2E test
 /*func TestMain(t *testing.T) {

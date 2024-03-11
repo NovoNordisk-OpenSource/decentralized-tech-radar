@@ -31,7 +31,7 @@ func main() {
 
 		// set the working directory in the container
 		// install application dependencies
-	runner := source.WithWorkdir("/d_src/src").
+	runner := source.WithWorkdir("/d_src").
 		WithExec([]string{"go", "mod", "tidy"})
 
 		// run application tests

@@ -1,7 +1,7 @@
 package view
 
 import (
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
+	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/specReader"
 	"html/template"
 	"log"
 	"os"

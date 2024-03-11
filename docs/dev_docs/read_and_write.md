@@ -2,11 +2,11 @@
 *WIP this document will be updated throughout the project*
 
 # Reading
-Example:
-```
+Technologies for the radar (or blips) are stored in the program using structs. These structs can then be passed between different parts of the program.
 
-```
-
+## Reading Spec files from CSV format
+For reading spec files in csv format, the `ReadCsvSpec` function is used. Since we know the structure of our data we can predefine our structs to fit that structure.  
+By using the [gocarina/gocsv](https://github.com/gocarina/gocsv) module we can  unmarshal the csv file. Taking the csv file and turning it into our data structure.
 
 # Writing
 **Will be rewritten**  
@@ -17,32 +17,4 @@ which is safe against code injection and/or XSS attacks.
 GoLang's own site on this package: https://pkg.go.dev/html/template
 
 Currently it can convert data from a CLI command to html.
-
-
-Example:
-```
-    const tmpl = `<span>{{.Greeting}}</span>'
-
-    t, err := template.New("index").Parse(tmpl)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Initialze a struct storing page data and todo data
-	data := PageData{
-		Greeting: htmldata,
-	}
-
-	//remove the index file if there's an old one
-    ...
-
-	// Open index.html for writing (create if it doesn't exist)
-    ...
-
-	//execute the html and data
-	err = t.Execute(file, data)
-	if err != nil {
-		panic(err)
-	}
-```
 

@@ -10,26 +10,25 @@ import (
 var htmlFileName string = "index"
 
 func GenerateHtml(blips Reader.Blips) {
-	const tmpl = `
-	<html>
-		<head>
-			<title>Header 1</title>
-			<link rel="stylesheet" href="css/style.css" type="text/css">
-		</head>
-		<body>
-			<h1 class="pageTitle">Header 1</h1>
-			<ul>
-				{{range .Blips}}
-						<li>Name: {{.Name}}</li>
-						<li>Quadrant: {{.Quadrant}}</li>
-						<li>Ring: {{.Ring}}</li>
-						<li>Is new: {{.IsNew}}</li>
-						<li>Moved: {{.Moved}}</li>
-						<li>Desc: {{.Description}}</li>
-				{{end}}
-			</ul>
-		</body>
-	</html>
+	const tmpl = `<html>
+	<head>
+		<title>Header 1</title>
+		<link rel="stylesheet" href="css/style.css" type="text/css">
+	</head>
+	<body>
+		<h1 class="pageTitle">Header 1</h1>
+		<ul>
+			{{range .Blips}}
+					<li>Name: {{.Name}}</li>
+					<li>Quadrant: {{.Quadrant}}</li>
+					<li>Ring: {{.Ring}}</li>
+					<li>Is new: {{.IsNew}}</li>
+					<li>Moved: {{.Moved}}</li>
+					<li>Desc: {{.Description}}</li>
+			{{end}}
+		</ul>
+	</body>
+</html>
 	`
 
 	// Make and parse the HTML template

@@ -51,7 +51,7 @@ jobs:
           tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin
           
       - name: Release project
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           body: ${{steps.changelog.outputs.changelog}}
           files: "*.tar.gz"

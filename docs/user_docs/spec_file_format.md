@@ -4,7 +4,7 @@ This product uses CSV for file reading, this means that group definition is sepa
 ```
 name,ring,quadrant,isNew,moved,description
 ```
-The reader will then translate these to structs, and therefor these groups will also have types.
+The reader will then translate these to structs which get translated to types using unmarshalling.
 
 The types foreach group:  
 ```  

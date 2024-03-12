@@ -2,7 +2,7 @@ package main
 
 import  (
 	"flag"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/specReader"
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
 	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 )
 

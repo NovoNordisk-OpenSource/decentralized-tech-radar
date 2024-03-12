@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/specReader"
+	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
 )
 
 func TestGenerateHtml(t *testing.T) {
@@ -29,7 +29,7 @@ func TestGenerateHtml(t *testing.T) {
 	//check if the index.html was created
 	_, err := os.Stat(htmlFileName + ".html")
 	if os.IsNotExist(err) {
-		t.Fatalf("Exptected HTML was not created.")
+		t.Fatal("Expected HTML was not created.")
 	}
 
 	//read content of the HTML file
@@ -42,7 +42,7 @@ func TestGenerateHtml(t *testing.T) {
 	contentStr := string(content)
 	if !strings.Contains(contentStr, "Test name") ||
 	!strings.Contains(contentStr, "Test quadrant") {
-		t.Errorf("HTML doesnt contain the expected data.")
+		t.Errorf("HTML doesn't contain the expected data.")
 	}
 
 	//clean up test after test is completed.

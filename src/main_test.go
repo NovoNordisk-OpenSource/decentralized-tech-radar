@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"os/exec"
 	"strings"
 	"testing"
 
 	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
+	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 )
 
 // Test Set up
@@ -49,7 +51,7 @@ func check(e error) {
 }
 
 func createCsvFile() {
-	err := os.WriteFile(testFileName + ".csv", []byte(csvTestString), 0644)
+	err := os.WriteFile(testFileName+".csv", []byte(csvTestString), 0644)
 	check(err)
 }
 
@@ -68,6 +70,44 @@ func TestReaderAndWriter(t *testing.T) {
 	// Read test file
 	specs := Reader.ReadCsvSpec(testFileName + ".csv")
 	view.GenerateHtml(specs)
+
+	//check if the index.html was created
+	_, err := os.Stat("index.html")
+	if os.IsNotExist(err) {
+		t.Fatal("Expected HTML file was not created.")
+	}
+
+	//read content of the HTML file
+	content, err := os.ReadFile("index.html")
+	if err != nil {
+		t.Fatalf("Could not read the generated HTML file: %v", err)
+	}
+	contentStr := string(content)
+	if !strings.Contains(contentStr, correctHTML) {
+		t.Errorf("HTML doesn't contain the expected data\nContained:\n%s", contentStr)
+	}
+}
+
+// End-to-end test
+func TestEndToEnd(t *testing.T) {
+	// Set up
+	createCsvFile()
+	defer cleanUp()
+
+	// Read test file
+	//specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	//view.GenerateHtml(specs)
+
+	// Start program using CLI arguments
+	os.Args = []string{"cmd", testFileName + ".csv"}
+	cmd := exec.Command("cd", "../dist", "&&", "./main", "-name", testFileName+".csv")
+
+	cmd_output, err := cmd.Output()
+	if err != nil {
+		t.Errorf("%v", err)
+	} else if string(cmd_output) != (fmt.Sprintf("Hello, %s", name)) {
+		t.Errorf("Output didn't match expected. %s", string(cmd_output))
+	}
 
 	//check if the index.html was created
 	_, err := os.Stat("index.html")

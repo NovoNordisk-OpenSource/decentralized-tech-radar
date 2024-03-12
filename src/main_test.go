@@ -19,7 +19,6 @@ TestBlip2,Adopt,Tool,false,0,Also a description`
 var correctHTML string = `<html>
 	<head>
 		<title>Header 1</title>
-		<link rel="stylesheet" href="css/style.css" type="text/css">
 	</head>
 	<body>
 		<h1 class="pageTitle">Header 1</h1>

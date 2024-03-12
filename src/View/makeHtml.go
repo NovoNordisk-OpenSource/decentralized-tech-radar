@@ -13,7 +13,6 @@ func GenerateHtml(blips Reader.Blips) {
 	const tmpl = `<html>
 	<head>
 		<title>Header 1</title>
-		<link rel="stylesheet" href="css/style.css" type="text/css">
 	</head>
 	<body>
 		<h1 class="pageTitle">Header 1</h1>
@@ -38,6 +37,7 @@ func GenerateHtml(blips Reader.Blips) {
 	}
 
 	// Open index.html for writing (create if it doesn't exist)
+	os.Remove(htmlFileName + ".html")
 	file, err := os.OpenFile(htmlFileName + ".html", os.O_WRONLY|os.O_CREATE, 0644) // 0644 grants the owner read and write access
 	if err != nil {
 		panic(err)

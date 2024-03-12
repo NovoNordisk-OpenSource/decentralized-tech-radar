@@ -1,7 +1,7 @@
 # Custom ignores
 dist/
 data/
-
+*.html
 
 # https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 .vscode/*

@@ -16,7 +16,7 @@ The types foreach group:
 - description : string
 ```
 
-Some of the groups is defined to take specific inputs. Groups can have these input
+Some of the groups is defined to take specific inputs. Groups can have these inputs:
 ```
 - name        : The name of a data management, datastore, infrastructure or langauge.
 - ring        : The name of the ring it's place like adopt, trial, assess or hold.

@@ -45,7 +45,7 @@ func TestGenerateHtml(t *testing.T) {
 		t.Errorf("HTML doesnt contain the expected data.")
 	}
 
-	//clean up test after test is completed
+	//clean up test after test is completed.
 	err = os.Remove(htmlFileName + ".html")
 	if err != nil {
 		t.Fatalf("Failed to remove test HTML file: %v", err)

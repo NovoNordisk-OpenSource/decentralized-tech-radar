@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -58,6 +57,9 @@ func createCsvFile() {
 func cleanUp() {
 	os.Remove(testFileName + ".csv")
 	os.Remove("index.html")
+	//todo this is for windows only (.exe), check it for other systems
+	os.Remove("tech_radar.exe")
+	os.Remove("tech_radar")
 }
 
 // Tests
@@ -95,22 +97,29 @@ func TestEndToEnd(t *testing.T) {
 	defer cleanUp()
 
 	// Read test file
-	//specs := Reader.ReadCsvSpec(testFileName + ".csv")
-	//view.GenerateHtml(specs)
+	specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	view.GenerateHtml(specs)
 
 	// Start program using CLI arguments
 	os.Args = []string{"cmd", testFileName + ".csv"}
-	cmd := exec.Command("cd", "../dist", "&&", "./main", "-name", testFileName+".csv")
+	//TODO this is for windows only (.exe), check it for other systems
+	cmd := exec.Command("go", "build", "-o", "tech_radar.exe")
+	cmd1 := exec.Command("./tech_radar.exe", "-file", testFileName+".csv")
 
-	cmd_output, err := cmd.Output()
+	_, err := cmd.Output()
 	if err != nil {
-		t.Errorf("%v", err)
-	} else if string(cmd_output) != (fmt.Sprintf("Hello, %s", name)) {
-		t.Errorf("Output didn't match expected. %s", string(cmd_output))
+		t.Fatalf("%v", err)
+	}
+
+	cmd1_output, err := cmd1.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	} else if !strings.Contains(string(cmd1_output), "Opened csv file!") {
+		t.Errorf("Output didn't match expected. %s", string(cmd1_output))
 	}
 
 	//check if the index.html was created
-	_, err := os.Stat("index.html")
+	_, err = os.Stat("index.html")
 	if os.IsNotExist(err) {
 		t.Fatal("Expected HTML file was not created.")
 	}
@@ -121,6 +130,8 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatalf("Could not read the generated HTML file: %v", err)
 	}
 	contentStr := string(content)
+
+	//check if content contains exptected string
 	if !strings.Contains(contentStr, correctHTML) {
 		t.Errorf("HTML doesn't contain the expected data\nContained:\n%s", contentStr)
 	}

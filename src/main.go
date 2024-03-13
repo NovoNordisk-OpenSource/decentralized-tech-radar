@@ -1,14 +1,22 @@
 package main
 
-import(
+import  (
 	"flag"
-	"fmt"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SayHello"
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
+	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 )
 
 func main() {
-	name := flag.String("name", "world", "This takes a name/string ")
+	file := flag.String("file", "", "This takes a path to a csv file/string")
 	flag.Parse()
 
-	fmt.Println(SayHello.SayHello(*name))
+	var specs SpecReader.Blips
+	// testing csv reader
+	if *file != "" {
+		specs = SpecReader.ReadCsvSpec(*file)
+	} else {
+		panic("No file was given (oh no)")
+	}
+	
+	view.GenerateHtml(specs)
 }

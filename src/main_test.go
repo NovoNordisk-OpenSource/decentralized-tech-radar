@@ -57,9 +57,8 @@ func createCsvFile() {
 func cleanUp() {
 	os.Remove(testFileName + ".csv")
 	os.Remove("index.html")
-	//todo this is for windows only (.exe), check it for other systems
+	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
-	os.Remove("tech_radar")
 }
 
 // Tests
@@ -102,7 +101,7 @@ func TestEndToEnd(t *testing.T) {
 
 	// Start program using CLI arguments
 	os.Args = []string{"cmd", testFileName + ".csv"}
-	//TODO this is for windows only (.exe), check it for other systems
+	//Works on Unix and Windows
 	cmd := exec.Command("go", "build", "-o", "tech_radar.exe")
 	cmd1 := exec.Command("./tech_radar.exe", "-file", testFileName+".csv")
 

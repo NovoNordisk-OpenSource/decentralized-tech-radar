@@ -61,17 +61,7 @@ func cleanUp() {
 	os.Remove("tech_radar.exe")
 }
 
-// Tests
-// Integration test
-func TestReaderAndWriter(t *testing.T) {
-	// Set up
-	createCsvFile()
-	defer cleanUp()
-
-	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName + ".csv")
-	view.GenerateHtml(specs)
-
+func assertIndexHTML(t *testing.T) {
 	//check if the index.html was created
 	_, err := os.Stat("index.html")
 	if os.IsNotExist(err) {
@@ -84,9 +74,25 @@ func TestReaderAndWriter(t *testing.T) {
 		t.Fatalf("Could not read the generated HTML file: %v", err)
 	}
 	contentStr := string(content)
+
+	//check if content contains exptected string
 	if !strings.Contains(contentStr, correctHTML) {
 		t.Errorf("HTML doesn't contain the expected data\nContained:\n%s", contentStr)
 	}
+}
+
+// Tests
+// Integration test
+func TestReaderAndWriter(t *testing.T) {
+	// Set up
+	createCsvFile()
+	defer cleanUp()
+
+	// Read test file
+	specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	view.GenerateHtml(specs)
+
+	assertIndexHTML(t)
 }
 
 // End-to-end test
@@ -117,21 +123,5 @@ func TestEndToEnd(t *testing.T) {
 		t.Errorf("Output didn't match expected. %s", string(cmd1_output))
 	}
 
-	//check if the index.html was created
-	_, err = os.Stat("index.html")
-	if os.IsNotExist(err) {
-		t.Fatal("Expected HTML file was not created.")
-	}
-
-	//read content of the HTML file
-	content, err := os.ReadFile("index.html")
-	if err != nil {
-		t.Fatalf("Could not read the generated HTML file: %v", err)
-	}
-	contentStr := string(content)
-
-	//check if content contains exptected string
-	if !strings.Contains(contentStr, correctHTML) {
-		t.Errorf("HTML doesn't contain the expected data\nContained:\n%s", contentStr)
-	}
+	assertIndexHTML(t)
 }

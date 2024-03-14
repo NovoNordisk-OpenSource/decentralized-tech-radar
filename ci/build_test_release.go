@@ -44,7 +44,7 @@ func main() {
 
 	for _, goos := range geese {
 		path := fmt.Sprintf("/dist/")
-		filename := fmt.Sprintf("/dist/tech_radar_%s", goos)
+		filename := fmt.Sprintf("/dist/Tech_Radar-%s", goos)
 		// build application
 		// write the build output to the host
 		build = build.

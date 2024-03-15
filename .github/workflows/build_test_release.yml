@@ -29,7 +29,7 @@ jobs:
             style: Code Style
             revert: Reverts
       - name: Setup Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version: '1.21.x'
       - run: go get dagger.io/dagger@latest
@@ -51,10 +51,9 @@ jobs:
           tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin
           
       - name: Release project
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           body: ${{steps.changelog.outputs.changelog}}
           files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            

@@ -1,0 +1,4 @@
+name,ring,quadrant,isNew,moved,description
+Go,Adopt,Language,true,0,this is new
+Python,Hold,Language,true,1,this is not new
+Azure devOps,Assess,Tool,false,2,hold this bad boi

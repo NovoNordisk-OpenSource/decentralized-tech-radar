@@ -57,7 +57,7 @@ func main() {
 
 	}
 	buildDir = buildDir.WithDirectory("/dist", buildDir.Directory("/dist"))
-	_, err = buildDir.Export(ctx, "./src")
+	_, err = buildDir.Export(ctx, ".")
 	if err != nil {
 		panic(err)
 	}

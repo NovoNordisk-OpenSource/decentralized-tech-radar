@@ -34,13 +34,13 @@ func main() {
 
 	// set the working directory in the container
 	// install application dependencies
-	runner := source.WithWorkdir("/d_src").
+	runner := source.WithWorkdir("/d_src/src").
 		WithExec([]string{"go", "mod", "tidy"})
 
 	// run application tests
 	test := runner.WithWorkdir("/d_src/src").WithExec([]string{"go", "test", "./..."})
 	build := test.WithWorkdir("/d_src/src")
-	
+
 	buildDir := test.Directory("/d_src")
 
 	for _, goos := range geese {
@@ -57,7 +57,7 @@ func main() {
 
 	}
 	buildDir = buildDir.WithDirectory("/dist", buildDir.Directory("/dist"))
-	_, err = buildDir.Export(ctx, ".")
+	_, err = buildDir.Export(ctx, "./src")
 	if err != nil {
 		panic(err)
 	}

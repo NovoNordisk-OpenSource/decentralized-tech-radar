@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
-	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 )
 
 // Test Set up
@@ -90,7 +90,7 @@ func TestReaderAndWriter(t *testing.T) {
 
 	// Read test file
 	specs := Reader.ReadCsvSpec(testFileName + ".csv")
-	view.GenerateHtml(specs)
+	html.GenerateHtml(specs)
 
 	assertIndexHTML(t)
 }
@@ -103,7 +103,7 @@ func TestEndToEnd(t *testing.T) {
 
 	// Read test file
 	specs := Reader.ReadCsvSpec(testFileName + ".csv")
-	view.GenerateHtml(specs)
+	html.GenerateHtml(specs)
 
 	// Start program using CLI arguments
 	os.Args = []string{"cmd", testFileName + ".csv"}

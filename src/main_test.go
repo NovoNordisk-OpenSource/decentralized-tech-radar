@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/Merger"
 	"os"
 	"os/exec"
 	"strings"
@@ -14,16 +15,18 @@ import (
 var testFileName0 string = "ForTesting"
 var testFileName1 string = "ForTestingToo"
 
-var csvTestString0 string = `name,ring,quadrant,isNew,moved,description
-TestBlip1,Assess,Language,true,1,This is a description
+var header string = "name,ring,quadrant,isNew,moved,description"
+
+var csvTestString0 string = `TestBlip1,Assess,Language,true,1,This is a description
 TestBlip2,Adopt,Tool,false,0,Also a description`
 
-var csvTestString1 string = `name,ring,quadrant,isNew,moved,description
-TestBlip3,Hold,Tool,false,0,This too is a description
+var csvTestString1 string = `TestBlip3,Hold,Tool,false,0,This too is a description
 TestBlip4,Test,Language, true,1,Also a descriptive description`
 
+var correctMergeCSV01 = header + "\n" + csvTestString0 + "\n" + csvTestString1
+
 // TODO: [Nice to have] Automate the two vars below by using the two test-strings above.
-var correctHTML string = `<html>
+var correctHTML0 string = `<html>
 	<head>
 		<title>Header 1</title>
 	</head>
@@ -49,7 +52,7 @@ var correctHTML string = `<html>
 	</body>
 </html>`
 
-var correctMergedHTML string = `<html>
+var correctHTML1 string = `<html>
 	<head>
 		<title>Header 1</title>
 	</head>
@@ -57,30 +60,16 @@ var correctMergedHTML string = `<html>
 		<h1 class="pageTitle">Header 1</h1>
 		<ul>
 			
-					<li>Name: TestBlip1</li>
-					<li>Quadrant: Language</li>
-					<li>Ring: Assess</li>
-					<li>Is new: true</li>
-					<li>Moved: 1</li>
-					<li>Desc: This is a description</li>
-			
-					<li>Name: TestBlip2</li>
-					<li>Quadrant: Tool</li>
-					<li>Ring: Adopt</li>
-					<li>Is new: false</li>
-					<li>Moved: 0</li>
-					<li>Desc: Also a description</li>
-
 					<li>Name: TestBlip3</li>
-					<li>Quadrant: Hold</li>
-					<li>Ring: Tools</li>
+					<li>Quadrant: Tool</li>
+					<li>Ring: Hold</li>
 					<li>Is new: false</li>
 					<li>Moved: 0</li>
 					<li>Desc: This too is a description</li>
-
+			
 					<li>Name: TestBlip4</li>
-					<li>Quadrant: Test</li>
-					<li>Ring: Language</li>
+					<li>Quadrant: Language</li>
+					<li>Ring: Test</li>
 					<li>Is new: true</li>
 					<li>Moved: 1</li>
 					<li>Desc: Also a descriptive description</li>
@@ -96,11 +85,11 @@ func check(e error) {
 }
 
 func createCsvFile(amountOfTestFiles int) {
-	err := os.WriteFile(testFileName0+".csv", []byte(csvTestString0), 0644)
+	err := os.WriteFile(testFileName0+".csv", []byte(header+"\n"+csvTestString0), 0644)
 	check(err)
 
 	if amountOfTestFiles == 2 {
-		err1 := os.WriteFile(testFileName1+".csv", []byte(csvTestString1), 0644)
+		err1 := os.WriteFile(testFileName1+".csv", []byte(header+"\n"+csvTestString1), 0644)
 		check(err1)
 	}
 }
@@ -116,6 +105,8 @@ func cleanUp(amountOfTestFiles int) {
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
 }
+
+// Assertions
 
 func assertIndexHTML(t *testing.T, chosenCorrectHTML string) {
 	//check if the index.html was created
@@ -137,6 +128,26 @@ func assertIndexHTML(t *testing.T, chosenCorrectHTML string) {
 	}
 }
 
+func assertMergedFile(t *testing.T, chosenCorrectMerge string) {
+	//check if the Merged_file.csv was created
+	_, err := os.Stat("Merged_file.csv")
+	if os.IsNotExist(err) {
+		t.Fatal("Expected Merged CSV-File was not created.")
+	}
+
+	//read content of the HTML file
+	content, err := os.ReadFile("Merged_file.csv")
+	if err != nil {
+		t.Fatalf("Could not read the generated Merged CSV-file: %v", err)
+	}
+	contentStr := string(content)
+
+	//check if content contains expected string
+	if !strings.Contains(contentStr, chosenCorrectMerge) {
+		t.Errorf("Merged CSV-file doesn't contain the expected data\nContained:\n%s", contentStr)
+	}
+}
+
 // Tests
 
 // Unit-testing merger
@@ -144,6 +155,26 @@ func TestMerger(t *testing.T) {
 	// Set up
 	createCsvFile(2)
 	defer cleanUp(2)
+
+	// Read & assert OG test-file.
+	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
+	view.GenerateHtml(specs)
+	assertIndexHTML(t, correctHTML0)
+
+	// Read & assert other test-file.
+	specs1 := Reader.ReadCsvSpec(testFileName1 + ".csv")
+	view.GenerateHtml(specs1)
+	assertIndexHTML(t, correctHTML1)
+
+	// Add csv-files testFileName0 and testFileName1 to an array
+	csvFiles := []string{"./" + testFileName0 + ".csv", "./" + testFileName1 + ".csv"}
+
+	println("Calling Merger.MergeCSV(...)")
+
+	// Merge two csv-files.
+	Merger.MergeCSV(csvFiles, header)
+
+	assertMergedFile(t, correctMergeCSV01)
 
 }
 
@@ -157,7 +188,7 @@ func TestReaderAndWriter(t *testing.T) {
 	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
 	view.GenerateHtml(specs)
 
-	assertIndexHTML(t, correctHTML)
+	assertIndexHTML(t, correctHTML0)
 }
 
 // End-to-end test
@@ -188,5 +219,5 @@ func TestEndToEnd(t *testing.T) {
 		t.Errorf("Output didn't match expected. %s", string(cmd1Output))
 	}
 
-	assertIndexHTML(t, correctHTML)
+	assertIndexHTML(t, correctHTML0)
 }

@@ -1,25 +1,43 @@
 package Merger
 
 import (
+	"bufio"
 	"bytes"
+	"log"
 	"os"
 )
 
-func MergeCSV(file1 string, file2 string) {
+func readCsvContent(filepath string) []byte {
+	var fileBytes []byte
+
+	// Open file
+	file, err := os.Open(filepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	
+	// Read file line by line, skipping first line
+	scanner := bufio.NewScanner(file)
+	scanner.Scan()
+	for scanner.Scan() {
+		fileBytes = append(fileBytes, scanner.Bytes()...)
+		fileBytes = append(fileBytes, []byte("\n")...)
+	}
+
+	return fileBytes
+}
+
+func MergeCSV(filepath1 string, filepath2 string) {
 	os.Remove("Merged_file.csv")
 	var buf bytes.Buffer
-	b1, err := os.ReadFile(file1)
-	if err != nil {
-		panic(err)
-	}
-	buf.Write(b1)
-	buf.Write([]byte("\n"))
-	b2, err := os.ReadFile(file2)
-	if err != nil {
-		panic(err)
-	}
-	buf.Write(b2)
-	err = os.WriteFile("Merged_file.csv", buf.Bytes(), 0644)
+
+	// Read file content
+	buf.Write(readCsvContent(filepath1))
+	buf.Write(readCsvContent(filepath2))
+
+	// Write combined files to one file
+	err := os.WriteFile("Merged_file.csv", buf.Bytes(), 0644)
 	if err != nil {
 		panic(err)
 	}

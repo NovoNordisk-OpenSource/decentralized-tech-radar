@@ -7,6 +7,21 @@ import (
 	"os"
 )
 
+func getHeader(filepath string) []byte {
+	file, err := os.Open(filepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	
+	scanner := bufio.NewScanner(file)
+	scanner.Scan()
+	headerBytes := scanner.Bytes()
+	headerBytes = append(headerBytes, []byte("\n")...)
+	
+	return headerBytes
+}
+
 func readCsvContent(filepath string) []byte {
 	var fileBytes []byte
 
@@ -28,12 +43,12 @@ func readCsvContent(filepath string) []byte {
 	return fileBytes
 }
 
-func MergeCSV(filepaths []string, header string) {
+func MergeCSV(filepaths []string) {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
 
 	// Add header to buffer
-	buf.Write([]byte(header + "\n"))
+	buf.Write(getHeader(filepaths[0]))
 
 	// Read file content and add to buffer
 	for _, file := range filepaths {

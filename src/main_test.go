@@ -11,7 +11,7 @@ import (
 	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 )
 
-// Test Set up
+// Set up tests variables
 var testFileName0 string = "ForTesting"
 var testFileName1 string = "ForTestingToo"
 
@@ -78,6 +78,51 @@ var correctHTML1 string = `<html>
 	</body>
 </html>`
 
+var correctHTML01 string = `<html>
+	<head>
+		<title>Header 1</title>
+	</head>
+	<body>
+		<h1 class="pageTitle">Header 1</h1>
+		<ul>
+			
+					<li>Name: TestBlip1</li>
+					<li>Quadrant: Language</li>
+					<li>Ring: Assess</li>
+					<li>Is new: true</li>
+					<li>Moved: 1</li>
+					<li>Desc: This is a description</li>
+			
+					<li>Name: TestBlip2</li>
+					<li>Quadrant: Tool</li>
+					<li>Ring: Adopt</li>
+					<li>Is new: false</li>
+					<li>Moved: 0</li>
+					<li>Desc: Also a description</li>
+			
+					<li>Name: TestBlip3</li>
+					<li>Quadrant: Tool</li>
+					<li>Ring: Hold</li>
+					<li>Is new: false</li>
+					<li>Moved: 0</li>
+					<li>Desc: This too is a description</li>
+			
+					<li>Name: TestBlip4</li>
+					<li>Quadrant: Language</li>
+					<li>Ring: Test</li>
+					<li>Is new: true</li>
+					<li>Moved: 1</li>
+					<li>Desc: Also a descriptive description</li>
+			
+		</ul>
+	</body>
+</html>`
+
+// Add csv-files testFileName0 and testFileName1 to an array
+var csvFiles01 = []string{"./" + testFileName0 + ".csv", "./" + testFileName1 + ".csv"}
+
+// Helper functions
+
 func check(e error) {
 	if e != nil {
 		panic(e)
@@ -104,6 +149,18 @@ func cleanUp(amountOfTestFiles int) {
 	os.Remove("index.html")
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
+}
+
+func readAssertCSV01(t *testing.T) {
+	// Read & assert OG test-file.
+	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
+	view.GenerateHtml(specs)
+	assertIndexHTML(t, correctHTML0)
+
+	// Read & assert other test-file.
+	specs1 := Reader.ReadCsvSpec(testFileName1 + ".csv")
+	view.GenerateHtml(specs1)
+	assertIndexHTML(t, correctHTML1)
 }
 
 // Assertions
@@ -169,31 +226,37 @@ func TestMerger_AssertsCorrectMergeCSV01(t *testing.T) {
 	createCsvFile(2)
 	defer cleanUp(2)
 
-	// Read & assert OG test-file.
-	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
-	view.GenerateHtml(specs)
-	assertIndexHTML(t, correctHTML0)
-
-	// Read & assert other test-file.
-	specs1 := Reader.ReadCsvSpec(testFileName1 + ".csv")
-	view.GenerateHtml(specs1)
-	assertIndexHTML(t, correctHTML1)
-
-	// Add csv-files testFileName0 and testFileName1 to an array
-	csvFiles := []string{"./" + testFileName0 + ".csv", "./" + testFileName1 + ".csv"}
+	// Read & assert test file 0 and other test file 1.
+	readAssertCSV01(t)
 
 	println("Calling Merger.MergeCSV(...)")
 
 	// Merge two csv-files.
-	Merger.MergeCSV(csvFiles, header)
+	Merger.MergeCSV(csvFiles01, header)
 
 	assertMergedFile(t, correctMergeCSV01)
-
 }
 
 // Reader, Writer & Merger: Integration test
 func TestReaderWriterMerger(t *testing.T) {
 	// Set up
+	createCsvFile(2)
+	defer cleanUp(2)
+
+	// Read & assert the two test files 0 and 1.
+	readAssertCSV01(t)
+
+	// Merge two csv-files.
+	Merger.MergeCSV(csvFiles01, header)
+
+	assertMergedFile(t, correctMergeCSV01)
+
+	// Read merged file and generate index.html
+	specs := Reader.ReadCsvSpec("Merged_file.csv")
+	view.GenerateHtml(specs)
+
+	assertIndexHTML(t, correctHTML01)
+
 }
 
 // End-to-end test

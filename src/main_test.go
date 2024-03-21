@@ -22,6 +22,7 @@ var csvTestString1 string = `name,ring,quadrant,isNew,moved,description
 TestBlip3,Hold,Tool,false,0,This too is a description
 TestBlip4,Test,Language, true,1,Also a descriptive description`
 
+// TODO: [Nice to have] Automate the two vars below by using the two test-strings above.
 var correctHTML string = `<html>
 	<head>
 		<title>Header 1</title>
@@ -43,6 +44,46 @@ var correctHTML string = `<html>
 					<li>Is new: false</li>
 					<li>Moved: 0</li>
 					<li>Desc: Also a description</li>
+			
+		</ul>
+	</body>
+</html>`
+
+var correctMergedHTML string = `<html>
+	<head>
+		<title>Header 1</title>
+	</head>
+	<body>
+		<h1 class="pageTitle">Header 1</h1>
+		<ul>
+			
+					<li>Name: TestBlip1</li>
+					<li>Quadrant: Language</li>
+					<li>Ring: Assess</li>
+					<li>Is new: true</li>
+					<li>Moved: 1</li>
+					<li>Desc: This is a description</li>
+			
+					<li>Name: TestBlip2</li>
+					<li>Quadrant: Tool</li>
+					<li>Ring: Adopt</li>
+					<li>Is new: false</li>
+					<li>Moved: 0</li>
+					<li>Desc: Also a description</li>
+
+					<li>Name: TestBlip3</li>
+					<li>Quadrant: Hold</li>
+					<li>Ring: Tools</li>
+					<li>Is new: false</li>
+					<li>Moved: 0</li>
+					<li>Desc: This too is a description</li>
+
+					<li>Name: TestBlip4</li>
+					<li>Quadrant: Test</li>
+					<li>Ring: Language</li>
+					<li>Is new: true</li>
+					<li>Moved: 1</li>
+					<li>Desc: Also a descriptive description</li>
 			
 		</ul>
 	</body>
@@ -76,7 +117,7 @@ func cleanUp(amountOfTestFiles int) {
 	os.Remove("tech_radar.exe")
 }
 
-func assertIndexHTML(t *testing.T) {
+func assertIndexHTML(t *testing.T, chosenCorrectHTML string) {
 	//check if the index.html was created
 	_, err := os.Stat("index.html")
 	if os.IsNotExist(err) {
@@ -90,8 +131,8 @@ func assertIndexHTML(t *testing.T) {
 	}
 	contentStr := string(content)
 
-	//check if content contains exptected string
-	if !strings.Contains(contentStr, correctHTML) {
+	//check if content contains expected string
+	if !strings.Contains(contentStr, chosenCorrectHTML) {
 		t.Errorf("HTML doesn't contain the expected data\nContained:\n%s", contentStr)
 	}
 }
@@ -116,7 +157,7 @@ func TestReaderAndWriter(t *testing.T) {
 	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
 	view.GenerateHtml(specs)
 
-	assertIndexHTML(t)
+	assertIndexHTML(t, correctHTML)
 }
 
 // End-to-end test
@@ -147,5 +188,5 @@ func TestEndToEnd(t *testing.T) {
 		t.Errorf("Output didn't match expected. %s", string(cmd1Output))
 	}
 
-	assertIndexHTML(t)
+	assertIndexHTML(t, correctHTML)
 }

@@ -11,11 +11,16 @@ import (
 )
 
 // Test Set up
-var testFileName string = "ForTesting"
+var testFileName0 string = "ForTesting"
+var testFileName1 string = "ForTestingToo"
 
-var csvTestString string = `name,ring,quadrant,isNew,moved,description
+var csvTestString0 string = `name,ring,quadrant,isNew,moved,description
 TestBlip1,Assess,Language,true,1,This is a description
 TestBlip2,Adopt,Tool,false,0,Also a description`
+
+var csvTestString1 string = `name,ring,quadrant,isNew,moved,description
+TestBlip3,Hold,Tool,false,0,This too is a description
+TestBlip4,Test,Language, true,1,Also a descriptive description`
 
 var correctHTML string = `<html>
 	<head>
@@ -49,13 +54,13 @@ func check(e error) {
 	}
 }
 
-func createCsvFile() {
-	err := os.WriteFile(testFileName+".csv", []byte(csvTestString), 0644)
+func createCsvFile(testFileNameType string, csvTestStringType string) {
+	err := os.WriteFile(testFileNameType+".csv", []byte(csvTestStringType), 0644)
 	check(err)
 }
 
-func cleanUp() {
-	os.Remove(testFileName + ".csv")
+func cleanUp(testFileNameType string) {
+	os.Remove(testFileNameType + ".csv")
 	os.Remove("index.html")
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
@@ -85,11 +90,11 @@ func assertIndexHTML(t *testing.T) {
 // Integration test
 func TestReaderAndWriter(t *testing.T) {
 	// Set up
-	createCsvFile()
-	defer cleanUp()
+	createCsvFile(testFileName0, csvTestString0)
+	defer cleanUp(testFileName0)
 
 	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
 	view.GenerateHtml(specs)
 
 	assertIndexHTML(t)
@@ -98,18 +103,18 @@ func TestReaderAndWriter(t *testing.T) {
 // End-to-end test
 func TestEndToEnd(t *testing.T) {
 	// Set up
-	createCsvFile()
-	defer cleanUp()
+	createCsvFile(testFileName0, csvTestString0)
+	defer cleanUp(testFileName0)
 
 	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
 	view.GenerateHtml(specs)
 
 	// Start program using CLI arguments
-	os.Args = []string{"cmd", testFileName + ".csv"}
+	os.Args = []string{"cmd", testFileName0 + ".csv"}
 	//Works on Unix and Windows
 	cmd := exec.Command("go", "build", "-o", "tech_radar.exe")
-	cmd1 := exec.Command("./tech_radar.exe", "-file", testFileName+".csv")
+	cmd1 := exec.Command("./tech_radar.exe", "-file", testFileName0+".csv")
 
 	_, err := cmd.Output()
 	if err != nil {

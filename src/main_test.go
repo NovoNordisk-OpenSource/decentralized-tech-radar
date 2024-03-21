@@ -148,9 +148,22 @@ func assertMergedFile(t *testing.T, chosenCorrectMerge string) {
 	}
 }
 
-// Tests
+// -- Tests --
 
-// Unit-testing merger
+// Reader & Writer: Integration test
+func TestReaderAndWriter(t *testing.T) {
+	// Set up
+	createCsvFile(1)
+	defer cleanUp(1)
+
+	// Read test file
+	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
+	view.GenerateHtml(specs)
+
+	assertIndexHTML(t, correctHTML0)
+}
+
+// Merger: Unit test
 func TestMerger(t *testing.T) {
 	// Set up
 	createCsvFile(2)
@@ -178,17 +191,9 @@ func TestMerger(t *testing.T) {
 
 }
 
-// Integration test
-func TestReaderAndWriter(t *testing.T) {
+// Reader, Writer & Merger: Integration test
+func TestReaderWriterMerger(t *testing.T) {
 	// Set up
-	createCsvFile(1)
-	defer cleanUp(1)
-
-	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
-	view.GenerateHtml(specs)
-
-	assertIndexHTML(t, correctHTML0)
 }
 
 // End-to-end test

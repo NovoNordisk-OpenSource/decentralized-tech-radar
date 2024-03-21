@@ -28,7 +28,7 @@ func readCsvContent(filepath string) []byte {
 	return fileBytes
 }
 
-func MergeCSV(filepath1 string, filepath2 string, header string) {
+func MergeCSV(filepaths []string, header string) {
 	os.Remove("Merged_file.csv")
 	var buf bytes.Buffer
 
@@ -36,8 +36,9 @@ func MergeCSV(filepath1 string, filepath2 string, header string) {
 	buf.Write([]byte(header + "\n"))
 
 	// Read file content and add to buffer
-	buf.Write(readCsvContent(filepath1))
-	buf.Write(readCsvContent(filepath2))
+	for _, file := range filepaths {
+		buf.Write(readCsvContent(file))
+	}
 
 	// Write combined files to one file
 	err := os.WriteFile("Merged_file.csv", buf.Bytes(), 0644)

@@ -21,7 +21,7 @@ func main() {
 	}
 
 	if *merge != "" {
-		Merger.MergeCSV(strings.Split(*merge, " ")[0], strings.Split(*merge, " ")[1], "name,ring,quadrant,isNew,moved,description")
+		Merger.MergeCSV(strings.Split(*merge, " "), "name,ring,quadrant,isNew,moved,description")
 	}
 	
 	view.GenerateHtml(specs)

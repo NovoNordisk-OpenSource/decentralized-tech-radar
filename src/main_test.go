@@ -54,13 +54,23 @@ func check(e error) {
 	}
 }
 
-func createCsvFile(testFileNameType string, csvTestStringType string) {
-	err := os.WriteFile(testFileNameType+".csv", []byte(csvTestStringType), 0644)
+func createCsvFile(amountOfTestFiles int) {
+	err := os.WriteFile(testFileName0+".csv", []byte(csvTestString0), 0644)
 	check(err)
+
+	if amountOfTestFiles == 2 {
+		err1 := os.WriteFile(testFileName1+".csv", []byte(csvTestString1), 0644)
+		check(err1)
+	}
 }
 
-func cleanUp(testFileNameType string) {
-	os.Remove(testFileNameType + ".csv")
+func cleanUp(amountOfTestFiles int) {
+	os.Remove(testFileName0 + ".csv")
+
+	if amountOfTestFiles == 2 {
+		os.Remove(testFileName1 + ".csv")
+	}
+
 	os.Remove("index.html")
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
@@ -87,11 +97,20 @@ func assertIndexHTML(t *testing.T) {
 }
 
 // Tests
+
+// Unit-testing merger
+func TestMerger(t *testing.T) {
+	// Set up
+	createCsvFile(2)
+	defer cleanUp(2)
+
+}
+
 // Integration test
 func TestReaderAndWriter(t *testing.T) {
 	// Set up
-	createCsvFile(testFileName0, csvTestString0)
-	defer cleanUp(testFileName0)
+	createCsvFile(1)
+	defer cleanUp(1)
 
 	// Read test file
 	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
@@ -103,8 +122,8 @@ func TestReaderAndWriter(t *testing.T) {
 // End-to-end test
 func TestEndToEnd(t *testing.T) {
 	// Set up
-	createCsvFile(testFileName0, csvTestString0)
-	defer cleanUp(testFileName0)
+	createCsvFile(1)
+	defer cleanUp(1)
 
 	// Read test file
 	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
@@ -121,11 +140,11 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatalf("%v", err)
 	}
 
-	cmd1_output, err := cmd1.Output()
+	cmd1Output, err := cmd1.Output()
 	if err != nil {
 		t.Fatalf("%v", err)
-	} else if !strings.Contains(string(cmd1_output), "Opened csv file!") {
-		t.Errorf("Output didn't match expected. %s", string(cmd1_output))
+	} else if !strings.Contains(string(cmd1Output), "Opened csv file!") {
+		t.Errorf("Output didn't match expected. %s", string(cmd1Output))
 	}
 
 	assertIndexHTML(t)

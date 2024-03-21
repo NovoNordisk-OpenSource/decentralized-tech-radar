@@ -11,7 +11,7 @@ import (
 
 func main() {
 	file := flag.String("file", "", "This takes a path to a csv file/string")
-	merge := flag.String("merge", "", "This takes two path to two files and creates a new merged file")
+	merge := flag.String("merge", "", "This takes paths to files that should be merged (space separated)")
 	flag.Parse()
 
 	var specs SpecReader.Blips

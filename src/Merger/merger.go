@@ -22,14 +22,14 @@ func readCsvContent(filepath string) []byte {
 	scanner.Scan()
 	for scanner.Scan() {
 		fileBytes = append(fileBytes, scanner.Bytes()...)
-		fileBytes = append(fileBytes, []byte("\n")...)
+		fileBytes = append(fileBytes, []byte("\n")...) // Add newline between each line in the file, otherwise it's all on one line
 	}
 
 	return fileBytes
 }
 
 func MergeCSV(filepaths []string, header string) {
-	os.Remove("Merged_file.csv")
+	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
 
 	// Add header to buffer

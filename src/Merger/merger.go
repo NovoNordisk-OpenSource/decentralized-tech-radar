@@ -28,11 +28,14 @@ func readCsvContent(filepath string) []byte {
 	return fileBytes
 }
 
-func MergeCSV(filepath1 string, filepath2 string) {
+func MergeCSV(filepath1 string, filepath2 string, header string) {
 	os.Remove("Merged_file.csv")
 	var buf bytes.Buffer
 
-	// Read file content
+	// Add header to buffer
+	buf.Write([]byte(header + "\n"))
+
+	// Read file content and add to buffer
 	buf.Write(readCsvContent(filepath1))
 	buf.Write(readCsvContent(filepath2))
 

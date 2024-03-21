@@ -151,7 +151,7 @@ func assertMergedFile(t *testing.T, chosenCorrectMerge string) {
 // -- Tests --
 
 // Reader & Writer: Integration test
-func TestReaderAndWriter(t *testing.T) {
+func TestReaderAndWriter_AssertsCorrectHTML0(t *testing.T) {
 	// Set up
 	createCsvFile(1)
 	defer cleanUp(1)
@@ -164,7 +164,7 @@ func TestReaderAndWriter(t *testing.T) {
 }
 
 // Merger: Unit test
-func TestMerger(t *testing.T) {
+func TestMerger_AssertsCorrectMergeCSV01(t *testing.T) {
 	// Set up
 	createCsvFile(2)
 	defer cleanUp(2)

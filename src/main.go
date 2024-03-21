@@ -15,7 +15,7 @@ func main() {
 
 	if *fetch != "" {
 		fetchArgs := strings.Split(*fetch, " ")
-		Fetcher.FetchFiles(fetchArgs[0], fetchArgs[1])
+		Fetcher.FetchFiles(fetchArgs[0], fetchArgs[1], fetchArgs[2])
 	} else {
 		panic("No file was given (oh no)")
 	}

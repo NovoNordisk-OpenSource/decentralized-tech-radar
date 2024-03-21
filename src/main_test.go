@@ -151,7 +151,7 @@ func cleanUp(amountOfTestFiles int) {
 	os.Remove("tech_radar.exe")
 }
 
-func readAssertCSV01(t *testing.T) {
+func readWriteAssertCSV01(t *testing.T) {
 	// Read & assert OG test-file.
 	specs := Reader.ReadCsvSpec(testFileName0 + ".csv")
 	view.GenerateHtml(specs)
@@ -161,6 +161,11 @@ func readAssertCSV01(t *testing.T) {
 	specs1 := Reader.ReadCsvSpec(testFileName1 + ".csv")
 	view.GenerateHtml(specs1)
 	assertIndexHTML(t, correctHTML1)
+}
+
+func readWriteMergedFile(t *testing.T) {
+	specs := Reader.ReadCsvSpec("Merged_file.csv")
+	view.GenerateHtml(specs)
 }
 
 // -- Assertions --
@@ -227,7 +232,7 @@ func TestMerger_AssertsCorrectMergeCSV01(t *testing.T) {
 	defer cleanUp(2)
 
 	// Read & assert test file 0 and other test file 1.
-	readAssertCSV01(t)
+	readWriteAssertCSV01(t)
 
 	println("Calling Merger.MergeCSV(...)")
 
@@ -244,7 +249,7 @@ func TestReaderWriterMerger(t *testing.T) {
 	defer cleanUp(2)
 
 	// Read & assert the two test files 0 and 1.
-	readAssertCSV01(t)
+	readWriteAssertCSV01(t)
 
 	// Merge two csv-files.
 	Merger.MergeCSV(csvFiles01, header)
@@ -252,8 +257,7 @@ func TestReaderWriterMerger(t *testing.T) {
 	assertMergedFile(t, correctMergeCSV01)
 
 	// Read merged file and generate index.html
-	specs := Reader.ReadCsvSpec("Merged_file.csv")
-	view.GenerateHtml(specs)
+	readWriteMergedFile(t)
 
 	assertIndexHTML(t, correctHTML01)
 

@@ -11,7 +11,7 @@ import (
 	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 )
 
-// Set up tests variables
+// -- Set up tests variables --
 var testFileName0 string = "ForTesting"
 var testFileName1 string = "ForTestingToo"
 
@@ -118,10 +118,10 @@ var correctHTML01 string = `<html>
 	</body>
 </html>`
 
-// Add csv-files testFileName0 and testFileName1 to an array
+// Add csv-files 'testFileName0' and 'testFileName1' to an array
 var csvFiles01 = []string{"./" + testFileName0 + ".csv", "./" + testFileName1 + ".csv"}
 
-// Helper functions
+// -- Helper functions --
 
 func check(e error) {
 	if e != nil {
@@ -163,7 +163,7 @@ func readAssertCSV01(t *testing.T) {
 	assertIndexHTML(t, correctHTML1)
 }
 
-// Assertions
+// -- Assertions --
 
 func assertIndexHTML(t *testing.T, chosenCorrectHTML string) {
 	//check if the index.html was created

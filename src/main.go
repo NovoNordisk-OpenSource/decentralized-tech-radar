@@ -40,7 +40,7 @@ func main() {
 	
 	var specs SpecReader.Blips
 	// testing csv reader
-	if *file != "" {
+	if *file != "" && *fetch == "" {
 		specs = SpecReader.ReadCsvSpec(*file)
 	} else {
 		panic("No file was given (oh no)")

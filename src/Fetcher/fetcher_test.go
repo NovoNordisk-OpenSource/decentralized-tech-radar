@@ -1,7 +1,6 @@
 package Fetcher
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -17,11 +16,5 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
     // We expect an error since the arguments are invalid
     if err == nil {
         t.Error("FetchFiles did not return an error when given invalid arguments")
-    } else {
-        //check if the error message is as expected.
-        expectedErrorMessage := "failed at fetcher"
-        if !strings.Contains(err.Error(), expectedErrorMessage) {
-            t.Errorf("Expected an error containing '%s', but got '%s'", expectedErrorMessage, err.Error())
-        }
-    }
+    } 
 }

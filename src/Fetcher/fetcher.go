@@ -27,7 +27,10 @@ func FetchFiles(url, branch, specFile string) error {
 
 	// Pulls files and returns the paths to said files
     seenFolders := make(map[string]string)
-	paths := puller(url, branch, specFile)
+	paths, err := puller(url, branch, specFile)
+    if err != nil {
+        return err
+    }
 	for _, path := range paths {
         fileName:= strings.Split(path,"/")
         if _ , ok := seenFolders[fileName[0]]; !ok {
@@ -48,41 +51,59 @@ func errHandler(err error, params ...string) {
 	}
 }
 
-func executer(cmd *exec.Cmd) {
+func executer(cmd *exec.Cmd) error {
 	//TODO: Figure out a way to take strings as input and build cmd
-	out, err := cmd.CombinedOutput()
-	errHandler(err, string(out))
+	_, err := cmd.CombinedOutput()
+
+	return err
 }
 
-func puller(url, branch, specFile string) []string {
+func puller(url, branch, specFile string) ([]string, error) {
+    paths := []string{}
+
 	// Create dummy repo
 	cmd := exec.Command("git", "init")
-	executer(cmd)
+	err := executer(cmd)
+    if err != nil {
+        return paths, err
+    }
 
 	//Enable sparse Checkout
 	cmd = exec.Command("git", "config", "core.sparseCheckout", "true")
-	executer(cmd)
+	err = executer(cmd)
+    if err != nil {
+        return paths, err
+    }
 
 	// Add whitelist to sparse-checkout
 	fileData, err := os.ReadFile(specFile)
-	errHandler(err)
 	err = os.WriteFile(".git/info/sparse-checkout", fileData, 0644)
-	errHandler(err)
+    if err != nil {
+        return paths, err
+    }	
 
 	// Add remote repo
 	cmd = exec.Command("git", "remote", "add", "origin", url)
-	executer(cmd)
+	err = executer(cmd)
+    if err != nil {
+        return paths, err
+    }
 
 	// git pull from remote repo
 	cmd = exec.Command("git", "pull", "origin", branch)
-	executer(cmd)
+	err = executer(cmd)
+    if err != nil {
+        return paths, err
+    }
 
 	//remove .git folder
 	err = os.RemoveAll("./.git")
-	errHandler(err)
+    if err != nil {
+        return paths, err
+    }
 
 	// https://stackoverflow.com/questions/55300117/how-do-i-find-all-files-that-have-a-certain-extension-in-go-regardless-of-depth
-	paths := []string{}
+	
 	filepath.WalkDir(".", func(s string, d fs.DirEntry, e error) error {
 		if e != nil {
 			return e
@@ -95,6 +116,6 @@ func puller(url, branch, specFile string) []string {
 		return nil
 	})
 
-	return paths
+	return paths, nil
 
 }

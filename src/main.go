@@ -13,7 +13,7 @@ import (
 
 func main() {
 	var repos []Fetcher.Repo
-	
+
 	fetch := flag.String("fetch", "", "This command will fetch files from a list of git repos.\n \nHere is an example\n \n go run main.go --fetch \"https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev main ./Fetcher/something.txt https://github.com/JonasSkjodt/CopenhagenBuzz master ./Fetcher/something.txt https://gitlab.com/nagyv-gitlab/gitops-test master ./Fetcher/something.txt\"")
 	file := flag.String("file", "", "This takes a path to a csv file/string")
 	flag.Parse()
@@ -34,7 +34,7 @@ func main() {
 		}
 
 		// Call the Fetcher package function to fetch files from all repositories
-		err := Fetcher.ListingReposForFetch(repos)
+		err := Fetcher.ListingReposForFetch(repos, "main")
 		if err != nil {
 			fmt.Println("Error fetching files:", err)
 			os.Exit(1)

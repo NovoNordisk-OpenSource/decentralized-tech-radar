@@ -14,7 +14,7 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 	branch := "branch"
 	specFile := "nonexistent-file.txt"
 
-	err := FetchFilesTest(url, branch, specFile)
+	err := FetchFiles(url, branch, specFile, "test")
 
 	// We expect an error since the arguments are invalid
 	if err == nil {
@@ -62,7 +62,7 @@ func TestListingReposForFetch(t *testing.T) {
     
     repos = append(repos, repo, repo2, repo3)
 
-    err := ListingReposForFetchTest(repos)
+    err := ListingReposForFetch(repos, "test")
     textFile.Close()
 
     //check if the error message is as expected.

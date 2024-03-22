@@ -1,7 +1,6 @@
 package Fetcher
 
 import (
-	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"

@@ -6,6 +6,12 @@ import (
 	"os/exec"
 )
 
+type Repo struct {
+    URL     string
+    Branch  string
+    SpecFile string
+  }
+
 func FetchFiles(url, branch, specFile string) error { 
 
     // Check if the .git directory exists in the current directory
@@ -25,4 +31,14 @@ func FetchFiles(url, branch, specFile string) error {
  
     return nil
 }
+
+func FetchAllRepos(repos []Repo) error {
+    for _, repo := range repos {
+      err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile)
+      if err != nil {
+        return err
+      }
+    }
+    return nil
+  }
 

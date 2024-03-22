@@ -33,6 +33,7 @@ func main() {
             fmt.Println("Error fetching files:", err)
             os.Exit(1)
         }
+		os.Exit(0)
     } else {
         fmt.Println("No fetch command was given")
         os.Exit(1)
@@ -40,7 +41,7 @@ func main() {
 	
 	var specs SpecReader.Blips
 	// testing csv reader
-	if *file != "" && *fetch == "" {
+	if *file != "" {
 		specs = SpecReader.ReadCsvSpec(*file)
 	} else {
 		panic("No file was given (oh no)")

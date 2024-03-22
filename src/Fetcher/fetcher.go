@@ -19,8 +19,26 @@ func FetchFiles(url, branch, specFile string) error {
 		}
 	}
 
-	puller(url,branch,specFile)
+	// Create cache dir if it doesn't exist
+	if _, err := os.Stat("cache"); os.IsNotExist(err) {
+		err := os.Mkdir("cache", 0700)
+		errHandler(err)
+	}
 
+	// Pulls files and returns the paths to said files
+    seenFolders := make(map[string]string)
+	paths := puller(url, branch, specFile)
+	for _, path := range paths {
+        fileName:= strings.Split(path,"/")
+        if _ , ok := seenFolders[fileName[0]]; !ok {
+            seenFolders[fileName[0]] = ""
+        }
+        os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
+	}
+    for folder, _ := range seenFolders {
+        os.RemoveAll(("./" + folder))
+    }
+    
 	return nil
 }
 
@@ -36,7 +54,6 @@ func executer(cmd *exec.Cmd) {
 	errHandler(err, string(out))
 }
 
-// TODO: should probably return the path of the file it downloaded
 func puller(url, branch, specFile string) []string {
 	// Create dummy repo
 	cmd := exec.Command("git", "init")
@@ -70,8 +87,10 @@ func puller(url, branch, specFile string) []string {
 		if e != nil {
 			return e
 		}
-		if filepath.Ext(d.Name()) == ".csv" {
-			paths = append(paths, s)
+		if strings.Split(s, "/")[0] != "cache" {
+			if filepath.Ext(d.Name()) == ".csv" {
+				paths = append(paths, s)
+			}
 		}
 		return nil
 	})

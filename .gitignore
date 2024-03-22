@@ -4,6 +4,7 @@ data/
 *.html
 truckconfig.json
 src/Fetcher/*.txt
+src/cache
 
 # https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 .vscode/*

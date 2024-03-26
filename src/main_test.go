@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/Merger"
 	"os"
 	"os/exec"
 	"strings"
@@ -120,47 +121,8 @@ func TestMerger2Reader2Writer(t *testing.T) {
 
 	// Generate html
 	view.GenerateHtml(specs)
-	
-	correctHTML := `<html>
-	<head>
-		<title>Header 1</title>
-	</head>
-	<body>
-		<h1 class="pageTitle">Header 1</h1>
-		<ul>
-			
-			<li>Name: TestBlip1</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
-			
-			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
-			
-			<li>Name: TestBlip3</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
-			
-			<li>Name: TestBlip4</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
-			
-		</ul>
-	</body>
-</html>`
-	assertIndexHTML(t, correctHTML)
+
+	assertIndexHTML(t)
 }
 
 // End-to-end test

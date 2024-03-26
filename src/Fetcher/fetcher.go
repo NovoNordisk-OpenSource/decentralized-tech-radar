@@ -90,7 +90,7 @@ func puller(url, branch, specFile string) ([]string, error) {
     }
 
 	// git pull from remote repo
-	cmd = exec.Command("git", "pull", "origin", branch)
+	cmd = exec.Command("git", "pull", "origin", branch, "--depth=1")
 	err = executer(cmd)
     if err != nil {
         return paths, err

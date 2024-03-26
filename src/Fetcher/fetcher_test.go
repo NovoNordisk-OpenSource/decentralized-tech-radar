@@ -33,7 +33,7 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
 	//TODO: Change this to main once templates folder is on main
     branch := "feat_git_fetcher"
-    data := []byte("templates/template.csv")
+    data := []byte("examples/templates/template.csv")
     os.WriteFile("./specfile.txt",data,0644)
     specFile := "specfile.txt"
 

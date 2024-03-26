@@ -32,7 +32,8 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.21.x'
-      - run: go get dagger.io/dagger@latest
+      - run: go work init ./ci ./src
+      - run: cd ./ci && go get dagger.io/dagger@latest && cd ..
       - run: go run ci/build_test_release.go
       - name: publish project
         shell: bash
@@ -57,4 +58,3 @@ jobs:
           files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            

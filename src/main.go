@@ -2,8 +2,8 @@ package main
 
 import  (
 	"flag"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
-	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
+	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 )
 
 func main() {
@@ -18,5 +18,5 @@ func main() {
 		panic("No file was given (oh no)")
 	}
 	
-	view.GenerateHtml(specs)
+	html.GenerateHtml(specs)
 }

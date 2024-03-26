@@ -29,9 +29,9 @@ func main() {
 			Exclude: []string{},
 		})).WithMountedCache("/d_src/ci/cache", goCache)
 
-		// set the working directory in the container
-		// install application dependencies
-	runner := source.WithWorkdir("/d_src").
+	// set the working directory in the container
+	// install application dependencies
+	runner := source.WithWorkdir("/d_src/src").
 		WithExec([]string{"go", "mod", "tidy"})
 
 		// run application tests

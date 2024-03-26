@@ -1,11 +1,11 @@
-package view
+package HTML
 
 import (
 	"os"
 	"strings"
 	"testing"
 
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
+	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
 )
 
 func TestGenerateHtml(t *testing.T) {

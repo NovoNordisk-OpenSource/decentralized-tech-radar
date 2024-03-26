@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/Merger"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
-	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
+	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 )
 
 func main() {
@@ -24,5 +24,5 @@ func main() {
 		Merger.MergeCSV(strings.Split(*merge, " "))
 	}
 	
-	view.GenerateHtml(specs)
+	html.GenerateHtml(specs)
 }

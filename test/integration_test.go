@@ -1,8 +1,7 @@
-package main
+package test
 
 import (
 	"os"
-	"os/exec"
 	"strings"
 	"testing"
 
@@ -10,6 +9,20 @@ import (
 	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/Merger"
 )
+
+// Tests
+// Integration test
+func TestReaderAndWriter(t *testing.T) {
+	// Set up
+	createCsvFile()
+	defer cleanUp()
+
+	// Read test file
+	specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	html.GenerateHtml(specs)
+
+	assertIndexHTML(t)
+}
 
 // Test Set up
 var testFileName string = "ForTesting"

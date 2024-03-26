@@ -28,30 +28,32 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 	}
 }
 
+
 func TestListingReposForFetch(t *testing.T) {
     // Creates a txt file for testing the  
     textFile, errCreate := os.Create("./TestingTextFile.txt")
     if errCreate != nil {
         t.Errorf(errCreate.Error() + " : Couldnt create txt file for testing : TestListingReposForFetch")
     } 
+    defer os.RemoveAll("./TestingTextFile.txt")
     
-    _, errWrite := textFile.WriteString("README.md")
+    _, errWrite := textFile.WriteString("/README.md")
     if errWrite != nil {
         t.Errorf(errWrite.Error() + " : Couldnt write to txt file for testing : TestListingReposForFetch")
     }
+    defer os.RemoveAll("./README.md")
+    defer DotGitDelete()
 
-    // github
+
     url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
 	branch := "main"
 	specFile := "./TestingTextFile.txt"
 
-    // gitlab
-    url2 := "https://gitlab.com/nagyv-gitlab/gitops-test"
+    url2 := "https://github.com/NovoNordisk-OpenSource/backstage"
 	branch2 := "master"
 	specFile2 := "./TestingTextFile.txt"
 
-    // bitbucket
-    url3 := "https://bitbucket.org/tech-radar/tech-radar/src/main/"
+    url3 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
 	branch3 := "main"
 	specFile3 := "./TestingTextFile.txt"
 
@@ -71,8 +73,7 @@ func TestListingReposForFetch(t *testing.T) {
         os.RemoveAll("./TestingTextFile.txt")
         t.Errorf("Expected an error containing '%s', but got '%s'", expectedErrorMessage, err.Error())
     }
-    os.RemoveAll("./TestingTextFile.txt")
-    os.RemoveAll("./README.md")
+    
 }
 
 func TestGitDelete(t *testing.T) {

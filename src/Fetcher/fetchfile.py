@@ -34,7 +34,7 @@ try:
     subprocess.run(['git', 'remote', 'add', 'origin', url], check=True)
     
     # Pull from the remote repository
-    subprocess.run(['git', 'pull', 'origin', branch], check=True)
+    subprocess.run(['git', 'pull', 'origin', branch,  '--depth=1'], check=True)
     
     # Remove the .git directory
     if os.name == 'nt':  # Windows

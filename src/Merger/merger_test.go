@@ -50,7 +50,21 @@ func TestGetHeader(t *testing.T) {
 	correctHeader := "name,ring,quadrant,isNew,moved,description\n"
 	header := getHeader("testFile1.csv")
 	if string(header) != correctHeader {
-		t.Errorf("Header does not match expected: \nGot %s\nExpected: %s", string(header), correctHeader)
+		t.Errorf("Header does not match expected:\nGot: %s\nExpected: %s", string(header), correctHeader)
+	}
+}
+
+func TestReadCsvContent(t *testing.T) {
+	createCsvFiles()
+	defer cleanUp()
+
+	correctContent := `Go,Adopt,Language,true,0,Its a programming Language
+Visual Studio Code,Trial,Tool,false,2,An IDE
+Dagger IO,Assess,Tool,true,1,Its a workflow thing
+`
+	readContent := readCsvContent("testFile1.csv")
+	if string(readContent) != correctContent {
+		t.Errorf("Read content does not match expected:\nGot:\n\t%s\nExpected:\n\t%s", string(readContent), correctContent)
 	}
 }
 
@@ -58,7 +72,7 @@ func TestMergeCSV(t *testing.T) {
 	// Setup
 	createCsvFiles()
 	defer cleanUp()
-	
+
 	// Call function
 	MergeCSV(TestFiles)
 
@@ -73,7 +87,7 @@ func TestMergeCSV(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Merged_file.csv could not be read: %v", err)
 	}
-	
+
 	contentStr := string(content)
 	if !strings.Contains(contentStr, correctMerge) {
 		t.Errorf("Merged file doesn't contain the expected data\nContained:\n%s", contentStr)

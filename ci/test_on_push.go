@@ -34,6 +34,7 @@ func main() {
 	runner := source.WithWorkdir("/d_src/src").
 		WithExec([]string{"go", "mod", "tidy"})
 
+
 		// run application tests
 	out, err := runner.WithWorkdir("/d_src/src").WithExec([]string{"go", "test", "./..."}).
 		Stderr(ctx)
@@ -41,4 +42,12 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(out)
+
+	// run application tests
+	out, err = runner.WithWorkdir("/d_src/test").WithExec([]string{"go", "test", "./..."}).
+		Stderr(ctx)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(out)	
 }

@@ -20,3 +20,4 @@ jobs:
       - run: go work init ./ci ./src ./test
       - run: cd ./ci && go get dagger.io/dagger@latest && cd ..
       - run: go run ./ci/test_on_push.go
+

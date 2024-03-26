@@ -44,6 +44,16 @@ func cleanUp() {
 	os.Remove("Merged_file.csv")
 }
 
+func TestGetHeader(t *testing.T) {
+	createCsvFiles()
+	defer cleanUp()
+	correctHeader := "name,ring,quadrant,isNew,moved,description\n"
+	header := getHeader("testFile1.csv")
+	if string(header) != correctHeader {
+		t.Errorf("Header does not match expected: \nGot %s\nExpected: %s", string(header), correctHeader)
+	}
+}
+
 func TestMergeCSV(t *testing.T) {
 	// Setup
 	createCsvFiles()

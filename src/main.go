@@ -34,7 +34,7 @@ func main() {
 		}
 
 		// Call the Fetcher package function to fetch files from all repositories
-		err := Fetcher.ListingReposForFetch(repos, "main")
+		err := Fetcher.ListingReposForFetch(repos)
 		if err != nil {
 			fmt.Println("Error fetching files:", err)
 			os.Exit(1)

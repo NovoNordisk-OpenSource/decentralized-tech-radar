@@ -1,12 +1,13 @@
 package Fetcher
 
 import (
+	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
-  "fmt"
 )
 
 type Repo struct {
@@ -15,53 +16,47 @@ type Repo struct {
 	SpecFile string
 }
 
-func FetchFiles(url, branch, specFile, wherefrom string) error {
-	cmd := exec.Command("")
-	if wherefrom == "main"{
-		cmd = exec.Command("python", "./Fetcher/fetchfile.py", url, branch, specFile)
-	} else {
-		cmd = exec.Command("python", "./fetchfile.py", url, branch, specFile)
-	}
-	
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		return fmt.Errorf("failed at fetcher: %s. Error: %s", out, err)
-	}
+func FetchFiles(url, branch, specFile string) error {
+	defer DotGitDelete()
 
-	errDotGit := DotGitDelete()
-	if errDotGit != nil {
-		return errDotGit
-	}
-
-  // Create cache dir if it doesn't exist
+	// Create cache dir if it doesn't exist
 	if _, err := os.Stat("cache"); os.IsNotExist(err) {
 		err := os.Mkdir("cache", 0700)
 		errHandler(err)
 	}
 
 	// Pulls files and returns the paths to said files
-    seenFolders := make(map[string]string)
+	seenFolders := make(map[string]string)
 	paths, err := puller(url, branch, specFile)
-    if err != nil {
-        return err
-    }
-	for _, path := range paths {
-        fileName:= strings.Split(path,"/")
-        if _ , ok := seenFolders[fileName[0]]; !ok {
-            seenFolders[fileName[0]] = ""
-        }
-        os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
+  fmt.Print(paths)
+	if err != nil {
+		return err
 	}
-    for folder, _ := range seenFolders {
-        os.RemoveAll(("./" + folder))
+
+	for _, path := range paths {
+    var fileName []string 
+    if runtime.GOOS == "windows" {
+      fileName = strings.Split(path, "\\")
+    } else {
+      fileName = strings.Split(path, "/")
     }
+		
+		if _, ok := seenFolders[fileName[0]]; !ok {
+			seenFolders[fileName[0]] = ""
+		}
+		os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
+	}
+
+	for folder, _ := range seenFolders {
+		os.RemoveAll(("./" + folder))
+	}
 
 	return nil
 }
 
-func ListingReposForFetch(repos []Repo, wherefrom string) error {
+func ListingReposForFetch(repos []Repo) error {
 	for _, repo := range repos {
-		err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile, wherefrom)
+		err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile)
 		if err != nil {
 			return err
 		}
@@ -69,17 +64,12 @@ func ListingReposForFetch(repos []Repo, wherefrom string) error {
 	return nil
 }
 
-func DotGitDelete() error {
+func DotGitDelete() {
 	// Check if the .git directory exists in the current directory
 	if _, err := os.Stat("./.git"); err == nil {
 		// Remove the .git directory if it exists (we are still in src which is the only place it'll remove the .git folder)
-		err := os.RemoveAll("./.git")
-		if err != nil {
-			return err
-		}
-		return nil
+		os.RemoveAll("./.git")
 	}
-	return nil
 }
 
 func errHandler(err error, params ...string) {
@@ -96,51 +86,51 @@ func executer(cmd *exec.Cmd) error {
 }
 
 func puller(url, branch, specFile string) ([]string, error) {
-    paths := []string{}
+	paths := []string{}
 
 	// Create dummy repo
 	cmd := exec.Command("git", "init")
 	err := executer(cmd)
-    if err != nil {
-        return paths, err
-    }
+	if err != nil {
+		return paths, err
+	}
 
 	//Enable sparse Checkout
 	cmd = exec.Command("git", "config", "core.sparseCheckout", "true")
 	err = executer(cmd)
-    if err != nil {
-        return paths, err
-    }
+	if err != nil {
+		return paths, err
+	}
 
 	// Add whitelist to sparse-checkout
 	fileData, err := os.ReadFile(specFile)
 	err = os.WriteFile(".git/info/sparse-checkout", fileData, 0644)
-    if err != nil {
-        return paths, err
-    }	
+	if err != nil {
+		return paths, err
+	}
 
 	// Add remote repo
 	cmd = exec.Command("git", "remote", "add", "origin", url)
 	err = executer(cmd)
-    if err != nil {
-        return paths, err
-    }
+	if err != nil {
+		return paths, err
+	}
 
 	// git pull from remote repo
-	cmd = exec.Command("git", "pull", "origin", branch)
+	cmd = exec.Command("git", "pull", "origin", branch, "--depth=1")
 	err = executer(cmd)
-    if err != nil {
-        return paths, err
-    }
+	if err != nil {
+		return paths, err
+	}
 
 	//remove .git folder
 	err = os.RemoveAll("./.git")
-    if err != nil {
-        return paths, err
-    }
+	if err != nil {
+		return paths, err
+	}
 
 	// https://stackoverflow.com/questions/55300117/how-do-i-find-all-files-that-have-a-certain-extension-in-go-regardless-of-depth
-	
+
 	filepath.WalkDir(".", func(s string, d fs.DirEntry, e error) error {
 		if e != nil {
 			return e
@@ -154,5 +144,4 @@ func puller(url, branch, specFile string) ([]string, error) {
 	})
 
 	return paths, nil
-
 }

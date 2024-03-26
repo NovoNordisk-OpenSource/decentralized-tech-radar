@@ -4,7 +4,7 @@ import (
 	"flag"
 	"strings"
 
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/Merger"
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Merger"
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
 	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 )

@@ -1,9 +1,9 @@
 package Fetcher
 
 import (
-	"strings"
+	"os"
 	"testing"
-    "os"
+    "strings"
     "path/filepath"
 )
 
@@ -94,4 +94,33 @@ func TestGitDelete(t *testing.T) {
     if _, err := os.Stat("./.git"); !os.IsNotExist(err) {
         t.Errorf(err.Error() + " : .git still exists")
     }
+}
+
+func TestFetchFilesValidArguments(t *testing.T) {
+    //TODO: Maybe this needs to be split into 2 tests
+    
+	// dev repo link and create specfile
+	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
+	//TODO: Change this to main once templates folder is on main
+    branch := "feat_git_fetcher"
+    data := []byte("templates/template.csv")
+    os.WriteFile("./specfile.txt",data,0644)
+    specFile := "specfile.txt"
+
+    err := FetchFiles(url,branch,specFile, "test")
+
+    if err != nil {
+        t.Errorf("FetchFiles returned an err %v", err)
+    }
+
+    _, err = os.Stat("./cache/template.csv")
+   if os.IsNotExist(err) {
+        t.Errorf("File wasn't downloaded or wasn't moved correctly: %v",err)
+    } 
+
+    //TODO: Maybe add a test for contents of CSV file?
+
+    defer os.Remove("specfile.txt")
+    defer os.RemoveAll("./cache")
+
 }

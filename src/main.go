@@ -39,6 +39,7 @@ func main() {
 			fmt.Println("Error fetching files:", err)
 			os.Exit(1)
 		}
+		os.Exit(0)
 	}
 
 	if *file != "" && *fetch == "" {

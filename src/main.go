@@ -21,7 +21,10 @@ func main() {
 	}
 
 	if *merge != "" {
-		Merger.MergeCSV(strings.Split(*merge, " "))
+		err := Merger.MergeCSV(strings.Split(*merge, " "))
+		if err != nil {
+			panic(err)
+		}
 	}
 	
 	html.GenerateHtml(specs)

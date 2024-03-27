@@ -3,14 +3,13 @@ package Merger
 import (
 	"bufio"
 	"bytes"
-	"log"
 	"os"
 )
 
-func getHeader(filepath string) []byte {
+func getHeader(filepath string) ([]byte, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
-		log.Fatal(err)
+		return []byte{}, err // Propagate error
 	}
 	defer file.Close()
 	
@@ -19,16 +18,16 @@ func getHeader(filepath string) []byte {
 	headerBytes := scanner.Bytes()
 	headerBytes = append(headerBytes, []byte("\n")...)
 	
-	return headerBytes
+	return headerBytes, nil
 }
 
-func readCsvContent(filepath string) []byte {
+func readCsvContent(filepath string) ([]byte, error) {
 	var fileBytes []byte
 
 	// Open file
 	file, err := os.Open(filepath)
 	if err != nil {
-		log.Fatal(err)
+		return fileBytes, err // Propagate error 
 	}
 	defer file.Close()
 	
@@ -40,24 +39,34 @@ func readCsvContent(filepath string) []byte {
 		fileBytes = append(fileBytes, []byte("\n")...) // Add newline between each line in the file, otherwise it's all on one line
 	}
 
-	return fileBytes
+	return fileBytes, nil
 }
 
-func MergeCSV(filepaths []string) {
+func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
 
 	// Add header to buffer
-	buf.Write(getHeader(filepaths[0]))
+	header, err := getHeader(filepaths[0])
+	if err != nil{
+		return err // Propagate error
+	}
+	buf.Write(header)
 
 	// Read file content and add to buffer
 	for _, file := range filepaths {
-		buf.Write(readCsvContent(file))
+		content, err := readCsvContent(file)
+		if err != nil {
+			return err
+		}
+		buf.Write(content)
 	}
 
 	// Write combined files to one file
-	err := os.WriteFile("Merged_file.csv", buf.Bytes(), 0644)
+	err = os.WriteFile("Merged_file.csv", buf.Bytes(), 0644)
 	if err != nil {
-		panic(err)
+		return err
 	}
+	
+	return nil
 }

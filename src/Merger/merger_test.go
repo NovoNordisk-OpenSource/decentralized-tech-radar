@@ -48,7 +48,10 @@ func TestGetHeader(t *testing.T) {
 	createCsvFiles()
 	defer cleanUp()
 	correctHeader := "name,ring,quadrant,isNew,moved,description\n"
-	header := getHeader("testFile1.csv")
+	header, err := getHeader("testFile1.csv")
+	if err != nil {
+		t.Fatalf("getHeader() gave an error: %v", err)
+	}
 	if string(header) != correctHeader {
 		t.Errorf("Header does not match expected:\nGot: %s\nExpected: %s", string(header), correctHeader)
 	}
@@ -62,7 +65,10 @@ func TestReadCsvContent(t *testing.T) {
 Visual Studio Code,Trial,Tool,false,2,An IDE
 Dagger IO,Assess,Tool,true,1,Its a workflow thing
 `
-	readContent := readCsvContent("testFile1.csv")
+	readContent, err := readCsvContent("testFile1.csv")
+	if err != nil {
+		t.Fatalf("readCsvContent() gave an error: %v", err)
+	}
 	if string(readContent) != correctContent {
 		t.Errorf("Read content does not match expected:\nGot:\n\t%s\nExpected:\n\t%s", string(readContent), correctContent)
 	}
@@ -74,10 +80,13 @@ func TestMergeCSV(t *testing.T) {
 	defer cleanUp()
 
 	// Call function
-	MergeCSV(TestFiles)
+	err := MergeCSV(TestFiles)
+	if err != nil {
+		t.Fatalf("MergeCSV gave an error: %v", err)
+	}
 
 	// Check that file exists
-	_, err := os.Stat("Merged_file.csv")
+	_, err = os.Stat("Merged_file.csv")
 	if os.IsNotExist(err) {
 		t.Fatal("Merged_file.csv was not found")
 	}

@@ -22,7 +22,8 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 }
 
 func TestFetchFilesValidArguments(t *testing.T) {
-	//TODO: Maybe this needs to be split into 2 tests
+    defer os.Remove("specfile.txt")
+    defer os.RemoveAll("./cache")
 
 	// dev repo link and create specfile
 	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
@@ -64,8 +65,5 @@ for i := range expected_lines {
         t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
     }
 }
-
-	defer os.Remove("specfile.txt")
-	defer os.RemoveAll("./cache")
 
 }

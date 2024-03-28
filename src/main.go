@@ -43,14 +43,7 @@ func main() {
 	}
 
 	if *file != "" && *fetch == "" {
-		var specs SpecReader.Blips
-		// testing csv reader
-		if *file != "" {
-			specs = SpecReader.ReadCsvSpec(*file)
-		} else {
-			panic("No file was given (oh no)")
-		}
-
+		specs := SpecReader.ReadCsvSpec(*file)
 		html.GenerateHtml(specs)
 	}
 }

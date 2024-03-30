@@ -63,7 +63,7 @@ jobs:
             tar -czvf "${release_name_mac}.tar.gz" ./tech_radar_mac
           
       - name: Release project
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           body_path: changelog.txt
           files: "*.tar.gz"

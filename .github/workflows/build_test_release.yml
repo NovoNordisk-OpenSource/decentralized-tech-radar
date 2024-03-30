@@ -10,6 +10,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Auto Changelog
+        uses: ardalanamini/auto-changelog@v4.0.1
+        id  : changelog
+        with:
+          github-token            : ${{ secrets.GITHUB_TOKEN }}
+          commit-types            : |
+            feat: New Features
+            fix: Bug Fixes
+            build: Build System & Dependencies
+            perf: Performance Improvements
+            docs: Documentation
+            test: Tests
+            refactor: Refactors
+            chore: Chores
+            ci: CI
+            cd: CD
+            style: Code Style
+            revert: Reverts
+      - name: Put changelog into file
+        run: touch changelog.txt && echo "${{steps.changelog.outputs.changelog}}" > changelog.txt && cat changelog.txt
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
@@ -27,23 +47,26 @@ jobs:
       - name: publish project
         shell: bash
         run: |
-          tag=$(git describe --tags --abbrev=0)
-          #linux build
-          release_name_linux="Tech_Radar-$tag-linux"
-
-          tar -czvf "${release_name_linux}.tar.gz" ./tech_radar_lin
-
-          #windows build
-          release_name_win="Tech_Radar-$tag-win"
-          tar -czvf "${release_name_win}.tar.gz" ./tech_radar.exe
-
-          #mac build
-          release_name_mac="Tech_Radar-$tag-mac"
-          tar -czvf "${release_name_mac}.tar.gz" ./tech_radar_mac
-
+            ls -la
+            tag=$(git describe --tags --abbrev=0)
+            #linux build
+            release_name_linux="Tech_Radar-$tag-linux"
+            
+            tar -czvf "${release_name_linux}.tar.gz" ./tech_radar_lin
+            
+            #windows build
+            release_name_win="Tech_Radar-$tag-win"
+            tar -czvf "${release_name_win}.tar.gz" ./tech_radar.exe
+            
+            #mac build
+            release_name_mac="Tech_Radar-$tag-mac"
+            tar -czvf "${release_name_mac}.tar.gz" ./tech_radar_mac
+          
       - name: Release project
         uses: softprops/action-gh-release@v1
         with:
+          body_path: changelog.txt
           files: "*.tar.gz"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            

@@ -20,7 +20,7 @@ func main() {
 
 	if *fetch != "" {
 		fetchArgs := strings.Split(*fetch, " ")
-		if len(fetchArgs) < 3 {
+		if len(fetchArgs) < 3 || len(fetchArgs) % 3 != 0{
 			fmt.Println(string(fetchArgs[0]) + " " + " Incorrect number of arguments for fetch command")
 			os.Exit(1)
 		}

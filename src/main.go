@@ -26,11 +26,11 @@ func main() {
 		}
 
 		// Iterate through command-line arguments after flags
-		for i := 0; i < len(fetchArgs); i++ {
+		// Go by every group of 3 arguments
+		for i := 0; i < len(fetchArgs)-2; i += 3 {
 			// Check for flag and enough arguments
 			repo := Fetcher.Repo{fetchArgs[i], fetchArgs[i+1], fetchArgs[i+2]} // Extract repository details
 			repos = append(repos, repo)
-			i += 2 // Skip to the next potential flag or argument
 		}
 
 		// Call the Fetcher package function to fetch files from all repositories

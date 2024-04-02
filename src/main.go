@@ -5,17 +5,18 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Fetcher"
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Merger"
 	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
 )
 
 func main() {
 	var repos []Fetcher.Repo
-
-	fetch := flag.String("fetch", "", "This command will fetch files from a list of git repos.\n \nHere is an example\n \n go run main.go --fetch \"https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev main ./Fetcher/something.txt https://github.com/JonasSkjodt/CopenhagenBuzz master ./Fetcher/something.txt https://gitlab.com/nagyv-gitlab/gitops-test master ./Fetcher/something.txt\"")
+  
 	file := flag.String("file", "", "This takes a path to a csv file/string")
+	fetch := flag.String("fetch", "", "This command will fetch a file from a git repo")
+	merge := flag.String("merge", "", "This takes paths to files that should be merged (space separated)")
 	flag.Parse()
 
 	if *fetch != "" {
@@ -40,6 +41,14 @@ func main() {
 			os.Exit(1)
 		}
 		os.Exit(0)
+    } 
+	
+
+	if *merge != "" {
+		err := Merger.MergeCSV(strings.Split(*merge, " "))
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	if *file != "" && *fetch == "" {

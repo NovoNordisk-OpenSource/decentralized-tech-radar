@@ -16,7 +16,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.21.x"
+          go-version: '1.21.x'
       - run: go work init ./ci ./src ./test
       - run: cd ./ci && go get dagger.io/dagger@latest && cd ..
       - run: go run ./ci/test_on_push.go

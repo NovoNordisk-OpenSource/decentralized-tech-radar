@@ -130,14 +130,15 @@ func puller(url, branch, specFile string) ([]string, error) {
 	}
 
 	// https://stackoverflow.com/questions/55300117/how-do-i-find-all-files-that-have-a-certain-extension-in-go-regardless-of-depth
-
-	filepath.WalkDir(".", func(s string, d fs.DirEntry, e error) error {
+	// This function recursively walks the directors inside the workdir and checks for csv files
+	// These then get added to the cache later
+	filepath.WalkDir(".", func(str string, dir fs.DirEntry, e error) error {
 		if e != nil {
 			return e
 		}
-		if strings.Split(s, "/")[0] != "cache" {
-			if filepath.Ext(d.Name()) == ".csv" {
-				paths = append(paths, s)
+		if strings.Split(str, "/")[0] != "cache" {
+			if filepath.Ext(dir.Name()) == ".csv" {
+				paths = append(paths, str)
 			}
 		}
 		return nil

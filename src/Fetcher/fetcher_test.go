@@ -1,6 +1,7 @@
 package Fetcher
 
 import (
+	"bufio"
 	"os"
 	"path/filepath"
 	"strings"
@@ -27,8 +28,6 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	defer os.RemoveAll("./cache")
 	defer DotGitDelete()
 
-	//TODO: Maybe this needs to be split into 2 tests
-
 	// dev repo link and create specfile
 	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
 	//TODO: Change this to main once templates folder is on main
@@ -38,17 +37,36 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	specFile := "specfile.txt"
 
 	err := FetchFiles(url, branch, specFile)
-
-	if err != nil {
+  
+  if err != nil {
 		t.Errorf("FetchFiles returned an err %v", err)
 	}
 
 	_, err = os.Stat("./cache/template.csv")
-	if os.IsNotExist(err) {
-		t.Errorf("File wasn't downloaded or wasn't moved correctly: %v", err)
-	}
+if os.IsNotExist(err) {
+    t.Errorf("File wasn't downloaded or wasn't moved correctly: %v", err)
+}
 
-	//TODO: Maybe add a test for contents of CSV file?
+file, err := os.Open("./cache/template.csv")
+if err != nil {
+    t.Errorf("Failed to open template.csv. %v", err.Error())
+}
+scanner := bufio.NewScanner(file)
+
+template_lines := []string{}
+for scanner.Scan() {
+    template_lines = append(template_lines, scanner.Text())
+}
+
+expected_lines := []string{"name,ring,quadrant,isNew,move,description",
+"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
+
+for i := range expected_lines {
+    if !(expected_lines[i] == template_lines[i]) {
+        t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
+    }
 }
 
 func TestListingReposForFetch(t *testing.T) {

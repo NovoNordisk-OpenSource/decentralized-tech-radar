@@ -1,7 +1,6 @@
 package Fetcher
 
 import (
-	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
@@ -28,7 +27,6 @@ func FetchFiles(url, branch, specFile string) error {
 	// Pulls files and returns the paths to said files
 	seenFolders := make(map[string]string)
 	paths, err := puller(url, branch, specFile)
-  fmt.Print(paths)
 	if err != nil {
 		return err
 	}

@@ -68,7 +68,7 @@ for i := range expected_lines {
         t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
     }
 }
-
+}
 func TestListingReposForFetch(t *testing.T) {
 	defer os.RemoveAll("./README.md")
 	defer os.RemoveAll("./TestingTextFile.txt")

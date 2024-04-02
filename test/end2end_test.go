@@ -12,17 +12,17 @@ import (
 // End-to-end test
 func TestEndToEnd(t *testing.T) {
 	// Set up
-	createCsvFile()
-	defer cleanUp()
+	CreateCsvFile()
+	defer CleanUp()
 
 	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName + ".csv")
+	specs := Reader.ReadCsvSpec(testFileName + "1.csv")
 	html.GenerateHtml(specs)
 
 	// Start program using CLI arguments
-	os.Args = []string{"cmd", testFileName + ".csv"}
+	os.Args = []string{"cmd", testFileName + "1.csv"}
 	//Works on Unix and Windows
-	cmd := exec.Command("go", "build", "-C", "../src", "-o", "tech_radar.exe")
+	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
 	_, err := cmd.Output()
 	if err != nil {
 		t.Fatalf("%v", err)

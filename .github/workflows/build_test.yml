@@ -2,10 +2,10 @@ name: Build_Test
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
   build_test:
@@ -20,4 +20,3 @@ jobs:
       - run: go work init ./ci ./src ./test
       - run: cd ./ci && go get dagger.io/dagger@latest && cd ..
       - run: go run ./ci/test_on_push.go
-

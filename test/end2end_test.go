@@ -5,6 +5,8 @@ import (
 	"os/exec"
 	"strings"
 	"testing"
+	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
+	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
 )
 
 // End-to-end test
@@ -12,6 +14,10 @@ func TestEndToEnd(t *testing.T) {
 	// Set up
 	CreateCsvFile()
 	defer CleanUp()
+
+	// Read test file
+	specs := Reader.ReadCsvSpec(testFileName + "1.csv")
+	html.GenerateHtml(specs)
 
 	// Start program using CLI arguments
 	os.Args = []string{"cmd", testFileName + "1.csv"}
@@ -21,7 +27,7 @@ func TestEndToEnd(t *testing.T) {
 	if err != nil {
 		t.Fatalf("%v", err)
 	}
-
+  
 	cmd1 := exec.Command("./tech_radar.exe", "-merge", testFileName+"1.csv"+" "+testFileName+"2.csv")
 	_, err = cmd1.Output()
 	if err != nil {

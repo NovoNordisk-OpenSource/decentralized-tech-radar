@@ -4,10 +4,9 @@ import (
 	"os"
 	"strings"
 	"testing"
-
+	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Merger"
 	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
-	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
 )
 
 // Test Set up
@@ -20,6 +19,14 @@ TestBlip2,Adopt,Tool,false,0,Also a description`
 var csvTestString2 string = `name,ring,quadrant,isNew,moved,description
 TestBlip3,Assess,Language,true,1,This is a description
 TestBlip4,Adopt,Tool,false,0,Also a description`
+// Test Set up
+var csvTestString string = `name,ring,quadrant,isNew,moved,description
+TestBlip1,Assess,Language,true,1,This is a description
+TestBlip2,Adopt,Tool,false,0,Also a description`
+
+// Tests
+// Integration test
+
 
 func check(e error) {
 	if e != nil {
@@ -39,6 +46,7 @@ func CleanUp() {
 	os.Remove(testFileName + "2.csv")
 	os.Remove("index.html")
 	os.Remove("Merged_file.csv")
+	
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
 }
@@ -57,7 +65,7 @@ func AssertIndexHTML(t *testing.T, html string) {
 	}
 	contentStr := string(content)
 
-	//check if content contains exptected string
+	//check if content contains expected string
 	if !strings.Contains(contentStr, html) {
 		t.Errorf("HTML doesn't contain the expected data\nContained:\n%s\nExpected:\n%s", contentStr, html)
 	}
@@ -72,7 +80,7 @@ func TestReaderAndWriter(t *testing.T) {
 
 	// Read test file
 	specs := Reader.ReadCsvSpec(testFileName + "1.csv")
-	view.GenerateHtml(specs)
+	html.GenerateHtml(specs)
 
 	correctHTML := `<html>
 	<head>
@@ -112,7 +120,7 @@ func TestMerger2Reader2Writer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("MergeCSV() gave an error: %v", err)
 	}
-	
+
 	_, err = os.Stat("Merged_file.csv")
 	if os.IsNotExist(err) {
 		t.Fatal("Merged file was not created")
@@ -122,7 +130,7 @@ func TestMerger2Reader2Writer(t *testing.T) {
 	specs := Reader.ReadCsvSpec("Merged_file.csv")
 
 	// Generate html
-	view.GenerateHtml(specs)
+	html.GenerateHtml(specs)
 
 	correctHTML := `<html>
 	<head>

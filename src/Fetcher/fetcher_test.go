@@ -3,6 +3,8 @@ package Fetcher
 import (
 	"bufio"
 	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -22,8 +24,9 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 }
 
 func TestFetchFilesValidArguments(t *testing.T) {
-    defer os.Remove("specfile.txt")
-    defer os.RemoveAll("./cache")
+	defer os.Remove("specfile.txt")
+	defer os.RemoveAll("./cache")
+	defer DotGitDelete()
 
 	// dev repo link and create specfile
 	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
@@ -34,8 +37,8 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	specFile := "specfile.txt"
 
 	err := FetchFiles(url, branch, specFile)
-
-	if err != nil {
+  
+  if err != nil {
 		t.Errorf("FetchFiles returned an err %v", err)
 	}
 
@@ -65,5 +68,69 @@ for i := range expected_lines {
         t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
     }
 }
+}
+func TestListingReposForFetch(t *testing.T) {
+	defer os.RemoveAll("./README.md")
+	defer os.RemoveAll("./TestingTextFile.txt")
+	defer os.RemoveAll("./cache")
+	defer DotGitDelete()
 
+	// Creates a text file named "TestingTextFile.txt" to hold a temporary
+	// list of repo specifications for testing the ListingReposForFetch function
+	textFile, errCreate := os.Create("./TestingTextFile.txt")
+	if errCreate != nil {
+		t.Errorf(errCreate.Error() + " : Couldnt create txt file for testing : TestListingReposForFetch")
+	}
+
+	_, errWrite := textFile.WriteString("/README.md")
+	if errWrite != nil {
+		t.Errorf(errWrite.Error() + " : Couldnt write to txt file for testing : TestListingReposForFetch")
+	}
+
+	url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
+	branch := "main"
+	specFile := "./TestingTextFile.txt"
+
+	url2 := "https://github.com/NovoNordisk-OpenSource/backstage"
+	branch2 := "master"
+	specFile2 := "./TestingTextFile.txt"
+
+	url3 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
+	branch3 := "main"
+	specFile3 := "./TestingTextFile.txt"
+
+	var repos []Repo
+	repo := Repo{url, branch, specFile}
+	repo2 := Repo{url2, branch2, specFile2}
+	repo3 := Repo{url3, branch3, specFile3}
+
+	repos = append(repos, repo, repo2, repo3)
+
+	err := ListingReposForFetch(repos)
+	textFile.Close()
+
+	//check if the error message is as expected.
+	expectedErrorMessage := "failed at fetcher"
+	if err != nil && strings.Contains(err.Error(), expectedErrorMessage) {
+		os.RemoveAll("./TestingTextFile.txt")
+		t.Errorf("Expected an error containing '%s', but got '%s'", expectedErrorMessage, err.Error())
+	}
+
+}
+
+func TestGitDelete(t *testing.T) {
+	// Makes a filepath for the folder
+	dotGitpath := filepath.Join(".", ".git")
+
+	// Makes a folder from the given parameters
+	err := os.MkdirAll(dotGitpath, os.ModePerm)
+	if err != nil {
+		t.Errorf(err.Error() + " : Couldnt make the .git folder")
+	}
+
+	DotGitDelete()
+
+	if _, err := os.Stat("./.git"); !os.IsNotExist(err) {
+		t.Errorf(err.Error() + " : .git still exists")
+	}
 }

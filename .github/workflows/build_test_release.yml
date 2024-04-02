@@ -2,7 +2,7 @@ name: Build_Test_Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   build_test_release:
@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Auto Changelog
         uses: ardalanamini/auto-changelog@v4.0.1
-        id  : changelog
+        id: changelog
         with:
-          github-token            : ${{ secrets.GITHUB_TOKEN }}
-          commit-types            : |
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          commit-types: |
             feat: New Features
             fix: Bug Fixes
             build: Build System & Dependencies
@@ -50,7 +50,7 @@ jobs:
           #mac build
           release_name_mac="Tech_Radar-$tag-mac"
           tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin
-          
+
       - name: Release project
         uses: softprops/action-gh-release@v2
         with:

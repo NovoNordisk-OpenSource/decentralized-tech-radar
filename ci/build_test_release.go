@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-
 	"dagger.io/dagger"
 )
 
@@ -34,13 +33,14 @@ func main() {
 
 	// set the working directory in the container
 	// install application dependencies
-	runner := source.WithWorkdir("/d_src").
+	runner := source.WithWorkdir("/d_src/src").
 		WithExec([]string{"go", "mod", "tidy"})
 
 	// run application tests
 	test := runner.WithWorkdir("/d_src/src").WithExec([]string{"go", "test", "./..."})
+	test = test.WithWorkdir("/d_src/test").WithExec([]string{"go", "test", "./..."})
 	build := test.WithWorkdir("/d_src/src")
-	
+
 	buildDir := test.Directory("/d_src")
 
 	for _, goos := range geese {

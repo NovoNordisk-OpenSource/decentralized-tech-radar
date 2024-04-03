@@ -3,7 +3,10 @@ package Merger
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"os"
+
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Verifier"
 )
 
 func getHeader(filepath string) ([]byte, error) {
@@ -45,6 +48,13 @@ func readCsvContent(filepath string) ([]byte, error) {
 func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
+
+	// Run verifier on files
+
+	err := Verifier.Verifier(filepaths...)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	// Add header to buffer
 	header, err := getHeader(filepaths[0])

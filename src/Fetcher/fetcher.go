@@ -1,12 +1,15 @@
 package Fetcher
 
 import (
+	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Verifier"
 )
 
 type Repo struct {
@@ -32,6 +35,7 @@ func FetchFiles(url, branch, specFile string) error {
 	}
 
 	for _, path := range paths {
+	
     var fileName []string 
     if runtime.GOOS == "windows" {
       fileName = strings.Split(path, "\\")
@@ -42,7 +46,16 @@ func FetchFiles(url, branch, specFile string) error {
 		if _, ok := seenFolders[fileName[0]]; !ok {
 			seenFolders[fileName[0]] = ""
 		}
+
+		file := "cache/"+fileName[len(fileName)-1]
+		
 		os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
+
+		// Runs verifier on downloaded file to remove duplicates and ensure data integrity
+		err := Verifier.Verifier(file)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 	}
 
 	for folder, _ := range seenFolders {
@@ -134,7 +147,8 @@ func puller(url, branch, specFile string) ([]string, error) {
 		if e != nil {
 			return e
 		}
-		if strings.Split(str, "/")[0] != "cache" {
+		path_seg := strings.Split(str, "/")
+		if path_seg[0] != "cache" {
 			if filepath.Ext(dir.Name()) == ".csv" {
 				paths = append(paths, str)
 			}

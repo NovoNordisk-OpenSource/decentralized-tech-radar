@@ -4,8 +4,8 @@
 
 # The script will take the following arguments:
 # 1. The URL of the remote repository(s)
-# 2. The name of the branch to fetch the csv file from
-# 3. The name of the specfile to use as a whitelist
+# 2. The name of the branch to fetch the csv file from (defaults to main)
+# 3. The name of the specfile to use as a whitelist (defaults to root whitelisted specfile)
 
 URL=$1
 Branch=$2
@@ -17,10 +17,21 @@ if [ -z "$URL" ]; then
     exit 1
 fi
 
+if [ -z "$Branch" ]; then
+    Branch="main"
+fi
+
+
 # Converts the URL to an array
 strarr=($URL)
 
 cd ../src
+
+if [ -z "$Specfile" ]; then
+    touch specfile.txt
+    cat "/" > specfile.txt
+    Specfile="specfile.txt"
+fi
 
 # Incrementer 
 i=0

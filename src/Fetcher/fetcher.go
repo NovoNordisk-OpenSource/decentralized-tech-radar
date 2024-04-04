@@ -9,12 +9,6 @@ import (
 	"strings"
 )
 
-type Repo struct {
-	URL      string
-	Branch   string
-	SpecFile string
-}
-
 func FetchFiles(url, branch, specFile string) error {
 	defer DotGitDelete()
 

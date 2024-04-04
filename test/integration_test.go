@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
+	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
+	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 // Tests

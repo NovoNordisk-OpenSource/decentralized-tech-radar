@@ -1,4 +1,4 @@
-module github.com/Agile-Arch-Angels/decentralized-tech-radar_dev
+module github.com/NovoNordisk-OpenSource/decentralized-tech-radar
 
 go 1.21.0
 

@@ -28,7 +28,7 @@ func cleanUp() {
 	os.Remove("testFile2.csv")
 }
 
-func TestVerifierFunctionMerger(t *testing.T) {
+func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 	createCsvFiles()
 	defer cleanUp()
 

@@ -1,9 +1,10 @@
 package main
 
-import  (
+import (
 	"flag"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
-	view "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/View"
+
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/src/SpecReader"
+	view "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/src/View"
 )
 
 func main() {
@@ -17,6 +18,6 @@ func main() {
 	} else {
 		panic("No file was given (oh no)")
 	}
-	
+
 	view.GenerateHtml(specs)
 }

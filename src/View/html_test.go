@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
+	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/src/SpecReader"
 )
 
 func TestGenerateHtml(t *testing.T) {
@@ -37,11 +37,11 @@ func TestGenerateHtml(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Could not read the generated HTML file: %v", err)
 	}
-	
+
 	//convert content to string and check if contains the test data
 	contentStr := string(content)
 	if !strings.Contains(contentStr, "Test name") ||
-	!strings.Contains(contentStr, "Test quadrant") {
+		!strings.Contains(contentStr, "Test quadrant") {
 		t.Errorf("HTML doesn't contain the expected data.")
 	}
 

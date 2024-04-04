@@ -1,10 +1,11 @@
 package view
 
 import (
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/src/SpecReader"
 	"html/template"
 	"log"
 	"os"
+
+	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/src/SpecReader"
 )
 
 var htmlFileName string = "index"
@@ -38,7 +39,7 @@ func GenerateHtml(blips Reader.Blips) {
 
 	// Open index.html for writing (create if it doesn't exist)
 	os.Remove(htmlFileName + ".html")
-	file, err := os.OpenFile(htmlFileName + ".html", os.O_WRONLY|os.O_CREATE, 0644) // 0644 grants the owner read and write access
+	file, err := os.OpenFile(htmlFileName+".html", os.O_WRONLY|os.O_CREATE, 0644) // 0644 grants the owner read and write access
 	if err != nil {
 		panic(err)
 	}

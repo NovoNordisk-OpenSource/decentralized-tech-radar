@@ -60,13 +60,13 @@ func Verifier (filepaths ... string) error {
 		
 		if set[name] != nil {
 			// Skips the name + first comma and does the same forward search for next comma
-			ring := line[len(name):strings.IndexByte(line, ',')]
+			ring := line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1]
 			if !slices.Contains(set[name], ring) {
-				set[name] = append(set[name],line[len(name):strings.IndexByte(line, ',')])
+				set[name] = append(set[name],ring)
 				tempfile.WriteString(line+"\n")	
 			}
 		} else {
-			set[name] = append(set[name],line[len(name):strings.IndexByte(line, ',')])
+			set[name] = append(set[name],line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1])
 			tempfile.WriteString(line+"\n")
 		}
 	}

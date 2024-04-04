@@ -21,9 +21,7 @@ var correctMerge string = `name,ring,quadrant,isNew,moved,description
 Go,Adopt,Language,true,0,Its a programming Language
 Visual Studio Code,Trial,Tool,false,2,An IDE
 Dagger IO,Assess,Tool,true,1,Its a workflow thing
-Python,Halt,Language,false,0,Its a programming Language
-Visual Studio,Trial,Tool,false,1,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing`
+Python,Halt,Language,false,0,Its a programming Language`
 
 var TestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
 

@@ -25,7 +25,7 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 
 func TestFetchFilesValidArguments(t *testing.T) {
 	defer os.Remove("specfile.txt")
-	defer os.RemoveAll("./cache")
+	defer os.RemoveAll("./cache/")
 	defer DotGitDelete()
 
 	// dev repo link and create specfile
@@ -43,38 +43,40 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	}
 
 	_, err = os.Stat("./cache/template.csv")
-if os.IsNotExist(err) {
-    t.Errorf("File wasn't downloaded or wasn't moved correctly: %v", err)
-}
+	if os.IsNotExist(err) {
+		t.Errorf("File wasn't downloaded or wasn't moved correctly: %v", err)
+	}
 
-file, err := os.Open("./cache/template.csv")
-if err != nil {
-    t.Errorf("Failed to open template.csv. %v", err.Error())
-}
-scanner := bufio.NewScanner(file)
+	file, err := os.Open("./cache/template.csv")
+	if err != nil {
+		t.Errorf("Failed to open template.csv. %v", err.Error())
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
 
-template_lines := []string{}
-for scanner.Scan() {
-    template_lines = append(template_lines, scanner.Text())
-}
+	template_lines := []string{}
+	for scanner.Scan() {
+		template_lines = append(template_lines, scanner.Text())
+	}
 
-expected_lines := []string{"name,ring,quadrant,isNew,move,description",
-"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
+	expected_lines := []string{"name,ring,quadrant,isNew,move,description",
+	"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+	"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+	"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
 
-for i := range expected_lines {
-    if !(expected_lines[i] == template_lines[i]) {
-        t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
-    }
-}
+	for i := range expected_lines {
+		if !(expected_lines[i] == template_lines[i]) {
+			t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
+		}
+	}
 }
 func TestListingReposForFetch(t *testing.T) {
 	defer os.RemoveAll("./README.md")
 	defer os.RemoveAll("./TestingTextFile.txt")
-	defer os.RemoveAll("./cache")
+	defer os.RemoveAll("./cache/")
+	//syscall.Rmdir(dirName)
 	defer DotGitDelete()
-
+	
 	// Creates a text file named "TestingTextFile.txt" to hold a temporary
 	// list of repo specifications for testing the ListingReposForFetch function
 	textFile, errCreate := os.Create("./TestingTextFile.txt")
@@ -91,22 +93,18 @@ func TestListingReposForFetch(t *testing.T) {
 	branch := "main"
 	specFile := "./TestingTextFile.txt"
 
-	url2 := "https://github.com/NovoNordisk-OpenSource/backstage"
-	branch2 := "master"
+	url2 := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev"
+	branch2 := "main"
 	specFile2 := "./TestingTextFile.txt"
 
 	url3 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
 	branch3 := "main"
 	specFile3 := "./TestingTextFile.txt"
 
-	var repos []Repo
-	repo := Repo{url, branch, specFile}
-	repo2 := Repo{url2, branch2, specFile2}
-	repo3 := Repo{url3, branch3, specFile3}
-
-	repos = append(repos, repo, repo2, repo3)
+	repos := []string {url, branch, specFile, url2, branch2, specFile2, url3, branch3, specFile3}
 
 	err := ListingReposForFetch(repos)
+
 	textFile.Close()
 
 	//check if the error message is as expected.

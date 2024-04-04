@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Fetcher"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Merger"
-	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Fetcher"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
+	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
 )
 
 func main() {

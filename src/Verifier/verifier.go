@@ -2,7 +2,6 @@ package Verifier
 
 import (
 	"bufio"
-	"errors"
 	"os"
 	"slices"
 	"strings"

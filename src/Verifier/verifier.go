@@ -9,10 +9,24 @@ import (
 )
 
 // This is for alternative names for blips e.g. CSharp, CS, C# all should be counted as C#)
-var alt_names = make(map[string]string)
+// var alt_names_str = `Go;golang,go-lang
+// 					C++;cpp
+// 					C#;csharp,cs
+// 					Python;python3,py
+// 					`
 
-//TODO: Add ... param argument for filepath instead to allow for multiple CSV files to be checked in one go
+
 func Verifier (filepaths ... string) error {
+
+	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
+	// Or just use a baked in str read line by line or combination
+	//os.Stat("./Dictionary/alt_names.txt")
+
+	alt_names := make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+	alt_names["python3"] = "Python"
+
+
+
 	// Map functions as a set (name -> ring)
 	set := make(map[string][]string)
 
@@ -54,14 +68,16 @@ func Verifier (filepaths ... string) error {
 			return errors.New("No comma was found format of csv file is wrong: triggered by line -> "+line)
 		}
 
+		real_name := name
 		if alt_names[name] != "" {
 			name = alt_names[name]
 		}
-		
+
 		if set[name] != nil {
 			// Skips the name + first comma and does the same forward search for next comma
-			ring := line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1]
-			if !slices.Contains(set[name], ring) {
+			ring := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
+			if !(slices.Contains(set[name], ring)) {
+				//print(set[name][0],ring)
 				set[name] = append(set[name],ring)
 				tempfile.WriteString(line+"\n")	
 			}

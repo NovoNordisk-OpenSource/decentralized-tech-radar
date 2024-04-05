@@ -16,7 +16,7 @@ var mergeCmd = &cobra.Command{
 	Short: "This command merges one or more CSV-files into one.",
 	Long: `This command reads data from each provided CSV-file and writes the data into a singular file in the order given as arguments.
 	
-<> are mandatory inputs, whereas [] are optional inputs.
+<> are mandatory arguments, whereas [] are optional arguments.
 Example of a <FilePath>: 'C://Program/MyCSVFile.csv'.
 Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile1.csv'`,
 	Args: cobra.MinimumNArgs(2),

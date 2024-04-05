@@ -6,27 +6,32 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 	"github.com/spf13/cobra"
 )
 
 // mergeCmd represents the merge command
 var mergeCmd = &cobra.Command{
-	Use:   "merge",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "merge \"<FilePath1> <FilePath2> [FilePath3, ...]\"",
+	Short: "This command merges one or more CSV-files into one.",
+	Long: `This command reads data from each provided CSV-file and writes the data into a singular file in the order given as arguments.
+	
+<> are mandatory inputs, whereas [] are optional inputs.
+Example of a <FilePath>: 'C://Program/MyCSVFile.csv'.
+Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile1.csv'`,
+	Args: cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) < 2 {
+			panic("Not enough arguments have been provided.")
+		}
+		Merger.MergeCSV(args)
 		fmt.Println("merge called")
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(mergeCmd)
-
+	//Have kept this for future reference to make the --cache command.
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

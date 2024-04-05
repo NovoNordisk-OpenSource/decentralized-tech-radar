@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Verifier"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
 type Repo struct {

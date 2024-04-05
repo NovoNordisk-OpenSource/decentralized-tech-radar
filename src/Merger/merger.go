@@ -5,8 +5,8 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Verifier"
+	
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
 func getHeader(filepath string) ([]byte, error) {

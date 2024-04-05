@@ -12,12 +12,12 @@ Go,Adopt,Language,true,0,Its a programming Language
 Visual Studio Code,Trial,Tool,false,2,An IDE
 Dagger IO,Assess,Tool,true,1,Its a workflow thing`
 
-func createCsvFiles() {
-	err := os.WriteFile("testFile1.csv", []byte(csvfile1), 0644)
+func createCsvFiles(csvfile string) {
+	err := os.WriteFile("testFile1.csv", []byte(csvfile), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = os.WriteFile("testFile2.csv", []byte(csvfile1), 0644)
+	err = os.WriteFile("testFile2.csv", []byte(csvfile), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,7 +29,7 @@ func cleanUp() {
 }
 
 func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
-	createCsvFiles()
+	createCsvFiles(csvfile1)
 	defer cleanUp()
 
 	Verifier("./testFile1.csv", "./testFile2.csv")

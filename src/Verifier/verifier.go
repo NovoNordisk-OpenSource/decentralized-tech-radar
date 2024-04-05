@@ -64,13 +64,15 @@ func Verifier (filepaths ... string) error {
 
 		// Faster than splitting
 		name := line[:strings.IndexByte(line, ',')]
-		if name == "" {
-			return errors.New("No comma was found format of csv file is wrong: triggered by line -> "+line)
-		}
+		//TODO: figure out a way to verify CSV integrity
+		// if !(len(name) < len(line)) {
+		// 	return errors.New("No comma was found format of csv file is wrong: triggered by line -> "+line)
+		// }
 
 		real_name := name
 		if alt_names[name] != "" {
-			name = alt_names[name]
+			//TODO: Figure out how to handle numbers in names
+			name = alt_names[strings.ToLower(name)]
 		}
 
 		if set[name] != nil {

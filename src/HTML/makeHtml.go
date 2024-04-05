@@ -18,17 +18,16 @@ func GenerateHtml(blips Reader.Blips) {
 		<h1 class="pageTitle">Header 1</h1>
 		<ul>
 			{{range .Blips}}
-					<li>Name: {{.Name}}</li>
-					<li>Quadrant: {{.Quadrant}}</li>
-					<li>Ring: {{.Ring}}</li>
-					<li>Is new: {{.IsNew}}</li>
-					<li>Moved: {{.Moved}}</li>
-					<li>Desc: {{.Description}}</li>
+			<li>Name: {{.Name}}</li>
+			<li>Quadrant: {{.Quadrant}}</li>
+			<li>Ring: {{.Ring}}</li>
+			<li>Is new: {{.IsNew}}</li>
+			<li>Moved: {{.Moved}}</li>
+			<li>Desc: {{.Description}}</li>
 			{{end}}
 		</ul>
 	</body>
-</html>
-	`
+</html>`
 
 	// Make and parse the HTML template
 	t, err := template.New(htmlFileName).Parse(tmpl)

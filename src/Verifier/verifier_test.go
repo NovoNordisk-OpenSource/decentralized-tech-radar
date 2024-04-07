@@ -52,3 +52,31 @@ func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \n Actual: %s",csv2)
 	}
 }
+
+var csvfile2 string = `name,ring,quadrant,isNew,moved,description
+Go;Adopt?Language:true:0_Its a programming Language
+Visual Studio Code:Trial^Tool:false;2:An IDE
+Dagger IO;Assess*Tool+true?1_Its a workflow thing`
+
+func TestCSVWrongFormatError(t *testing.T) {
+	createCsvFiles(csvfile2)
+	defer cleanUp()
+
+	err := Verifier("./testFile1.csv")
+
+	if err == nil {
+		t.Fatalf("Expected error but got nil")
+	}
+
+	os.Open("testFile1.csv")
+
+	csv1, err := os.ReadFile("./testFile1.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	
+	if string(csv1) != "name,ring,quadrant,isNew,moved,description\n" {
+		t.Fatalf("csvFile1 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \n Actual: %s",csv1)
+	} 
+
+} 

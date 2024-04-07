@@ -2,6 +2,7 @@ package Verifier
 
 import (
 	"bufio"
+	"errors"
 	"os"
 	"slices"
 	"strings"
@@ -62,11 +63,18 @@ func Verifier (filepaths ... string) error {
 		}
 
 		// Faster than splitting
-		name := line[:strings.IndexByte(line, ',')]
-		//TODO: figure out a way to verify CSV integrity
-		// if !(len(name) < len(line)) {
-		// 	return errors.New("No comma was found format of csv file is wrong: triggered by line -> "+line)
-		// }
+		// Panic handler 
+		name := ""
+		index := strings.IndexByte(line, ',')
+		if index != -1 {
+		name = line[:index]
+		} 
+		
+		//TODO: Change these to be variable names later if we extend the program with custom ring names
+		if strings.Contains(name,"Hold") || strings.Contains(name,"Adopt") || strings.Contains(name,"Assess") || strings.Contains(name, "Trail") || name == "" {
+			os.Rename("tempfile.csv", filepath)
+			return errors.New("No comma was found format of csv file is wrong: triggered by line -> "+line)
+		}
 
 		real_name := name
 		if alt_names[name] != "" {
@@ -88,7 +96,6 @@ func Verifier (filepaths ... string) error {
 		}
 	}
 	// Overwrite filepath with tempfile (has the removed changes)
-	
 	os.Rename("tempfile.csv", filepath)
 	}
 return nil

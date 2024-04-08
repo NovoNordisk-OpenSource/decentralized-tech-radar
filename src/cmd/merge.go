@@ -24,11 +24,12 @@ Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile
 		if len(args) < 2 {
 			panic("Not enough arguments have been provided.")
 		}
-		if cmd.Flags().Changed("cache") {
-			fmt.Println("cache is set")
+		useCache, _ := cmd.Flags().GetBool("cache")
+		if useCache {
+			fmt.Println("cache is set.")
 		} else {
 			Merger.MergeCSV(args)
-			fmt.Println("merge called")
+			fmt.Println("merge called.")
 		}
 	},
 }

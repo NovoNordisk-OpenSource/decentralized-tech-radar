@@ -57,9 +57,9 @@ func Verifier (filepaths ... string) error {
 			panic(err)
 		}
 
-		defer file.Close()
-		defer tempfile.Close()
 		defer os.RemoveAll(tempfile.Name())
+		defer tempfile.Close()
+		defer file.Close()
 
 		scanner := bufio.NewScanner(file)
 		

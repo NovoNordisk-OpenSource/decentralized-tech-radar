@@ -78,6 +78,14 @@ func Verifier (filepaths ... string) error {
 		if line == "" {
 			break
 		}
+		
+		check, err := checkDataLine(line)
+		if err != nil {
+			return err
+		}
+		if !check {
+			return errors.New(filepath + " contains invalid data: " + scanner.Text())
+		}
 
 		// Faster than splitting
 		// Panic handler 
@@ -86,11 +94,6 @@ func Verifier (filepaths ... string) error {
 		if index != -1 {
 		name = line[:index]
 		} 
-		
-		//TODO: Change these to be variable names later if we extend the program with custom ring names
-		if strings.Contains(name,"Hold") || strings.Contains(name,"Adopt") || strings.Contains(name,"Assess") || strings.Contains(name, "Trial") || name == "" {
-			return errors.New("No comma was found format of csv file is wrong: \ntriggered by line -> "+line +"\n in file -> "+filepath)
-		}
 
 		duplicateRemoval(filepath, name, line, tempfile)
 		

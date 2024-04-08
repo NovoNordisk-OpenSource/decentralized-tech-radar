@@ -71,7 +71,7 @@ func Verifier (filepaths ... string) error {
 		} 
 		
 		//TODO: Change these to be variable names later if we extend the program with custom ring names
-		if strings.Contains(name,"Hold") || strings.Contains(name,"Adopt") || strings.Contains(name,"Assess") || strings.Contains(name, "Trail") || name == "" {
+		if strings.Contains(name,"Hold") || strings.Contains(name,"Adopt") || strings.Contains(name,"Assess") || strings.Contains(name, "Trial") || name == "" {
 			os.Rename("tempfile.csv", filepath)
 			return errors.New("No comma was found format of csv file is wrong: triggered by line -> "+line)
 		}

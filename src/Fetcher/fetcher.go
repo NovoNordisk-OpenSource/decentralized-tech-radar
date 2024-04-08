@@ -47,14 +47,15 @@ func FetchFiles(url, branch, specFile string) error {
 			seenFolders[fileName[0]] = ""
 		}
 
-		file := "cache/"+fileName[len(fileName)-1]
 		
 		os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
-
+		
 		// Runs verifier on downloaded file to remove duplicates and ensure data integrity
+		
+		file := "./cache/"+fileName[len(fileName)-1]
 		err := Verifier.Verifier(file)
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Printf("File has problems not correctly formatted CSV file: "+file +"\ncontinuing to next file")
 		}
 	}
 

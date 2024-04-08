@@ -983,7 +983,7 @@ footer p {
 }
 
 .search-container__input {
-    background: #edf1f3 url(images/search-active-wave.svg) no-repeat 98%;
+    background: #edf1f3 url(../images/search-active-wave.svg) no-repeat 98%;
     color: #163c4d;
     font-family: Inter,sans-serif;
     height: 48px;

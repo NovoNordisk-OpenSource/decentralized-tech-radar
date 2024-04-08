@@ -75,7 +75,7 @@ define([
 
   const plotRadarGraph = function (blips, currentRadarName) {
     // document.title = title.replace(/.(csv)$/, '')
-    document.title = "Something"
+    document.title = "Novo Nordisk Tech Radar"
 
     const ringMap = graphConfig.rings.reduce((allRings, ring, index) => {
       allRings[ring] = new Ring(ring, index)

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"regexp"
 	"slices"
 	"strings"
 )
@@ -20,6 +21,27 @@ import (
 func checkHeader(header string) bool {
 	correctHeader := "name,ring,quadrant,isNew,moved,description"
 	return header == correctHeader
+}
+
+// Creates the regex pattern string with the names on the rings
+func createRegexPattern(ring1, ring2, ring3, ring4 string) string {
+	regexPattern := fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),[0123],(([^,\n])([^,\n])*)",
+								strings.ToUpper(ring1[:1]), strings.ToLower(ring1[1:]), strings.ToUpper(ring2[:1]), strings.ToLower(ring2[1:]), 
+								strings.ToUpper(ring3[:1]), strings.ToLower(ring3[1:]), strings.ToUpper(ring4[:1]), strings.ToLower(ring4[1:]))
+	return regexPattern
+}
+
+// Checks that the given string matches the correct 
+// format for data in a specfile
+func checkDataLine(data string) (bool, error) {
+	pattern := createRegexPattern("hold", "assess", "trial", "adopt")
+	
+	match, err := regexp.MatchString(pattern, data)
+	if err != nil {
+		return false, err
+	}
+
+	return match, nil
 }
 
 func Verifier (filepaths ... string) error {

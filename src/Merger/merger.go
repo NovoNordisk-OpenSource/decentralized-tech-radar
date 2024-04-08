@@ -3,7 +3,6 @@ package Merger
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"os"
 	
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
@@ -53,7 +52,7 @@ func MergeCSV(filepaths []string) error {
 
 	err := Verifier.Verifier(filepaths...)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	// Add header to buffer

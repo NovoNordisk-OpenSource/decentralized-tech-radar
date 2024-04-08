@@ -1,10 +1,11 @@
 package HTML
 
 import (
-	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 	"html/template"
 	"log"
 	"os"
+
+	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 var htmlFileName string = "index"
@@ -22,6 +23,7 @@ func GenerateHtml(blips Reader.Blips) {
 	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" integrity="sha512-byor" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="../src/js/stylesheets/style.css" rel="stylesheet"/>
 	<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet" />
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -83,7 +85,7 @@ func GenerateHtml(blips Reader.Blips) {
 
 	// Open index.html for writing (create if it doesn't exist)
 	os.Remove(htmlFileName + ".html")
-	file, err := os.OpenFile(htmlFileName + ".html", os.O_WRONLY|os.O_CREATE, 0644) // 0644 grants the owner read and write access
+	file, err := os.OpenFile(htmlFileName+".html", os.O_WRONLY|os.O_CREATE, 0644) // 0644 grants the owner read and write access
 	if err != nil {
 		panic(err)
 	}

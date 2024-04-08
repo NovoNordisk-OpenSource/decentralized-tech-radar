@@ -112,7 +112,6 @@
     margin: 0;
   }
 
-  @if $UIRefresh2022 {
     .d3-tip {
       font-size: 12px;
       display: block;
@@ -152,5 +151,5 @@
       left: 0;
       text-align: center;
     }
-  }
+  
 }

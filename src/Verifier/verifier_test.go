@@ -1,6 +1,7 @@
 package Verifier
 
 import (
+	"bufio"
 	"log"
 	"os"
 	"strings"
@@ -26,6 +27,7 @@ func createCsvFiles(csvfile string) {
 func cleanUp() {
 	os.Remove("testFile1.csv")
 	os.Remove("testFile2.csv")
+	os.Remove("tempfile.csv")
 }
 
 func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
@@ -67,4 +69,23 @@ func TestCSVWrongFormatError(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected error but got nil")
 	}
-} 
+}
+
+func TestCheckHeaderCorrectHeader(t *testing.T) {
+	createCsvFiles(csvfile1)
+	defer cleanUp()
+
+	file, err := os.Open("./testFile1.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Scan()
+
+	value := checkHeader(scanner.Text())
+	if !value {
+		t.Errorf("checkHeader returned the wrong value\n\tGot: %t\n\tExpected: %t", value, true)
+	}
+}

@@ -3,6 +3,7 @@ package Verifier
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"os"
 	"slices"
 	"strings"
@@ -15,6 +16,11 @@ import (
 // 					Python;python3,py
 // 					`
 
+// Checks that the given string matches the defined header of the specfile
+func checkHeader(header string) bool {
+	correctHeader := "name,ring,quadrant,isNew,moved,description"
+	return header == correctHeader
+}
 
 func Verifier (filepaths ... string) error {
 	for _, filepath := range filepaths {

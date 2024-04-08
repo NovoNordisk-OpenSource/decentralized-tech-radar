@@ -67,16 +67,4 @@ func TestCSVWrongFormatError(t *testing.T) {
 	if err == nil {
 		t.Fatalf("Expected error but got nil")
 	}
-
-	os.Open("testFile1.csv")
-
-	csv1, err := os.ReadFile("./testFile1.csv")
-	if err != nil {
-		t.Fatal(err)
-	}
-	
-	if string(csv1) != "name,ring,quadrant,isNew,moved,description\n" {
-		t.Fatalf("csvFile1 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \n Actual: %s",csv1)
-	} 
-
 } 

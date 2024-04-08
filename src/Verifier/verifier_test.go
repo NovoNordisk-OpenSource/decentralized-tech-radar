@@ -89,3 +89,26 @@ func TestCheckHeaderCorrectHeader(t *testing.T) {
 		t.Errorf("checkHeader returned the wrong value\n\tGot: %t\n\tExpected: %t", value, true)
 	}
 }
+
+func TestCheckDatalineCorrectData(t *testing.T) {
+	createCsvFiles(csvfile1)
+	defer cleanUp()
+
+	file, err := os.Open("./testFile1.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Scan() // skip header
+	scanner.Scan()
+
+	value, err := checkDataLine(scanner.Text())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !value {
+		t.Errorf("checkDataline returned the wrong value\n\tGot: %t\n\tExpected: %t", value, true)
+	}
+}

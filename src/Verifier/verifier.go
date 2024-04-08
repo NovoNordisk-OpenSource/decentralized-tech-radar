@@ -46,59 +46,58 @@ func checkDataLine(data string) (bool, error) {
 
 func Verifier (filepaths ... string) error {
 	for _, filepath := range filepaths {
-	
-	file, err := os.Open(filepath)
-	if err != nil {
-		panic(err)
-	}
-
-	// Create temp file to overwrite primary file
-	tempfile, err := os.Create("tempfile.csv")
-	if err != nil {
-		panic(err)
-	}
-
-	defer file.Close()
-	defer tempfile.Close()
-	defer os.RemoveAll(tempfile.Name())
-
-	scanner := bufio.NewScanner(file)
-	
-	//TODO: Check if header matches (this will be another branch) for now it will just eat the first line
-	scanner.Scan()
-	if !checkHeader(scanner.Text()) {
-		return errors.New("The header of " + filepath + " is not correct.\n\tCorrect header: name,ring,quadrant,isNew,moved,description\n\tHeader of "+ filepath + ": " + scanner.Text())
-	}
-	tempfile.WriteString(scanner.Text()+"\n")
-	
-	// https://stackoverflow.com/questions/44073754/how-to-slice-string-till-particular-character-in-go
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		if line == "" {
-			break
-		}
-		
-		check, err := checkDataLine(line)
+		file, err := os.Open(filepath)
 		if err != nil {
-			return err
-		}
-		if !check {
-			return errors.New(filepath + " contains invalid data: " + scanner.Text())
+			panic(err)
 		}
 
-		// Faster than splitting
-		// Panic handler 
-		name := ""
-		index := strings.IndexByte(line, ',')
-		if index != -1 {
-		name = line[:index]
-		} 
+		// Create temp file to overwrite primary file
+		tempfile, err := os.Create("tempfile.csv")
+		if err != nil {
+			panic(err)
+		}
 
-		duplicateRemoval(filepath, name, line, tempfile)
+		defer file.Close()
+		defer tempfile.Close()
+		defer os.RemoveAll(tempfile.Name())
+
+		scanner := bufio.NewScanner(file)
 		
+		//TODO: Check if header matches (this will be another branch) for now it will just eat the first line
+		scanner.Scan()
+		if !checkHeader(scanner.Text()) {
+			return errors.New("The header of " + filepath + " is not correct.\n\tCorrect header: name,ring,quadrant,isNew,moved,description\n\tHeader of "+ filepath + ": " + scanner.Text())
+		}
+		tempfile.WriteString(scanner.Text()+"\n")
+		
+		// https://stackoverflow.com/questions/44073754/how-to-slice-string-till-particular-character-in-go
+		for scanner.Scan() {
+			line := scanner.Text()
+
+			if line == "" {
+				break
+			}
+			
+			check, err := checkDataLine(line)
+			if err != nil {
+				return err
+			}
+			if !check {
+				return errors.New(filepath + " contains invalid data: " + scanner.Text())
+			}
+
+			// Faster than splitting
+			// Panic handler 
+			name := ""
+			index := strings.IndexByte(line, ',')
+			if index != -1 {
+				name = line[:index]
+			} 
+
+			duplicateRemoval(filepath, name, line, tempfile)
+			
+		}
 	}
-}
 return nil
 }
 

@@ -66,6 +66,9 @@ func Verifier (filepaths ... string) error {
 	
 	//TODO: Check if header matches (this will be another branch) for now it will just eat the first line
 	scanner.Scan()
+	if !checkHeader(scanner.Text()) {
+		return errors.New("The header of " + filepath + " is not correct.\n\tCorrect header: name,ring,quadrant,isNew,moved,description\n\tHeader of "+ filepath + ": " + scanner.Text())
+	}
 	tempfile.WriteString(scanner.Text()+"\n")
 	
 	// https://stackoverflow.com/questions/44073754/how-to-slice-string-till-particular-character-in-go

@@ -3,7 +3,10 @@ package Merger
 import (
 	"bufio"
 	"bytes"
+	"errors"
+	"fmt"
 	"os"
+	"path/filepath"
 )
 
 func getHeader(filepath string) ([]byte, error) {
@@ -12,12 +15,12 @@ func getHeader(filepath string) ([]byte, error) {
 		return []byte{}, err // Propagate error
 	}
 	defer file.Close()
-	
+
 	scanner := bufio.NewScanner(file)
 	scanner.Scan()
 	headerBytes := scanner.Bytes()
 	headerBytes = append(headerBytes, []byte("\n")...)
-	
+
 	return headerBytes, nil
 }
 
@@ -27,10 +30,10 @@ func readCsvContent(filepath string) ([]byte, error) {
 	// Open file
 	file, err := os.Open(filepath)
 	if err != nil {
-		return fileBytes, err // Propagate error 
+		return fileBytes, err // Propagate error
 	}
 	defer file.Close()
-	
+
 	// Read file line by line, skipping first line
 	scanner := bufio.NewScanner(file)
 	scanner.Scan()
@@ -42,13 +45,42 @@ func readCsvContent(filepath string) ([]byte, error) {
 	return fileBytes, nil
 }
 
+func MergeFromFolder(folderPath string) error {
+	_, err := os.Stat(folderPath)
+	if os.IsNotExist(err) {
+		return errors.New("Folder does not exist or could not be found. \nError: " + err.Error())
+	} else if err != nil {
+		return err
+	}
+
+	cachedRepos, err := os.ReadDir(folderPath)
+	if err != nil {
+		return err
+	}
+
+	var cachePaths []string
+	for _, repo := range cachedRepos {
+		if filepath.Ext(repo.Name()) == ".csv" {
+			cachePaths = append(cachePaths, filepath.Join(folderPath, repo.Name()))
+		}
+	}
+
+	if len(cachePaths) == 0 {
+		fmt.Println("There are currently no files in the cache.")
+	}
+
+	MergeCSV(cachePaths)
+
+	return nil
+}
+
 func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
 
 	// Add header to buffer
 	header, err := getHeader(filepaths[0])
-	if err != nil{
+	if err != nil {
 		return err // Propagate error
 	}
 	buf.Write(header)
@@ -67,6 +99,6 @@ func MergeCSV(filepaths []string) error {
 	if err != nil {
 		return err
 	}
-	
+
 	return nil
 }

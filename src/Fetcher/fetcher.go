@@ -1,15 +1,12 @@
 package Fetcher
 
 import (
-	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
-
-	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 )
 
 type Repo struct {
@@ -55,38 +52,11 @@ func FetchFiles(url, branch, specFile string) error {
 	return nil
 }
 
-func FetchFilesFromCache() error {
-	cacheDir := "./cache"
-	cachedRepos, err := os.ReadDir("./cache")
-	if err != nil {
-		return err
-	}
-
-	var cachePaths []string
-	for _, repo := range cachedRepos {
-		if filepath.Ext(repo.Name()) == ".csv" {
-			cachePaths = append(cachePaths, filepath.Join(cacheDir, repo.Name()))
-		}
-	}
-
-	if len(cachePaths) == 0 {
-		fmt.Println("There are currently no files in the cache.")
-	}
-
-	Merger.MergeCSV(cachePaths)
-
-	return nil
-}
-
-func ListingReposForFetch(repos []Repo, useCache bool) error {
-	if useCache {
-		FetchFilesFromCache()
-	} else {
-		for _, repo := range repos {
-			err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile)
-			if err != nil {
-				return err
-			}
+func ListingReposForFetch(repos []Repo) error {
+	for _, repo := range repos {
+		err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile)
+		if err != nil {
+			return err
 		}
 	}
 	return nil

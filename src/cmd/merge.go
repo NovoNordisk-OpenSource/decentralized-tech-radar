@@ -19,16 +19,21 @@ var mergeCmd = &cobra.Command{
 <> are mandatory arguments, whereas [] are optional arguments.
 Example of a <FilePath>: 'C://Program/MyCSVFile.csv'.
 Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile1.csv'`,
-	Args: cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) < 2 {
-			panic("Not enough arguments have been provided.")
-		}
 		useCache, _ := cmd.Flags().GetBool("cache")
 		if useCache {
-			fmt.Println("cache is set.")
+			err := Merger.MergeFromFolder("./cache")
+			if err != nil {
+				panic(err)
+			}
 		} else {
-			Merger.MergeCSV(args)
+			if len(args) < 2 {
+				panic("Not enough arguments have been provided.")
+			}
+			err := Merger.MergeCSV(args)
+			if err != nil {
+				panic(err)
+			}
 			fmt.Println("merge called.")
 		}
 	},

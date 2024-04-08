@@ -25,7 +25,7 @@ func checkHeader(header string) bool {
 
 // Creates the regex pattern string with the names on the rings
 func createRegexPattern(ring1, ring2, ring3, ring4 string) string {
-	regexPattern := fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),[0123],(([^,\n])([^,\n])*)",
+	regexPattern := fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),-?[0123],(([^,\n])([^,\n])*)",
 								strings.ToUpper(ring1[:1]), strings.ToLower(ring1[1:]), strings.ToUpper(ring2[:1]), strings.ToLower(ring2[1:]), 
 								strings.ToUpper(ring3[:1]), strings.ToLower(ring3[1:]), strings.ToUpper(ring4[:1]), strings.ToLower(ring4[1:]))
 	return regexPattern
@@ -98,7 +98,7 @@ func Verifier (filepaths ... string) error {
 			
 		}
 	}
-return nil
+	return nil
 }
 
 func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {

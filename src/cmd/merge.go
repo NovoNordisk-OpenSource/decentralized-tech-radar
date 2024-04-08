@@ -31,14 +31,5 @@ Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile
 
 func init() {
 	rootCmd.AddCommand(mergeCmd)
-	//Have kept this for future reference to make the --cache command.
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// mergeCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// mergeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	mergeCmd.Flags().BoolP("cache", "c", false, "Help message for cache")
 }

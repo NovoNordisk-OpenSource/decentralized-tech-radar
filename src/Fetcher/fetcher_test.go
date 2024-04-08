@@ -29,9 +29,9 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	defer DotGitDelete()
 
 	// dev repo link and create specfile
-	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
+	url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
 	//TODO: Change this to main once templates folder is on main
-	branch := "feat_git_fetcher"
+	branch := "main"
 	data := []byte("examples/csv_templates/template.csv")
 	os.WriteFile("./specfile.txt", data, 0644)
 	specFile := "specfile.txt"
@@ -91,8 +91,8 @@ func TestListingReposForFetch(t *testing.T) {
 	branch := "main"
 	specFile := "./TestingTextFile.txt"
 
-	url2 := "https://github.com/NovoNordisk-OpenSource/backstage"
-	branch2 := "master"
+	url2 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
+	branch2 := "main"
 	specFile2 := "./TestingTextFile.txt"
 
 	url3 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"

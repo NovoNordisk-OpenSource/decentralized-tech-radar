@@ -36,6 +36,9 @@ func main() {
 	runner := source.WithWorkdir("/d_src/src").
 		WithExec([]string{"go", "mod", "tidy"})
 
+	runner = runner.WithWorkdir("/d_src/test").
+		WithExec([]string{"go", "mod", "tidy"})
+
 	// run application tests
 	test := runner.WithWorkdir("/d_src/src").WithExec([]string{"go", "test", "./..."})
 	test = test.WithWorkdir("/d_src/test").WithExec([]string{"go", "test", "./..."})

@@ -17,20 +17,6 @@ import (
 
 
 func Verifier (filepaths ... string) error {
-
-	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
-	// Or just use a baked in str read line by line or combination
-	//os.Stat("./Dictionary/alt_names.txt")
-
-	alt_names := make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
-	alt_names["python3"] = "Python"
-
-
-
-	// Map functions as a set (name -> ring)
-	set := make(map[string][]string)
-
-	//TODO: This is where a for loop for multi csv should go
 	for _, filepath := range filepaths {
 	
 	file, err := os.Open(filepath)
@@ -75,27 +61,43 @@ func Verifier (filepaths ... string) error {
 			return errors.New("No comma was found format of csv file is wrong: \ntriggered by line -> "+line +"\n in file -> "+filepath)
 		}
 
-		real_name := name
-		if alt_names[name] != "" {
-			//TODO: Figure out how to handle numbers in names
-			name = alt_names[strings.ToLower(name)]
-		}
+		duplicateRemoval(filepath, name, line, tempfile)
+		
+	}
+}
+return nil
+}
 
-		if set[name] != nil {
-			// Skips the name + first comma and does the same forward search for next comma
-			ring := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
-			if !(slices.Contains(set[name], ring)) {
-				//print(set[name][0],ring)
-				set[name] = append(set[name],ring)
-				tempfile.WriteString(line+"\n")	
-			}
-		} else {
-			set[name] = append(set[name],line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1])
-			tempfile.WriteString(line+"\n")
+func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
+	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
+	// Or just use a baked in str read line by line or combination
+	//os.Stat("./Dictionary/alt_names.txt")
+
+	alt_names := make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+	alt_names["python3"] = "Python"
+
+	// Map functions as a set (name -> ring)
+	set := make(map[string][]string)
+
+
+	real_name := name
+	if alt_names[name] != "" {
+		//TODO: Figure out how to handle numbers in names
+		name = alt_names[strings.ToLower(name)]
+	}
+
+	if set[name] != nil {
+		// Skips the name + first comma and does the same forward search for next comma
+		ring := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
+		if !(slices.Contains(set[name], ring)) {
+			set[name] = append(set[name],ring)
+			tempfile.WriteString(line+"\n")	
 		}
+	} else {
+		set[name] = append(set[name],line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1])
+		tempfile.WriteString(line+"\n")
 	}
 	// Overwrite filepath with tempfile (has the removed changes)
 	os.Rename("tempfile.csv", filepath)
-	}
-return nil
+	return nil
 }

@@ -69,67 +69,17 @@ func TestEndToEnd(t *testing.T) {
 		"TestBlip4",
 	}
 
-	/*correctHTML := `
-	<html>
-			<head>
-					<title>Header 1</title>
-			</head>
-			<body>
-					<h1 class="pageTitle">Header 1</h1>
-					<ul>
+	// Read index.html
+	indexHTMLContent, err := os.ReadFile("index.html")
+	if err != nil {
+		t.Fatalf("Failed to read index.html: %v", err)
+	}
 
-							<li>Name: Python</li>
-							<li>Quadrant: language</li>
-							<li>Ring: hold</li>
-							<li>Is new: false</li>
-							<li>Moved: 0</li>
-							<li>Desc: Lorem ipsum dolor sit amet consectetur adipiscing elit.</li>
-
-							<li>Name: web</li>
-							<li>Quadrant: language</li>
-							<li>Ring: hold</li>
-							<li>Is new: false</li>
-							<li>Moved: 0</li>
-							<li>Desc: Lorem ipsum dolor sit amet consectetur adipiscing elit.</li>
-
-							<li>Name: react</li>
-							<li>Quadrant: language</li>
-							<li>Ring: hold</li>
-							<li>Is new: false</li>
-							<li>Moved: 0</li>
-							<li>Desc: Lorem ipsum dolor sit amet consectetur adipiscing elit.</li>
-
-							<li>Name: TestBlip1</li>
-							<li>Quadrant: Language</li>
-							<li>Ring: Assess</li>
-							<li>Is new: true</li>
-							<li>Moved: 1</li>
-							<li>Desc: This is a description</li>
-
-							<li>Name: TestBlip2</li>
-							<li>Quadrant: Tool</li>
-							<li>Ring: Adopt</li>
-							<li>Is new: false</li>
-							<li>Moved: 0</li>
-							<li>Desc: Also a description</li>
-
-							<li>Name: TestBlip3</li>
-							<li>Quadrant: Language</li>
-							<li>Ring: Assess</li>
-							<li>Is new: true</li>
-							<li>Moved: 1</li>
-							<li>Desc: This is a description</li>
-
-							<li>Name: TestBlip4</li>
-							<li>Quadrant: Tool</li>
-							<li>Ring: Adopt</li>
-							<li>Is new: false</li>
-							<li>Moved: 0</li>
-							<li>Desc: Also a description</li>
-
-					</ul>
-			</body>
-	</html>`*/
-	//AssertIndexHTML(t, correctHTML)
+	// Check if index contains some of the Blips' names.
+	for _, name := range correctBlipNames {
+		if !strings.Contains(string(indexHTMLContent), name) {
+			t.Errorf("Expected Blip-name %q not found in index.html", name)
+		}
+	}
 
 }

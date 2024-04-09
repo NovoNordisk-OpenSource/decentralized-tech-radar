@@ -10,8 +10,8 @@ import (
 
 var csvfile1 string = `name,ring,quadrant,isNew,moved,description
 Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Tool,false,2,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing`
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
 
 func createCsvFiles(csvfile string) {
 	err := os.WriteFile("testFile1.csv", []byte(csvfile), 0644)

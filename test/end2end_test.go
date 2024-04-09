@@ -41,6 +41,7 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// Merger
 	cmd1 := exec.Command("./tech_radar.exe", "merge", "./cache/template.csv", "./cache/"+testFileName+"1.csv", "./cache/"+testFileName+"2.csv")
 	_, err = cmd1.Output()
 	if err != nil {
@@ -51,6 +52,7 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatal("Failed to create Merged_file.csv")
 	}
 
+	// Generator
 	cmd2 := exec.Command("./tech_radar.exe", "generate", "Merged_file.csv")
 	cmd2_output, err := cmd2.Output()
 	if err != nil {
@@ -59,6 +61,7 @@ func TestEndToEnd(t *testing.T) {
 		t.Errorf("Output didn't match expected. %s", string(cmd2_output))
 	}
 
+	// Slices for assertion/checking with contains
 	correctBlipNames := []string{
 		"Python",
 		"web",
@@ -75,7 +78,7 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatalf("Failed to read index.html: %v", err)
 	}
 
-	// Check if index contains some of the Blips' names.
+	// Check if index DOES NOT contain some of the Blips' names.
 	for _, name := range correctBlipNames {
 		if !strings.Contains(string(indexHTMLContent), name) {
 			t.Errorf("Expected Blip-name %q not found in index.html", name)

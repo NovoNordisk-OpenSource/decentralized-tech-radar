@@ -20,7 +20,7 @@ define([
 ], function(htmlUtil, mathUtils, stringUtil, config, d3) {
   const { getElementWidth, getElementHeight, decodeHTML } = htmlUtil;
   const { toRadian } = mathUtils;
-  const getRingIdString = stringUtil;
+  const { getRingIdString } = stringUtil;
   const {
     graphConfig,
     getGraphSize,

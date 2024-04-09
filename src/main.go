@@ -54,6 +54,10 @@ func main() {
 
 	if *file != "" && *fetch == "" {
 		specs := SpecReader.ReadCsvSpec(*file)
-		html.GenerateHtml(specs)
+		if true == false {
+			print(specs)
+		}
+		csvString := SpecReader.CsvToString(*file)
+		html.GenerateHtml(/*specs, */csvString)
 	}
 }

@@ -43648,7 +43648,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
     }
 
     .d3-tip.n:after {
-        content: "â–¼";
+        content: "";
         left: 0;
         margin: -3px 0 0;
         text-align: center;

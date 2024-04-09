@@ -3,22 +3,89 @@ require('jquery-ui/ui/widgets/autocomplete')
 
 const config = require('../config')
 const featureToggles = config().featureToggles*/
-
 /*
 define([
-  '../config.js'
-  //'jquery',
-  //'jquery-ui/ui/widgets/autocomplete',
+  '../config',
+  'jquery',
+  'jquery-autocomplete'
+], function(config, $, autocomplete) {
+  const featureToggles = config().featureToggles;
+
+  const createAutoComplete = (el, blips, onSelect) => {
+    const input = document.querySelector(el);
+    const resultList = document.createElement('ul');
+    resultList.className = 'autocomplete-results';
+    input.parentNode.appendChild(resultList);
+
+    input.addEventListener('input', () => {
+      const searchTerm = input.value.toLowerCase();
+      const matches = blips.filter(({ blip }) => {
+        const searchable = `${blip.name()} ${blip.description()}`.toLowerCase();
+        return searchTerm.split(' ').every(term => searchable.includes(term));
+      });
+
+      // Clear previous results
+      resultList.innerHTML = '';
+
+      // Add new results to the list
+      matches.forEach(match => {
+        const li = document.createElement('li');
+        li.className = 'autocomplete-result';
+        li.textContent = match.blip.name();
+        li.addEventListener('click', () => {
+          onSelect(null, { item: match });
+        });
+        resultList.appendChild(li);
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!input.contains(event.target)) {
+        resultList.innerHTML = ''; // Clear results when clicking outside
+      }
+    });
+  };
+
+  const AutoComplete = (el, quadrants, onSelect) => {
+    const blips = quadrants.reduce((acc, quadrant) => {
+      return [...acc, ...quadrant.quadrant.blips().map(blip => ({ blip, quadrant }))];
+    }, []);
+
+    if (featureToggles.UIRefresh2022) {
+      createAutoComplete(el, blips, onSelect);
+    } else {
+      // Define alternative behavior if the toggle is off
+      createAutoComplete(el, blips, onSelect);
+    }
+  };
+
+  return AutoComplete;
+});
+*/
+
+// const $ = require('jquery')
+// require('jquery-ui/ui/widgets/autocomplete')
+
+// const config = require('../config')
+// const featureToggles = config().featureToggles
+
+// $.widget('custom.radarcomplete', $.ui.autocomplete, {
+
+
+define([
+  '../config.js',
+  'jquery',
+  'jquery-autocomplete'
 ], function(configFuntion, $, autocomplete) {
   
   const featureToggles = configFuntion().featureToggles;
-  --------------
+  // --------------
 
-  define([
-    'jquery',
-    '../config.js'
-  ], function($, config) {
-    const featureToggles = config().featureToggles;
+  // define([
+  //   'jquery',
+  //   '../config.js'
+  // ], function($, config) {
+  //   const featureToggles = config().featureToggles;
 
   $.widget('custom.radarcomplete', $.ui.autocomplete, {
     _create: function () {
@@ -72,64 +139,6 @@ define([
       })
     }
   }
-
-  return AutoComplete;
-});
-*/
-//module.exports = AutoComplete
-
-define([
-  '../config'
-], function(config) {
-  const featureToggles = config().featureToggles;
-
-  const createAutoComplete = (el, blips, onSelect) => {
-    const input = document.querySelector(el);
-    const resultList = document.createElement('ul');
-    resultList.className = 'autocomplete-results';
-    input.parentNode.appendChild(resultList);
-
-    input.addEventListener('input', () => {
-      const searchTerm = input.value.toLowerCase();
-      const matches = blips.filter(({ blip }) => {
-        const searchable = `${blip.name()} ${blip.description()}`.toLowerCase();
-        return searchTerm.split(' ').every(term => searchable.includes(term));
-      });
-
-      // Clear previous results
-      resultList.innerHTML = '';
-
-      // Add new results to the list
-      matches.forEach(match => {
-        const li = document.createElement('li');
-        li.className = 'autocomplete-result';
-        li.textContent = match.blip.name();
-        li.addEventListener('click', () => {
-          onSelect(null, { item: match });
-        });
-        resultList.appendChild(li);
-      });
-    });
-
-    document.addEventListener('click', (event) => {
-      if (!input.contains(event.target)) {
-        resultList.innerHTML = ''; // Clear results when clicking outside
-      }
-    });
-  };
-
-  const AutoComplete = (el, quadrants, onSelect) => {
-    const blips = quadrants.reduce((acc, quadrant) => {
-      return [...acc, ...quadrant.quadrant.blips().map(blip => ({ blip, quadrant }))];
-    }, []);
-
-    if (featureToggles.UIRefresh2022) {
-      createAutoComplete(el, blips, onSelect);
-    } else {
-      // Define alternative behavior if the toggle is off
-      createAutoComplete(el, blips, onSelect);
-    }
-  };
 
   return AutoComplete;
 });

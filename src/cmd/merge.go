@@ -21,9 +21,6 @@ Example of a <FilePath>: 'C://Program/MyCSVFile.csv'.
 Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile1.csv'`,
 	Args: cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) < 2 {
-			panic("Not enough arguments have been provided.")
-		}
 		Merger.MergeCSV(args)
 		fmt.Println("merge called")
 	},

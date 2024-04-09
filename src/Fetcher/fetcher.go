@@ -40,7 +40,9 @@ func FetchFiles(url, branch, specFile string) error {
 	}
 
 	for folder, _ := range seenFolders {
-		os.RemoveAll(("./" + folder))
+		if folder != "cache" {
+			os.RemoveAll(("./" + folder))
+		}
 	}
 
 	return nil

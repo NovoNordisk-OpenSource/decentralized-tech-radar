@@ -23,25 +23,31 @@ func checkHeader(header string) bool {
 	return header == correctHeader
 }
 
+// The pattern is created as a singleton so that we don't need 
+// to compile a new on every line that is checked
+var regexPattern *regexp.Regexp = nil
+
 // Creates the regex pattern string with the names on the rings
-func createRegexPattern(ring1, ring2, ring3, ring4 string) string {
-	regexPattern := fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),-?[0123],(([^,\n])([^,\n])*)",
+func createRegexPattern(ring1, ring2, ring3, ring4 string) {
+	var err error
+	regexPattern, err = regexp.Compile(fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),-?[0123],(([^,\n])([^,\n])*)",
 								strings.ToUpper(ring1[:1]), strings.ToLower(ring1[1:]), strings.ToUpper(ring2[:1]), strings.ToLower(ring2[1:]), 
-								strings.ToUpper(ring3[:1]), strings.ToLower(ring3[1:]), strings.ToUpper(ring4[:1]), strings.ToLower(ring4[1:]))
-	return regexPattern
+								strings.ToUpper(ring3[:1]), strings.ToLower(ring3[1:]), strings.ToUpper(ring4[:1]), strings.ToLower(ring4[1:])))
+	if err != nil {
+		panic(err)
+	}
 }
 
 // Checks that the given string matches the correct 
 // format for data in a specfile
-func checkDataLine(data string) (bool, error) {
-	pattern := createRegexPattern("hold", "assess", "trial", "adopt")
-	
-	match, err := regexp.MatchString(pattern, data)
-	if err != nil {
-		return false, err
+func checkDataLine(data string) bool {
+	if regexPattern == nil { // Check if we need to compile the pattern
+		createRegexPattern("hold", "assess", "trial", "adopt")
 	}
+	
+	match := regexPattern.MatchString(data)
 
-	return match, nil
+	return match
 }
 
 func Verifier (filepaths ... string) error {
@@ -78,10 +84,8 @@ func Verifier (filepaths ... string) error {
 				break
 			}
 			
-			check, err := checkDataLine(line)
-			if err != nil {
-				return err
-			}
+			check := checkDataLine(line)
+
 			if !check {
 				return errors.New(filepath + " contains invalid data: " + scanner.Text())
 			}

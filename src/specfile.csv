@@ -1,7 +1,8 @@
 name,ring,quadrant,isNew,moved,description
-RJDcGqUtECqUYD,Hold,data management,true,0,uOceYNVwMWrBLNFVjExmhkSxSeodnnggLHyGSqZpX
-aaok,Assess,language,true,3,LKqLWsFoooUgYBpIfDRSRBnZiUarJrAdKWCOmFSGWRBiKukjGvnMGpODnXiyiQxaDFOBKhsWblYoNYHBCOmXNAveIEGiFSvNXOzr
-EJfcs,Trial,datastore,true,-2,kOSqlTRpCZqcAUkqbQUjJoefLfKPwYY
+testHold,Hold,data management,true,0,Test for hold
+testAssess,Assess,language,true,3,Test for assess
+testTrial,Trial,datastore,true,-2,Test for Trail
+testAdopt,Adopt,data management,true,2,Test for Adopt
 vHcZeRVB,Assess,datastore,true,-2,xRZQYvMqRRfcSQGMwEbDXvzVgLIOoNNEfogREkpNZsgG
 KQeWrSx,Hold,data management,false,2,qostWQLwJqqzCPUdWhqKrIXZHgiNVBLoodjkzWXrShMwCExNGXguNaTXcMzIbHOrMKlpYGMnoopEtJzRylWBJ
 ppTDmwYevG,Assess,language,false,0,EUiUCeutUgxfAtXsVFLqDoaEeRMVLUOmQr
@@ -9,7 +10,6 @@ ggycrVe,Hold,data management,false,2,QoMYuqgosnbzcvjEescwcjgWAxRHpJcqcv
 IVRwVocdnyPijOD,Hold,infrastructure,false,0,NwckAIxQKQoRGSEAnTKaFWWguT
 vaOiRtY,Adopt,data management,true,2,kJyPHYKcFReATXEKjQNkUdhhAxLNUTCGBHvNehGwxhkgcyrGh
 BacsRMVCtnTcZKe,Hold,infrastructure,false,2,QfggZiLLdBKODltRGugqrkDbPZvaoqckzNkSPvpNAxD
-aGLXrZSIIY,Adopt,data management,true,2,ZaSZXBKbjoXKTdfbqsBvEGilJDWQCKEJFsIHkjXEObLtOQwWofDuwdslWCsmuPkyoWvbkBwXyzCUxIAXIguBHbKCMAZhAyhDwYrgvNbEQOBKfFQ
 Zue,Trial,data management,false,1,WuswCiTJoTUEAtxFfbHMkRVIotAXqNfnqSfOzDIFrxwYWVQyZeKTnBNThyAakiIFqWyj
 MEZkfzwER,Trial,infrastructure,true,-2,SvfjZITyPWyHFYKSXuYCtBiuLqNeUJPzMQYcgShhLeEAvpdAaTOOnKK
 vgpaRoV,Hold,datastore,false,1,kfDEgwGRcwNWRIDEsPeFzbHGmsAvBoVMIWaWMFeocdSsfSrNAKUJrojLufMlharJmqLXyJakzoV

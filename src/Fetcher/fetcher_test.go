@@ -29,45 +29,45 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	defer DotGitDelete()
 
 	// dev repo link and create specfile
-	url := "https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev.git"
+	url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
 	//TODO: Change this to main once templates folder is on main
-	branch := "feat_git_fetcher"
+	branch := "main"
 	data := []byte("examples/csv_templates/template.csv")
 	os.WriteFile("./specfile.txt", data, 0644)
 	specFile := "specfile.txt"
 
 	err := FetchFiles(url, branch, specFile)
-  
-  if err != nil {
+
+	if err != nil {
 		t.Errorf("FetchFiles returned an err %v", err)
 	}
 
 	_, err = os.Stat("./cache/template.csv")
-if os.IsNotExist(err) {
-    t.Errorf("File wasn't downloaded or wasn't moved correctly: %v", err)
-}
+	if os.IsNotExist(err) {
+		t.Errorf("File wasn't downloaded or wasn't moved correctly: %v", err)
+	}
 
-file, err := os.Open("./cache/template.csv")
-if err != nil {
-    t.Errorf("Failed to open template.csv. %v", err.Error())
-}
-scanner := bufio.NewScanner(file)
+	file, err := os.Open("./cache/template.csv")
+	if err != nil {
+		t.Errorf("Failed to open template.csv. %v", err.Error())
+	}
+	scanner := bufio.NewScanner(file)
 
-template_lines := []string{}
-for scanner.Scan() {
-    template_lines = append(template_lines, scanner.Text())
-}
+	template_lines := []string{}
+	for scanner.Scan() {
+		template_lines = append(template_lines, scanner.Text())
+	}
 
-expected_lines := []string{"name,ring,quadrant,isNew,move,description",
-"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
+	expected_lines := []string{"name,ring,quadrant,isNew,move,description",
+		"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+		"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+		"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
 
-for i := range expected_lines {
-    if !(expected_lines[i] == template_lines[i]) {
-        t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
-    }
-}
+	for i := range expected_lines {
+		if !(expected_lines[i] == template_lines[i]) {
+			t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v", expected_lines[i], template_lines[i])
+		}
+	}
 }
 func TestListingReposForFetch(t *testing.T) {
 	defer os.RemoveAll("./README.md")
@@ -91,8 +91,8 @@ func TestListingReposForFetch(t *testing.T) {
 	branch := "main"
 	specFile := "./TestingTextFile.txt"
 
-	url2 := "https://github.com/NovoNordisk-OpenSource/backstage"
-	branch2 := "master"
+	url2 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
+	branch2 := "main"
 	specFile2 := "./TestingTextFile.txt"
 
 	url3 := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"

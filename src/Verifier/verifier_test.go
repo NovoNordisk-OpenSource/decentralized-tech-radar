@@ -104,10 +104,7 @@ func TestCheckDatalineCorrectData(t *testing.T) {
 	scanner.Scan() // skip header
 	scanner.Scan()
 
-	value, err := checkDataLine(scanner.Text())
-	if err != nil {
-		t.Fatal(err)
-	}
+	value := checkDataLine(scanner.Text())
 	if !value {
 		t.Errorf("checkDataline returned the wrong value\n\tGot: %t\n\tExpected: %t", value, true)
 	}

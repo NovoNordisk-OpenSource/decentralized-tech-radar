@@ -1,6 +1,5 @@
 package test
 
-/*
 import (
 	"os"
 	"os/exec"
@@ -30,7 +29,19 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatalf("%v", err)
 	}
 
-	cmd1 := exec.Command("./tech_radar.exe", "-merge", testFileName+"1.csv"+" "+testFileName+"2.csv")
+	// Fetcher
+	url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
+	data := []byte("examples/csv_templates/template.csv")
+	os.WriteFile("./specfile.txt", data, 0644)
+	specFile := "specfile.txt"
+
+	cmd0 := exec.Command("./tech_radar.exe", "fetch", url, "main", specFile)
+	_, err = cmd0.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	cmd1 := exec.Command("./tech_radar.exe", "merge", "./cache/template.csv", "./cache/"+testFileName+"1.csv", "./cache/"+testFileName+"2.csv")
 	_, err = cmd1.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -40,7 +51,7 @@ func TestEndToEnd(t *testing.T) {
 		t.Fatal("Failed to create Merged_file.csv")
 	}
 
-	cmd2 := exec.Command("./tech_radar.exe", "-file", "Merged_file.csv")
+	cmd2 := exec.Command("./tech_radar.exe", "generate", "Merged_file.csv")
 	cmd2_output, err := cmd2.Output()
 	if err != nil {
 		t.Fatalf("%v", err)
@@ -48,45 +59,77 @@ func TestEndToEnd(t *testing.T) {
 		t.Errorf("Output didn't match expected. %s", string(cmd2_output))
 	}
 
-	correctHTML := `<html>
-	<head>
-		<title>Header 1</title>
-	</head>
-	<body>
-		<h1 class="pageTitle">Header 1</h1>
-		<ul>
+	correctBlipNames := []string{
+		"Python",
+		"web",
+		"react",
+		"TestBlip1",
+		"TestBlip2",
+		"TestBlip3",
+		"TestBlip4",
+	}
 
-			<li>Name: TestBlip1</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
+	/*correctHTML := `
+	<html>
+			<head>
+					<title>Header 1</title>
+			</head>
+			<body>
+					<h1 class="pageTitle">Header 1</h1>
+					<ul>
 
-			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
+							<li>Name: Python</li>
+							<li>Quadrant: language</li>
+							<li>Ring: hold</li>
+							<li>Is new: false</li>
+							<li>Moved: 0</li>
+							<li>Desc: Lorem ipsum dolor sit amet consectetur adipiscing elit.</li>
 
-			<li>Name: TestBlip3</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
+							<li>Name: web</li>
+							<li>Quadrant: language</li>
+							<li>Ring: hold</li>
+							<li>Is new: false</li>
+							<li>Moved: 0</li>
+							<li>Desc: Lorem ipsum dolor sit amet consectetur adipiscing elit.</li>
 
-			<li>Name: TestBlip4</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
+							<li>Name: react</li>
+							<li>Quadrant: language</li>
+							<li>Ring: hold</li>
+							<li>Is new: false</li>
+							<li>Moved: 0</li>
+							<li>Desc: Lorem ipsum dolor sit amet consectetur adipiscing elit.</li>
 
-		</ul>
-	</body>
-</html>`
-	AssertIndexHTML(t, correctHTML)
+							<li>Name: TestBlip1</li>
+							<li>Quadrant: Language</li>
+							<li>Ring: Assess</li>
+							<li>Is new: true</li>
+							<li>Moved: 1</li>
+							<li>Desc: This is a description</li>
+
+							<li>Name: TestBlip2</li>
+							<li>Quadrant: Tool</li>
+							<li>Ring: Adopt</li>
+							<li>Is new: false</li>
+							<li>Moved: 0</li>
+							<li>Desc: Also a description</li>
+
+							<li>Name: TestBlip3</li>
+							<li>Quadrant: Language</li>
+							<li>Ring: Assess</li>
+							<li>Is new: true</li>
+							<li>Moved: 1</li>
+							<li>Desc: This is a description</li>
+
+							<li>Name: TestBlip4</li>
+							<li>Quadrant: Tool</li>
+							<li>Ring: Adopt</li>
+							<li>Is new: false</li>
+							<li>Moved: 0</li>
+							<li>Desc: Also a description</li>
+
+					</ul>
+			</body>
+	</html>`*/
+	//AssertIndexHTML(t, correctHTML)
+
 }
-*/

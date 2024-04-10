@@ -1,15 +1,5 @@
-// const Chance = require('chance')
-// const { graphConfig } = require('./config')
-// const { toRadian } = require('../util/mathUtils')
-// const { renderBlipDescription } = require('./components/quadrantTables')
-// const Blip = require('../models/blip')
-// const isEmpty = require('lodash/isEmpty')
-// const { replaceSpaceWithHyphens, removeAllSpaces } = require('../util/stringUtil')
-// const config = require('../config')
-// const featureToggles = config().featureToggles
-
 define([
-    'chance', // Assuming 'chance' is properly configured in your RequireJS paths
+    'chance',
     './config',
     '../util/mathUtils',
     './components/quadrantTables',

@@ -4,13 +4,11 @@ import (
 	"html/template"
 	"log"
 	"os"
-
-	// Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 var htmlFileName string = "index"
 
-func GenerateHtml(/*blips Reader.Blips, */csvData string) {
+func GenerateHtml(csvData string) {
 	const tmpl = `
 	<!doctype html>
 	<html lang="en">
@@ -20,7 +18,7 @@ func GenerateHtml(/*blips Reader.Blips, */csvData string) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link href="../src/js/images/favicon.ico" rel="icon" />
 	<link rel="preconnect" href="https://rsms.me/" />
-	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" integrity="sha512-byor" />
+	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link href="../src/js/stylesheets/style.css" rel="stylesheet"/>

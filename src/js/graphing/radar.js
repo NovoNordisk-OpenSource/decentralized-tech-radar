@@ -1,32 +1,3 @@
-// const d3 = require('d3')
-// const { default: d3tip } = require('d3-tip')
-// const Chance = require('chance')
-// const _ = require('lodash/core')
-
-// const RingCalculator = require('../util/ringCalculator')
-// const AutoComplete = require('../util/autoComplete')
-// const config = require('../config')
-// const featureToggles = config().featureToggles
-// const { plotRadarBlips } = require('./blips')
-// const { graphConfig, getGraphSize } = require('./config')
-
-// const { renderBanner } = require('./components/banner')
-// const { renderQuadrantSubnav } = require('./components/quadrantSubnav')
-// const { renderSearch } = require('./components/search')
-// // const { renderAlternativeRadars } = require('./components/alternativeRadars')
-// const { renderButtons } = require('./components/buttons')
-// const {
-//   renderRadarQuadrants,
-//   renderMobileView,
-//   renderRadarLegends,
-//   removeScrollListener,
-// } = require('./components/quadrants')
-// const { renderQuadrantTables } = require('./components/quadrantTables')
-// const { addQuadrantNameInPdfView, addRadarLinkInPdfView } = require('./pdfPage')
-
-// const { constructSheetUrl } = require('../util/urlUtils')
-// const { toRadian } = require('../util/mathUtils')
-
 define([
   'chance',
   'lodash',

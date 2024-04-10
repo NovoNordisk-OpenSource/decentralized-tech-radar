@@ -1,14 +1,4 @@
-// const d3 = require('d3')
-/*
 define([
-  '../../util/autoComplete.js',
-  './quadrants.js'],
- function(AutoComplete, selectRadarQuadrantremoveScrollListener) {
-  // const AutoComplete = require('../../util/autoComplete')
-  // const { selectRadarQuadrant, removeScrollListener } = require('../components/quadrants')
-  const {selectRadarQuadrant, removeScrollListener } = selectRadarQuadrantremoveScrollListener*/
-
-  define([
     'd3',
     '../../util/autoComplete',
     '../components/quadrants'

@@ -1,9 +1,3 @@
-// const d3 = require('d3')
-
-// const config = require('../../config')
-// const { addPdfCoverTitle } = require('../pdfPage')
-// const featureToggles = config().featureToggles
-
 define(['d3', '../../config.js', '../pdfPage.js'], function(d3, configFuntion, pdfPage) {
   const featureToggles = configFuntion().featureToggles;
   const { addPdfCoverTitle } = pdfPage;
@@ -33,6 +27,7 @@ define(['d3', '../../config.js', '../pdfPage.js'], function(d3, configFuntion, p
         .select('.radar-title')
         .append('div')
         .attr('class', 'radar-title__logo')
+        //TODO insert the novo header image for the PDF
         //.html('<a href="https://www.thoughtworks.com"> <img src="/images/logo.png" /> </a>')
     }
   }

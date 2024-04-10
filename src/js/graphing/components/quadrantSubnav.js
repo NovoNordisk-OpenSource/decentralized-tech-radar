@@ -1,8 +1,3 @@
-// const d3 = require('d3')
-// const { selectRadarQuadrant, removeScrollListener } = require('./quadrants')
-// const { getRingIdString } = require('../../util/stringUtil')
-// const { uiConfig } = require('../config')
-
 define([
   'd3',
   './quadrants.js',

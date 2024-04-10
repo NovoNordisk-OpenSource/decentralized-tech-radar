@@ -1,8 +1,3 @@
-// const d3 = require('d3')
-// const { graphConfig, getScale, uiConfig } = require('../config')
-// const { stickQuadrantOnScroll } = require('./quadrants')
-// const { removeAllSpaces } = require('../../util/stringUtil')
-
 define([
   'd3',
   '../config.js',

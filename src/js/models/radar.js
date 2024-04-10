@@ -1,13 +1,3 @@
-// const _ = {
-//   map: require('lodash/map'),
-//   uniqBy: require('lodash/uniqBy'),
-//   sortBy: require('lodash/sortBy'),
-// }
-
-// const Radar = function () {
-//   const config = require('../config')
-//   const featureToggles = config().featureToggles
-
 define([
   'lodash',
   '../config.js'

@@ -1,4 +1,3 @@
-// const d3 = require('d3')
 define(['d3'], function(d3) {
   const addPdfCoverTitle = (title) => {
     d3.select('main #pdf-cover-page .pdf-title').text(title)
@@ -20,5 +19,4 @@ define(['d3'], function(d3) {
     addQuadrantNameInPdfView: addQuadrantNameInPdfView,
     addRadarLinkInPdfView: addRadarLinkInPdfView
   }
-  // module.exports = { addPdfCoverTitle, addQuadrantNameInPdfView, addRadarLinkInPdfView }
 });

@@ -1,16 +1,3 @@
-// const d3 = require('d3')
-// const { getElementWidth, getElementHeight, decodeHTML } = require('../../util/htmlUtil')
-// const { toRadian } = require('../../util/mathUtils')
-// const { getRingIdString } = require('../../util/stringUtil')
-// const {
-//   graphConfig,
-//   getGraphSize,
-//   getScaledQuadrantWidth,
-//   getScaledQuadrantHeightWithGap,
-//   getScale,
-//   uiConfig,
-// } = require('../config')
-
 define([
   'd3',
   '../../util/htmlUtil.js',

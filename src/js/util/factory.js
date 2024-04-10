@@ -9,16 +9,15 @@
 
 define([
   // List dependencies here
-  // 'd3',
+  'd3',
   '../models/radar.js',
   '../models/quadrant.js',
   '../models/ring.js',
   '../models/blip.js',
   '../graphing/radar.js',
   '../config.js',
-  '../graphing/config.js',
-  'd3'
-], function(Radar, Quadrant, Ring, Blip, GraphingRadar, configFuntion, config, d3) {
+  '../graphing/config.js'
+], function(d3, Radar, Quadrant, Ring, Blip, GraphingRadar, configFuntion, config) {
   // You can now use these dependencies as variables within this function.
   
   const featureToggles = configFuntion().featureToggles;

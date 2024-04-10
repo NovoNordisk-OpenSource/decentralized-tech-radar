@@ -73,20 +73,13 @@ define([
 
 
 define([
-  '../config.js',
   'jquery',
-  'jquery-autocomplete'
-], function(configFuntion, $, autocomplete) {
+  'jquery-autocomplete',
+  '../config.js',
+], function( $, autocomplete, configFuntion) {
   
   const featureToggles = configFuntion().featureToggles;
-  // --------------
-
-  // define([
-  //   'jquery',
-  //   '../config.js'
-  // ], function($, config) {
-  //   const featureToggles = config().featureToggles;
-
+  
   $.widget('custom.radarcomplete', $.ui.autocomplete, {
     _create: function () {
       this._super()

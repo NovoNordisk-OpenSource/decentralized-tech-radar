@@ -12,12 +12,12 @@
 // } = require('../config')
 
 define([
+  'd3',
   '../../util/htmlUtil.js',
   '../../util/mathUtils.js',
   '../../util//stringUtil.js',
-  '../config.js',
-  'd3'
-], function(htmlUtil, mathUtils, stringUtil, config, d3) {
+  '../config.js'
+], function(d3, htmlUtil, mathUtils, stringUtil, config) {
   const { getElementWidth, getElementHeight, decodeHTML } = htmlUtil;
   const { toRadian } = mathUtils;
   const { getRingIdString } = stringUtil;

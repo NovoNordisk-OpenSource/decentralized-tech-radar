@@ -4,7 +4,7 @@
 // const { addPdfCoverTitle } = require('../pdfPage')
 // const featureToggles = config().featureToggles
 
-define(['../../config.js', '../pdfPage.js', 'd3'], function(configFuntion, pdfPage, d3) {
+define(['d3', '../../config.js', '../pdfPage.js'], function(d3, configFuntion, pdfPage) {
   const featureToggles = configFuntion().featureToggles;
   const { addPdfCoverTitle } = pdfPage;
 

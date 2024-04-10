@@ -4,11 +4,11 @@
 // const { uiConfig } = require('../config')
 
 define([
+  'd3',
   './quadrants.js',
   '../../util/stringUtil.js',
-  '../config.js',
-  'd3'
-], function(quadrants, stringUtil, config, d3) {
+  '../config.js'
+], function(d3, quadrants, stringUtil, config) {
   const { selectRadarQuadrant, removeScrollListener } = quadrants;
   const { getRingIdString } = stringUtil;
   const { uiConfig } = config;

@@ -9,10 +9,10 @@ define([
   const {selectRadarQuadrant, removeScrollListener } = selectRadarQuadrantremoveScrollListener*/
 
   define([
+    'd3',
     '../../util/autoComplete',
-    '../components/quadrants',
-    'd3'
-  ], function(autoCompleteModule, quadrantsModule, d3) {
+    '../components/quadrants'
+  ], function(d3, autoCompleteModule, quadrantsModule) {
     const AutoComplete = autoCompleteModule;
     const { selectRadarQuadrant, removeScrollListener } = quadrantsModule;
 

@@ -10,20 +10,20 @@
 
 define([
     'chance', // Assuming 'chance' is properly configured in your RequireJS paths
-    'lodash', // Assuming 'lodash/isEmpty' is properly configured in your RequireJS paths
     './config',
     '../util/mathUtils',
     './components/quadrantTables',
     '../models/blip',
+    'lodash',
     '../util/stringUtil',
     '../config'
-], function(Chance, lodash, config, mathUtils, quadrantTables, Blip, stringUtil, configFuntion) {
+], function(Chance, appConfig, mathUtils, quadrantTables, Blip, _, stringUtil, configFunction) {
   
-  const { graphConfig } = config;
+  const { graphConfig } = appConfig;
   const { toRadian } = mathUtils;
   const { renderBlipDescription } = quadrantTables;
   const { replaceSpaceWithHyphens, removeAllSpaces } = stringUtil;
-  const featureToggles = configFuntion().featureToggles;
+  const featureToggles = configFunction().featureToggles;
 
   const getRingRadius = function (ringIndex) {
     const ratios = [0, 0.316, 0.652, 0.832, 0.992]
@@ -275,7 +275,7 @@ define([
       blip.isNew() ? newBlipsInRing.push(blip) : existingBlipsInRing.push(blip)
     })
 
-    const blipGroups = [newBlipsInRing, existingBlipsInRing].filter((group) => !lodash(group))
+    const blipGroups = [newBlipsInRing, existingBlipsInRing].filter((group) => !_.isEmpty(group))
     blipGroups.forEach((blipsInRing) => {
       const blipType = blipsInRing[0].isNew() ? 'new' : 'existing'
       const groupBlip = createGroupBlip(blipsInRing, blipType, ring, quadrantOrder)

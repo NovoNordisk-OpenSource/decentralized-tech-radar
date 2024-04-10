@@ -3,7 +3,7 @@
 //   forOwn: require('lodash/forOwn'),
 // }
 
-define(['sanitize-html', 'lodash/forOwn'], function(sanitizeHtml, forOwn) {
+define(['sanitize-html', 'lodash'], function(sanitizeHtml, _) {
   //runs the webpacket api to sanitize the input csv url
   const InputSanitizer = function () {
     var relaxedOptions = {

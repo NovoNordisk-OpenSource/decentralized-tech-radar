@@ -29,9 +29,9 @@
 
 define([
   'chance',
-  // 'lodash/core',
+  'lodash',
   '../util/ringCalculator.js',
-  '../util/autoComplete.js',
+  'jquery-autocomplete',
   '../config.js',
   './blips.js',
   './config.js',
@@ -48,7 +48,7 @@ define([
   'd3tip',
   'd3-collection',
   'd3-selection'
-], function(Chance, RingCalculator, AutoComplete, configFuntion, blips, config, banner, quadrantSubnav, search, buttons, quadrants, quadrantTables, pdfPage, urlUtils, mathUtils, d3, d3tip) {
+], function(Chance, _, RingCalculator, AutoComplete, configFuntion, blips, config, banner, quadrantSubnav, search, buttons, quadrants, quadrantTables, pdfPage, urlUtils, mathUtils, d3, d3tip) {
   
   const featureToggles = configFuntion().featureToggles;
   const { plotRadarBlips } = blips;

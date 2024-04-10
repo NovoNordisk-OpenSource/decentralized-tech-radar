@@ -8,7 +8,11 @@
 //   const config = require('../config')
 //   const featureToggles = config().featureToggles
 
-define(['../config.js'], function(config) {
+define([
+  'lodash',
+  '../config.js'
+],
+function(_, config) {
   const Radar = function () {
     const featureToggles = config().featureToggles
 

@@ -4,11 +4,11 @@
 // const { removeAllSpaces } = require('../../util/stringUtil')
 
 define([
+  'd3',
   '../config.js',
   './quadrants.js',
-  '../../util/stringUtil.js',
-  'd3'
-], function(config, quadrants, stringUtil, d3) {
+  '../../util/stringUtil.js'
+], function(d3, config, quadrants, stringUtil) {
   const { graphConfig, getScale, uiConfig } = config;
   const { stickQuadrantOnScroll } = quadrants;
   const { removeAllSpaces } = stringUtil;

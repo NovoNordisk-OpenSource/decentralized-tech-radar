@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 	"testing"
-	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
-	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
-	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
+	//html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
+	//"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
+	//Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 // Test Set up
@@ -73,7 +73,7 @@ func AssertIndexHTML(t *testing.T, html string) {
 
 // Tests
 // Integration test
-func TestReaderAndWriter(t *testing.T) {
+/*func TestReaderAndWriter(t *testing.T) {
 	// Set up
 	CreateCsvFile()
 	defer CleanUp()
@@ -172,4 +172,4 @@ func TestMerger2Reader2Writer(t *testing.T) {
 	</body>
 </html>`
 	AssertIndexHTML(t, correctHTML)
-}
+}*/

@@ -17,7 +17,7 @@ require.config({
       },
       'jquery-autocomplete': {
         deps: ['jquery'], // d3-tip depends on d3
-        exports: 'jquery-ui/ui/widgets/autocomplete' // d3-tip, 'selection' attaches to the d3 object
+        //exports: 'jQuery.ui.autocomplete' // d3-tip, 'selection' attaches to the d3 object
       }
   }
 });

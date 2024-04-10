@@ -37,5 +37,5 @@ The merger also includes a cache flag this will run the merger using the cache f
 The generator takes a merged CSV file and generates a tech radar HTML file from it. This can then be opened in a web browser.
 To run the generator you can use the following command
 ```bash
-./Tech_Radar generate 
+./Tech_Radar generate <path/to/csvfile>
 ```

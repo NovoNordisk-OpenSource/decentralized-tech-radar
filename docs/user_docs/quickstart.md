@@ -24,7 +24,7 @@ Example:
 The merger takes in one or more CSV files and merges them into one big file called `Merged_file.csv`. The merger will use a verifier to check if any of the CSV files are formatted wrong or contain the wrong information.
 To run the merger you can use the following command:
 ```bash
-./Tech_Radar merge <path/to/csvfile> [path/to/csvfile2] ...
+./Tech_Radar merge <path/to/csvfile> <path/to/csvfile2> [path/to/csvfile3] ...
 ```
 `path/to/csvfile` being a path to a locally stored csvfile with correct format *__see spec_file_format.md__*  
 

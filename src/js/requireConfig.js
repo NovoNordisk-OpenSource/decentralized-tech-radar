@@ -1,4 +1,6 @@
-// RequireConfig.js
+/**
+ * Tech radar dependencies
+ */
 require.config({
     paths: {
       'd3': 'https://d3js.org/d3.v7.min',
@@ -12,12 +14,12 @@ require.config({
     },
     shim: {
       'd3tip': {
-        deps: ['d3','d3-collection', 'd3-selection'], // d3-tip depends on d3
-        exports: 'd3.tip' // d3-tip, 'selection' attaches to the d3 object
+        deps: ['d3','d3-collection', 'd3-selection'],
+        exports: 'd3.tip'
       },
       'jquery-autocomplete': {
-        deps: ['jquery'], // d3-tip depends on d3
-        //exports: 'jQuery.ui.autocomplete' // d3-tip, 'selection' attaches to the d3 object
+        deps: ['jquery'],
+        exports: '$.ui.autocomplete'
       }
   }
 });

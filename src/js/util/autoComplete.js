@@ -9,6 +9,7 @@ define([
   $.widget('custom.radarcomplete', $.ui.autocomplete, {
     _create: function () {
       this._super()
+      console.log('Custom radarcomplete widget created!')
       this.widget().menu('option', 'items', '> :not(.ui-autocomplete-quadrant)')
     },
     _renderMenu: function (ul, items) {

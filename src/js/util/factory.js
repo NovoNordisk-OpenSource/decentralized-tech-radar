@@ -1,5 +1,6 @@
 define([
   'd3',
+  'lodash',
   '../models/radar.js',
   '../models/quadrant.js',
   '../models/ring.js',
@@ -7,7 +8,7 @@ define([
   '../graphing/radar.js',
   '../config.js',
   '../graphing/config.js'
-], function(d3, Radar, Quadrant, Ring, Blip, GraphingRadar, configFuntion, config) {
+], function(d3, _, Radar, Quadrant, Ring, Blip, GraphingRadar, configFuntion, config) {
   
   const featureToggles = configFuntion().featureToggles;
   const { getGraphSize, graphConfig } = config;

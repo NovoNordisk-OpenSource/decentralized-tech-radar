@@ -29,14 +29,13 @@ func FetchFiles(url, branch, specFile string) error {
 	}
 
 	for _, path := range paths {
-	
-    var fileName []string 
-    if runtime.GOOS == "windows" {
-      fileName = strings.Split(path, "\\")
-    } else {
-      fileName = strings.Split(path, "/")
-    }
-		
+		var fileName []string
+		if runtime.GOOS == "windows" {
+			fileName = strings.Split(path, "\\")
+		} else {
+			fileName = strings.Split(path, "/")
+		}
+
 		if _, ok := seenFolders[fileName[0]]; !ok {
 			seenFolders[fileName[0]] = ""
 		}

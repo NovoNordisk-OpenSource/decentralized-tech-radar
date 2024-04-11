@@ -40,6 +40,7 @@ func cleanUp() {
 	os.Remove("testFile1.csv")
 	os.Remove("testFile2.csv")
 	os.Remove("Merged_file.csv")
+	os.RemoveAll("./cache")
 }
 
 func TestGetHeader(t *testing.T) {
@@ -81,6 +82,40 @@ func TestMergeCSV(t *testing.T) {
 	err := MergeCSV(TestFiles)
 	if err != nil {
 		t.Fatalf("MergeCSV gave an error: %v", err)
+	}
+
+	// Check that file exists
+	_, err = os.Stat("Merged_file.csv")
+	if os.IsNotExist(err) {
+		t.Fatal("Merged_file.csv was not found")
+	}
+
+	// Check that file is merged correctly
+	content, err := os.ReadFile("Merged_file.csv")
+	if err != nil {
+		t.Fatalf("Merged_file.csv could not be read: %v", err)
+	}
+
+	contentStr := string(content)
+	if !strings.Contains(contentStr, correctMerge) {
+		t.Errorf("Merged file doesn't contain the expected data\nContained:\n%s", contentStr)
+	}
+}
+
+func TestMergeFromFolder(t *testing.T) {
+	createCsvFiles()
+	defer cleanUp()
+
+	err := os.Mkdir("cache", 0700)
+	if err != nil {
+		t.Fatal(err)
+	}
+	os.Rename(TestFiles[0], "./cache/"+TestFiles[0])
+	os.Rename(TestFiles[1], "./cache/"+TestFiles[1])
+
+	err = MergeFromFolder("./cache")
+	if err != nil {
+		t.Fatal(err)
 	}
 
 	// Check that file exists

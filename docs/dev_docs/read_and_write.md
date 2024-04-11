@@ -8,6 +8,8 @@ Technologies for the radar (or blips) are stored in the program using structs. T
 For reading spec files in csv format, the `ReadCsvSpec` function is used. Since we know the structure of our data we can predefine our structs to fit that structure.  
 By using the [gocarina/gocsv](https://github.com/gocarina/gocsv) module we can  unmarshal the csv file. Taking the csv file and turning it into our data structure.
 
+For reading spec files in csv format and then change it into a string, the `CsvToString` is used. The purpose is for giving the csv data to the javascripts. The data given is then injected into html. This data is used for the javascript and is therefor hidden in the html.
+
 # Writing
 **Will be rewritten**  
 This opens a index.html file, and if an index.html file doesn't exists, it creates it. It also removes any old index.html files if there are any.  

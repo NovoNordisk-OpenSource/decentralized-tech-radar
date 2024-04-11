@@ -37,8 +37,8 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	specFile := "specfile.txt"
 
 	err := FetchFiles(url, branch, specFile)
-  
-  if err != nil {
+
+	if err != nil {
 		t.Errorf("FetchFiles returned an err %v", err)
 	}
 
@@ -51,7 +51,6 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to open template.csv. %v", err.Error())
 	}
-	defer file.Close()
 	scanner := bufio.NewScanner(file)
 
 	template_lines := []string{}
@@ -60,13 +59,13 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	}
 
 	expected_lines := []string{"name,ring,quadrant,isNew,move,description",
-	"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-	"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-	"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
+		"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+		"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
+		"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
 
 	for i := range expected_lines {
 		if !(expected_lines[i] == template_lines[i]) {
-			t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v",expected_lines[i], template_lines[i])
+			t.Errorf("Mismatch in downloaded file. Expected: %v \n Retrieved: %v", expected_lines[i], template_lines[i])
 		}
 	}
 }

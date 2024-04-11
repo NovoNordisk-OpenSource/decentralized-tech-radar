@@ -1,12 +1,12 @@
 package test
 
 import (
-	"os"
-	"strings"
-	"testing"
 	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
+	"os"
+	"strings"
+	"testing"
 )
 
 // Test Set up
@@ -40,7 +40,9 @@ func CleanUp() {
 	os.Remove(testFileName + "2.csv")
 	os.Remove("index.html")
 	os.Remove("Merged_file.csv")
-	
+	os.Remove("test/cache/")
+	os.Remove("test/specfile.txt")
+
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
 }

@@ -1,8 +1,10 @@
 # Welcome to Tech_Radar quickstart guide
 In this guide you will find the essential commands for the program. The program is split into 3 primary commands: Fetcher, Merger, and generator
 
-Legend for this guide:  
-When running commands you will see <...> anything inside these are required arguments whilst anything inside [...] means optional extra arguments
+## Legend for this guide
+When running commands, you will see...
+**<...>** : Arrows indicate required arguments.
+**[...]** : Square-brackets indicate optional arguments.
 
 ## The Fetcher
 The fetcher will fetch files from one or more repositories (depending on amount of arguments given). It will then run through those files and cache them if they are CSV files.  

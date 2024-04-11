@@ -5,9 +5,6 @@ import (
 	"os/exec"
 	"strings"
 	"testing"
-
-	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
-	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 // End-to-end test
@@ -17,8 +14,8 @@ func TestEndToEnd(t *testing.T) {
 	defer CleanUp()
 
 	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName + "1.csv")
-	html.GenerateHtml(specs)
+	// specs := Reader.ReadCsvSpec(testFileName + "1.csv")
+	// html.GenerateHtml(specs)
 
 	// Start program using CLI arguments
 	os.Args = []string{"cmd", testFileName + "1.csv"}

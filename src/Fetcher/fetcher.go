@@ -9,6 +9,7 @@ import (
 	"runtime"
 	"strings"
 
+
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
@@ -53,10 +54,10 @@ func FetchFiles(url, branch, specFile string) error {
 	}
 
 	for folder, _ := range seenFolders {
-        if folder != "cache" {
-            os.RemoveAll(("./" + folder))
-        }
-    }
+		if folder != "cache" {
+			os.RemoveAll(("./" + folder))
+		}
+	}
 
 	return nil
 }

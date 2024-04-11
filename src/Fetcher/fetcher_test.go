@@ -25,7 +25,7 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 
 func TestFetchFilesValidArguments(t *testing.T) {
 	defer os.Remove("specfile.txt")
-	defer os.RemoveAll("./cache")
+	defer os.RemoveAll("./cache/")
 	defer DotGitDelete()
 
 	// dev repo link and create specfile
@@ -72,9 +72,10 @@ func TestFetchFilesValidArguments(t *testing.T) {
 func TestListingReposForFetch(t *testing.T) {
 	defer os.RemoveAll("./README.md")
 	defer os.RemoveAll("./TestingTextFile.txt")
-	defer os.RemoveAll("./cache")
+	defer os.RemoveAll("./cache/")
+	//syscall.Rmdir(dirName)
 	defer DotGitDelete()
-
+	
 	// Creates a text file named "TestingTextFile.txt" to hold a temporary
 	// list of repo specifications for testing the ListingReposForFetch function
 	textFile, errCreate := os.Create("./TestingTextFile.txt")
@@ -99,14 +100,10 @@ func TestListingReposForFetch(t *testing.T) {
 	branch3 := "main"
 	specFile3 := "./TestingTextFile.txt"
 
-	var repos []Repo
-	repo := Repo{url, branch, specFile}
-	repo2 := Repo{url2, branch2, specFile2}
-	repo3 := Repo{url3, branch3, specFile3}
-
-	repos = append(repos, repo, repo2, repo3)
+	repos := []string {url, branch, specFile, url2, branch2, specFile2, url3, branch3, specFile3}
 
 	err := ListingReposForFetch(repos)
+
 	textFile.Close()
 
 	//check if the error message is as expected.

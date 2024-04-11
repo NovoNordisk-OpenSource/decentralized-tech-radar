@@ -17,6 +17,9 @@ import (
 // 					Python;python3,py
 // 					`
 
+// Map of alternative names for the same blip
+var alt_names = make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+
 // Checks that the given string matches the defined header of the specfile
 func checkHeader(header string) bool {
 	correctHeader := "name,ring,quadrant,isNew,moved,description"
@@ -101,21 +104,24 @@ func Verifier (filepaths ... string) error {
 			duplicateRemoval(filepath, name, line, tempfile)
 			
 		}
+		file.Close()
+		tempfile.Close()
+		err = os.Rename("tempfile.csv", filepath)
+		if err != nil {
+			panic(err)
+		}
 	}
+	
 	return nil
 }
+
+// Map functions as a set (name -> ring)
+var set = make(map[string][]string)
 
 func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")
-
-	alt_names := make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
-	alt_names["python3"] = "Python"
-
-	// Map functions as a set (name -> ring)
-	set := make(map[string][]string)
-
 
 	real_name := name
 	if alt_names[name] != "" {
@@ -135,6 +141,5 @@ func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
 		tempfile.WriteString(line+"\n")
 	}
 	// Overwrite filepath with tempfile (has the removed changes)
-	os.Rename("tempfile.csv", filepath)
 	return nil
 }

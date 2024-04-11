@@ -9,21 +9,19 @@ import (
 
 var csvfile1 string = `name,ring,quadrant,isNew,moved,description
 Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Tool,false,2,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing`
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
 
 var csvfile2 string = `name,ring,quadrant,isNew,moved,description
-Python,Halt,Language,false,0,Its a programming Language
-Visual Studio,Trial,Tool,false,1,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing`
+Python,Hold,Language,false,0,Its a programming Language
+Visual Studio,Trial,Infrastructure,false,1,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
 
 var correctMerge string = `name,ring,quadrant,isNew,moved,description
 Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Tool,false,2,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing
-Python,Halt,Language,false,0,Its a programming Language
-Visual Studio,Trial,Tool,false,1,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing`
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
+Python,Hold,Language,false,0,Its a programming Language`
 
 var TestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
 
@@ -62,8 +60,8 @@ func TestReadCsvContent(t *testing.T) {
 	defer cleanUp()
 
 	correctContent := `Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Tool,false,2,An IDE
-Dagger IO,Assess,Tool,true,1,Its a workflow thing
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
 `
 	readContent, err := readCsvContent("testFile1.csv")
 	if err != nil {

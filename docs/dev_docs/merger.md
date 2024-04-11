@@ -26,3 +26,7 @@ The merger currently has three functions:
 * `MergeCSV(filepaths []string, header string) error`
   * **What it is:** A public function taking two arguments: An Array of data type string, and a string. It returns nothing.
   * **What it does:** If Merged_file.csv already exists, this is removed. Then it uses `readCsvContent()` to read each provided csv-file, writing each file's contents line by line into one new Merged_file.csv. These are read and written in the order of the file-paths provided.
+  
+* `MergeFromFolder(folderPath string) error`
+  * **What it is**: A public function that takes one argument: A path to a folder, which in the default case, when adding the cache flag, is the cache folder itself.
+  * **What it does**: If the cache folder exists, it reads all files from said folder, and appends them to cachePaths. It then checks whether or not cachePaths contain anything, and if so, merges the file with `MergeCSV(cachePaths)`.

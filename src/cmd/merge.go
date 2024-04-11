@@ -12,7 +12,7 @@ import (
 
 // mergeCmd represents the merge command
 var mergeCmd = &cobra.Command{
-	Use:   "merge \"<FilePath1> <FilePath2> [FilePath3, ...]\"",
+	Use:   "merge <FilePath1> <FilePath2> [FilePath3] ...",
 	Short: "This command merges one or more CSV-files into one.",
 	Long: `This command reads data from each provided CSV-file and writes the data into a singular file in the order given as arguments.
 	

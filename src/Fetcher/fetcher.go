@@ -1,12 +1,16 @@
 package Fetcher
 
 import (
+	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
 func FetchFiles(url, branch, specFile string) error {
@@ -36,7 +40,17 @@ func FetchFiles(url, branch, specFile string) error {
 		if _, ok := seenFolders[fileName[0]]; !ok {
 			seenFolders[fileName[0]] = ""
 		}
+
+		
 		os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
+		
+		// Runs verifier on downloaded file to remove duplicates and ensure data integrity
+		
+		file := "./cache/"+fileName[len(fileName)-1]
+		err := Verifier.Verifier(file)
+		if err != nil {
+			fmt.Printf("File has problems not correctly formatted CSV file: "+file +"\ncontinuing to next file")
+		}
 	}
 
 	for folder, _ := range seenFolders {
@@ -130,7 +144,8 @@ func puller(url, branch, specFile string) ([]string, error) {
 		if e != nil {
 			return e
 		}
-		if strings.Split(str, "/")[0] != "cache" {
+		path_seg := strings.Split(str, "/")
+		if path_seg[0] != "cache" {
 			if filepath.Ext(dir.Name()) == ".csv" {
 				paths = append(paths, str)
 			}

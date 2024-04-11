@@ -20,3 +20,7 @@ GoLang's own site on this package: https://pkg.go.dev/html/template
 
 Currently it can convert data from a CLI command to html.
 
+go run "<Url> <branch> <filepath>"
+
+example 
+go run "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar main whitelist.txt"

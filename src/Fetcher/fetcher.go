@@ -12,12 +12,6 @@ import (
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
-type Repo struct {
-	URL      string
-	Branch   string
-	SpecFile string
-}
-
 func FetchFiles(url, branch, specFile string) error {
 	defer DotGitDelete()
 
@@ -68,9 +62,9 @@ func FetchFiles(url, branch, specFile string) error {
 	return nil
 }
 
-func ListingReposForFetch(repos []Repo) error {
-	for _, repo := range repos {
-		err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile)
+func ListingReposForFetch(repos []string) error {
+	for i := 0; i < len(repos); i += 3 {
+		err := FetchFiles(repos[i], repos[i+1], repos[i+2])
 		if err != nil {
 			return err
 		}

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
 func getHeader(filepath string) ([]byte, error) {
@@ -77,6 +78,13 @@ func MergeFromFolder(folderPath string) error {
 func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
+
+	// Run verifier on files
+
+	err := Verifier.Verifier(filepaths...)
+	if err != nil {
+		panic(err)
+	}
 
 	// Add header to buffer
 	header, err := getHeader(filepaths[0])

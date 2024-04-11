@@ -1,7 +1,6 @@
 package test
 
-/*
-import (
+/*import (
 	"os"
 	"os/exec"
 	"strings"
@@ -64,7 +63,7 @@ func TestEndToEnd(t *testing.T) {
 			<li>Desc: This is a description</li>
 
 			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
+			<li>Quadrant: Infrastructure</li>
 			<li>Ring: Adopt</li>
 			<li>Is new: false</li>
 			<li>Moved: 0</li>
@@ -78,7 +77,7 @@ func TestEndToEnd(t *testing.T) {
 			<li>Desc: This is a description</li>
 
 			<li>Name: TestBlip4</li>
-			<li>Quadrant: Tool</li>
+			<li>Quadrant: Infrastructure</li>
 			<li>Ring: Adopt</li>
 			<li>Is new: false</li>
 			<li>Moved: 0</li>

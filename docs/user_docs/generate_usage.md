@@ -11,5 +11,5 @@ When wanting to generate html from a CSV file, then simply give the file path to
 
 The command for generating is:
 ```
-go run main.go generate <csvFile>
+go run main.go generate <csvFilePath>
 ```

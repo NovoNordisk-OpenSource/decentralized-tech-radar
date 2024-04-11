@@ -17,7 +17,7 @@ var generateCmd = &cobra.Command{
 The FilePath refers to the designated path. An example would be: 'C://Program/MyCSVFile.csv'`,
 	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		specs := Reader.ReadCsvSpec(args[0])
+		specs := Reader.CsvToString(args[0])
 		html.GenerateHtml(specs)
 	},
 }

@@ -40,8 +40,8 @@ func CleanUp() {
 	os.Remove(testFileName + "2.csv")
 	os.Remove("index.html")
 	os.Remove("Merged_file.csv")
-	os.Remove("test/cache/")
-	os.Remove("test/specfile.txt")
+	os.RemoveAll("cache/")
+	os.Remove("specfile.txt")
 
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")

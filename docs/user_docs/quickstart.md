@@ -1,5 +1,5 @@
 # Welcome to Tech_Radar quickstart guide
-In this guide you will find the essential commands for the program. The program is split into 3 primary commands: Fetcher, Merger, and generator
+In this guide you will find the essential commands for the program. The program is split into 3 primary commands: Fetcher, Merger, and Generator.
 
 ## Legend for this guide
 When running commands, you will see...

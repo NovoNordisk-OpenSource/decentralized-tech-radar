@@ -7,7 +7,7 @@ The **Decentralized Tech Radar** has a Generate feature to make html from CSV sp
 
 ## How to use
 
-When wanting to generate html from a CSV file, then simple give the file path to that same file in the generate command.
+When wanting to generate html from a CSV file, then simply give the file path to that same file in the generate command.
 
 The command for generating is:
 ```

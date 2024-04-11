@@ -54,6 +54,8 @@ func checkDataLine(data string) bool {
 }
 
 func Verifier (filepaths ... string) error {
+	// Map functions as a set (name -> ring)
+	var set = make(map[string][]string)
 	for _, filepath := range filepaths {
 		file, err := os.Open(filepath)
 		if err != nil {
@@ -101,7 +103,7 @@ func Verifier (filepaths ... string) error {
 				name = line[:index]
 			} 
 
-			duplicateRemoval(filepath, name, line, tempfile)
+			duplicateRemoval(name, line, tempfile, set)
 			
 		}
 		file.Close()
@@ -115,10 +117,7 @@ func Verifier (filepaths ... string) error {
 	return nil
 }
 
-// Map functions as a set (name -> ring)
-var set = make(map[string][]string)
-
-func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
+func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]string) error {
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")

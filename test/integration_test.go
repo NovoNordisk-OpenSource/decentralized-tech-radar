@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 	"testing"
-	html "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/HTML"
-	"github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/Merger"
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
+  "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
+	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
+	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 // Test Set up

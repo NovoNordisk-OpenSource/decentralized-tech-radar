@@ -34,7 +34,7 @@ func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 	createCsvFiles(csvfile1)
 	defer cleanUp()
 
-	Verifier("./testFile1.csv", "./testFile2.csv")
+	DuplicateRemoval("./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {

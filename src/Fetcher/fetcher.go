@@ -44,8 +44,7 @@ func FetchFiles(url, branch, specFile string) error {
 		
 		os.Rename(path, ("cache/" + fileName[len(fileName)-1]))
 		
-		// Runs verifier on downloaded file to remove duplicates and ensure data integrity
-		
+		// Runs data integrity verifier on downloaded file
 		file := "./cache/"+fileName[len(fileName)-1]
 		err := Verifier.Verifier(file)
 		if err != nil {

@@ -79,9 +79,14 @@ func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 	var buf bytes.Buffer
 
-	// Run verifier on files
-
+	// Run data verifier on files
 	err := Verifier.Verifier(filepaths...)
+	if err != nil {
+		panic(err)
+	}
+
+	// Run duplicate removal on files
+	err = Verifier.DuplicateRemoval(filepaths...)
 	if err != nil {
 		panic(err)
 	}

@@ -37,11 +37,11 @@ func TestGenerateHtml(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Could not read the generated HTML file: %v", err)
 	}
-	
+
 	//convert content to string and check if contains the test data
 	contentStr := string(content)
 	if !strings.Contains(contentStr, "Test name") ||
-	!strings.Contains(contentStr, "Test quadrant") {
+		!strings.Contains(contentStr, "Test quadrant") {
 		t.Errorf("HTML doesn't contain the expected data.")
 	}
 

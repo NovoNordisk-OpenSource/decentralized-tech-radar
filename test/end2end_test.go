@@ -5,9 +5,9 @@ import (
 	"os/exec"
 	"strings"
 	"testing"
+
 	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
 	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
-
 )
 
 // End-to-end test

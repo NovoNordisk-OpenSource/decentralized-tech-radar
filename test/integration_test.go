@@ -4,8 +4,9 @@ import (
 	"os"
 	"strings"
 	"testing"
-  "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
+  
 	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 

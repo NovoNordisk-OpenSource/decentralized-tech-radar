@@ -1,0 +1,4 @@
+name,ring,quadrant,isNew,moved,description
+Go,Adopt,Language,true,0,Its a programming Language
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow

@@ -1,12 +1,12 @@
 package test
 
 import (
-	"os"
-	"strings"
-	"testing"
 	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
+	"os"
+	"strings"
+	"testing"
 )
 
 // Test Set up
@@ -14,20 +14,14 @@ var testFileName string = "ForTesting"
 
 var csvTestString1 string = `name,ring,quadrant,isNew,moved,description
 TestBlip1,Assess,Language,true,1,This is a description
-TestBlip2,Adopt,Tool,false,0,Also a description`
+TestBlip2,Adopt,Infrastructure,false,0,Also a description`
 
 var csvTestString2 string = `name,ring,quadrant,isNew,moved,description
 TestBlip3,Assess,Language,true,1,This is a description
-TestBlip4,Adopt,Tool,false,0,Also a description`
-// Test Set up
-var csvTestString string = `name,ring,quadrant,isNew,moved,description
-TestBlip1,Assess,Language,true,1,This is a description
-TestBlip2,Adopt,Tool,false,0,Also a description`
+TestBlip4,Adopt,Infrastructure,false,0,Also a description`
 
 // Tests
 // Integration test
-
-
 func check(e error) {
 	if e != nil {
 		panic(e)
@@ -46,7 +40,9 @@ func CleanUp() {
 	os.Remove(testFileName + "2.csv")
 	os.Remove("index.html")
 	os.Remove("Merged_file.csv")
-	
+	os.RemoveAll("cache/")
+	os.Remove("specfile.txt")
+
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
 	os.RemoveAll("cache")
@@ -80,35 +76,20 @@ func TestReaderAndWriter(t *testing.T) {
 	defer CleanUp()
 
 	// Read test file
-	specs := Reader.ReadCsvSpec(testFileName + "1.csv")
+	specs := Reader.CsvToString(testFileName + "1.csv")
 	html.GenerateHtml(specs)
 
-	correctHTML := `<html>
-	<head>
-		<title>Header 1</title>
-	</head>
-	<body>
-		<h1 class="pageTitle">Header 1</h1>
-		<ul>
-			
-			<li>Name: TestBlip1</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
-			
-			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
-			
-		</ul>
-	</body>
-</html>`
-	AssertIndexHTML(t, correctHTML)
+	// Read index.html
+	indexHTMLContent, err := os.ReadFile("index.html")
+	if err != nil {
+		t.Fatalf("Failed to read index.html: %v", err)
+	}
+
+	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\nTestBlip1,Assess,Language,true,1,This is a description\nTestBlip2,Adopt,Infrastructure,false,0,Also a description").build();`
+
+	if !strings.Contains(string(indexHTMLContent), stringToCheck) {
+		t.Errorf("The content of HTML does not contain %s", stringToCheck)
+	}
 }
 
 func TestMerger2Reader2Writer(t *testing.T) {
@@ -128,49 +109,20 @@ func TestMerger2Reader2Writer(t *testing.T) {
 	}
 
 	// Read merged file
-	specs := Reader.ReadCsvSpec("Merged_file.csv")
+	specs := Reader.CsvToString("Merged_file.csv")
 
 	// Generate html
 	html.GenerateHtml(specs)
 
-	correctHTML := `<html>
-	<head>
-		<title>Header 1</title>
-	</head>
-	<body>
-		<h1 class="pageTitle">Header 1</h1>
-		<ul>
-			
-			<li>Name: TestBlip1</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
-			
-			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
-			
-			<li>Name: TestBlip3</li>
-			<li>Quadrant: Language</li>
-			<li>Ring: Assess</li>
-			<li>Is new: true</li>
-			<li>Moved: 1</li>
-			<li>Desc: This is a description</li>
-			
-			<li>Name: TestBlip4</li>
-			<li>Quadrant: Tool</li>
-			<li>Ring: Adopt</li>
-			<li>Is new: false</li>
-			<li>Moved: 0</li>
-			<li>Desc: Also a description</li>
-			
-		</ul>
-	</body>
-</html>`
-	AssertIndexHTML(t, correctHTML)
+	// Read index.html
+	indexHTMLContent, err := os.ReadFile("index.html")
+	if err != nil {
+		t.Fatalf("Failed to read index.html: %v", err)
+	}
+	
+	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\nTestBlip1,Assess,Language,true,1,This is a description\nTestBlip2,Adopt,Infrastructure,false,0,Also a description\nTestBlip3,Assess,Language,true,1,This is a description\nTestBlip4,Adopt,Infrastructure,false,0,Also a description\n").build();`
+
+	if !strings.Contains(string(indexHTMLContent), stringToCheck) {
+		t.Errorf("The content of HTML does not contain %s", stringToCheck)
+	}
 }

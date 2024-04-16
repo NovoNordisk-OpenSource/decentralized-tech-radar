@@ -5,7 +5,9 @@ data/
 truckconfig.json
 src/Fetcher/*.txt
 src/cache
-
+test/cache
+test/specfile.txt
+**/Merged_file.csv
 
 # https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 .vscode/*
@@ -14,6 +16,7 @@ src/cache
 !.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
+.vscode/
 
 # Local History for Visual Studio Code
 .history/

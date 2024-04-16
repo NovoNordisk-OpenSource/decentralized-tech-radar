@@ -37,8 +37,8 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	specFile := "specfile.txt"
 
 	err := FetchFiles(url, branch, specFile)
-  
-  if err != nil {
+
+	if err != nil {
 		t.Errorf("FetchFiles returned an err %v", err)
 	}
 
@@ -51,7 +51,9 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to open template.csv. %v", err.Error())
 	}
+
 	defer file.Close()
+
 	scanner := bufio.NewScanner(file)
 
 	template_lines := []string{}

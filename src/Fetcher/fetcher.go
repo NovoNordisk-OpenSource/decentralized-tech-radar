@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
@@ -87,6 +88,8 @@ func ListingReposForFetch(repos []string) error {
 	for i := 0; i < len(repos); i += 3 {
 		go FetchFiles(repos[i], repos[i+1], repos[i+2], channel)
 	}
+	progressCh := make(chan int)
+	go progressBar(progressCh)
 	for i := 0; i < len(repos)/3; i++ {
 		err := <- channel
 		if err != nil {
@@ -94,6 +97,15 @@ func ListingReposForFetch(repos []string) error {
 		}
 	}
 	return nil
+}
+
+func progressBar(ch chan int) {
+	for {
+		for _, r := range `-\|/` {
+			fmt.Printf("\r%c", r)
+			time.Sleep(100 * time.Millisecond)
+		}
+	}
 }
 
 func errHandler(err error, params ...string) {

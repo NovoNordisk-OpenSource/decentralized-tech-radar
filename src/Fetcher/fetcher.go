@@ -16,6 +16,7 @@ import (
 )
 
 var token sync.Mutex
+var finished int
 
 func FetchFiles(url, branch, specFile string, ch chan error ) {
 	// Pulls files and returns the paths to said files
@@ -88,21 +89,30 @@ func ListingReposForFetch(repos []string) error {
 	for i := 0; i < len(repos); i += 3 {
 		go FetchFiles(repos[i], repos[i+1], repos[i+2], channel)
 	}
-	progressCh := make(chan int)
-	go progressBar(progressCh)
+	finished = 0
+	go progressBar(len(repos)/3)
 	for i := 0; i < len(repos)/3; i++ {
 		err := <- channel
 		if err != nil {
 			return err
 		}
+		finished++
 	}
 	return nil
 }
 
-func progressBar(ch chan int) {
+func progressBar(numOfFiles int) {
+	progressBar := []string{}
+	for i := 0; i < numOfFiles; i++ {
+		progressBar = append(progressBar, ".")
+	}
 	for {
 		for _, r := range `-\|/` {
-			fmt.Printf("\r%c", r)
+			for i := 0; i < finished; i++ {
+				progressBar[i] = "#"
+			}
+			percent_fin := float32(finished) / float32(numOfFiles) * 100.0
+			fmt.Printf("\r%c [%s] %d%%", r, strings.Join(progressBar, ""), int32(percent_fin))
 			time.Sleep(100 * time.Millisecond)
 		}
 	}

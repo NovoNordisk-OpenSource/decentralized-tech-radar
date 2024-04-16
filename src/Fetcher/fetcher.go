@@ -9,9 +9,12 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
+
+var token sync.Mutex
 
 func FetchFiles(url, branch, specFile string, ch chan error ) {
 	// Pulls files and returns the paths to said files
@@ -35,6 +38,7 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 		// Handle renaming even when two files have the same name, by adding a number to the end
 		i := 0
 		var newFileName string
+		token.Lock()
 		for {
 			fileName := fileNamePath[len(fileNamePath)-1]
 			if i == 0 { // Don't add a 0 to filename
@@ -48,6 +52,7 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 				if err != nil {
 					panic(err)
 				}
+				token.Unlock()
 				break
 			}
 			i++
@@ -83,7 +88,6 @@ func ListingReposForFetch(repos []string) error {
 		go FetchFiles(repos[i], repos[i+1], repos[i+2], channel)
 	}
 	for i := 0; i < len(repos)/3; i++ {
-		fmt.Println("Here")
 		err := <- channel
 		if err != nil {
 			return err

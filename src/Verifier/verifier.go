@@ -130,9 +130,9 @@ func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]str
 
 	if set[name] != nil {
 		// Skips the name + first comma and does the same forward search for next comma
-		ring := strings.ToLower(line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1])
-		if !(slices.Contains(set[name], ring)) {
-			set[name] = append(set[name],ring)
+		quad := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
+		if !(slices.Contains(set[name], quad)) {
+			set[name] = append(set[name],quad)
 			tempfile.WriteString(line+"\n")	
 		}
 	} else {

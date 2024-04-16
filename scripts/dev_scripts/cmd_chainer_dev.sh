@@ -25,7 +25,7 @@ fi
 # Converts the URL to an array
 strarr=($URL)
 
-cd ../src
+cd ../../src
 
 if [ -z "$Specfile" ]; then
     touch specfile.txt
@@ -44,20 +44,17 @@ for url in ${strarr[@]}; do
     i=$i+3
 done
 
-# Convert the array to a string
-urlstr="${strarr[*]}"
-
 # Fetch the csv file from the remote repository(s)
-go run main.go --fetch "${urlstr}"
+go run main.go fetch "${strarr[@]}"
 
 # ls the cache directory and get the csv files
 # it gets converted to an array and then to a string (don't question it)
-csvfiles=$(ls ./cache/*.csv)
-csvfiles=($csvfiles)
-csvfiles=${csvfiles[*]}
+# csvfiles=$(ls ./cache/*.csv)
+# csvfiles=($csvfiles)
+
 
 # Merge the csv files
-go run main.go --merge "${csvfiles}"
+go run main.go merge --cache
 
 # Render the csv file to a html file
-go run main.go --file "./Merged_file.csv"
+go run main.go generate "./Merged_file.csv"

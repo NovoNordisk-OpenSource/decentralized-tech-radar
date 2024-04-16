@@ -8,11 +8,11 @@ define([
   '../graphing/radar.js',
   '../config.js',
   '../graphing/config.js'
-], function(d3, _, Radar, Quadrant, Ring, Blip, GraphingRadar, configFuntion, config) {
+], function fac(d3, _, Radar, Quadrant, Ring, Blip, GraphingRadar, configFunction, config) {
   
-  const featureToggles = configFuntion().featureToggles;
+  const featureToggles = configFunction().featureToggles;
   const { getGraphSize, graphConfig } = config;
-
+  
   const plotRadar = function (blips, currentRadarName) {
     
     document.title = "plotRaderTitle"
@@ -128,3 +128,4 @@ define([
 
   return Factory
 });
+

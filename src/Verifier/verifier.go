@@ -17,6 +17,9 @@ import (
 // 					Python;python3,py
 // 					`
 
+// Map of alternative names for the same blip
+var alt_names = make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+
 // Checks that the given string matches the defined header of the specfile
 func checkHeader(header string) bool {
 	correctHeader := "name,ring,quadrant,isNew,moved,description"
@@ -31,8 +34,8 @@ var regexPattern *regexp.Regexp = nil
 func createRegexPattern(ring1, ring2, ring3, ring4 string) {
 	var err error
 	regexPattern, err = regexp.Compile(fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),-?[0123],(([^,\n])([^,\n])*)",
-								strings.ToUpper(ring1[:1]), strings.ToLower(ring1[1:]), strings.ToUpper(ring2[:1]), strings.ToLower(ring2[1:]), 
-								strings.ToUpper(ring3[:1]), strings.ToLower(ring3[1:]), strings.ToUpper(ring4[:1]), strings.ToLower(ring4[1:])))
+								strings.ToUpper(ring1[:1]) + strings.ToLower(ring1[:1]), ring1[1:], strings.ToUpper(ring2[:1]) + strings.ToLower(ring2[:1]), ring2[1:], 
+								strings.ToUpper(ring3[:1]) + strings.ToLower(ring3[:1]), ring3[1:], strings.ToUpper(ring4[:1]) + strings.ToLower(ring4[:1]), ring4[1:]))
 	if err != nil {
 		panic(err)
 	}
@@ -51,6 +54,8 @@ func checkDataLine(data string) bool {
 }
 
 func Verifier (filepaths ... string) error {
+	// Map functions as a set (name -> ring)
+	var set = make(map[string][]string)
 	for _, filepath := range filepaths {
 		file, err := os.Open(filepath)
 		if err != nil {
@@ -98,24 +103,24 @@ func Verifier (filepaths ... string) error {
 				name = line[:index]
 			} 
 
-			duplicateRemoval(filepath, name, line, tempfile)
+			duplicateRemoval(name, line, tempfile, set)
 			
 		}
+		file.Close()
+		tempfile.Close()
+		err = os.Rename("tempfile.csv", filepath)
+		if err != nil {
+			panic(err)
+		}
 	}
+	
 	return nil
 }
 
-func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
+func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]string) error {
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")
-
-	alt_names := make(map[string]string)//{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
-	alt_names["python3"] = "Python"
-
-	// Map functions as a set (name -> ring)
-	set := make(map[string][]string)
-
 
 	real_name := name
 	if alt_names[name] != "" {
@@ -125,7 +130,7 @@ func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
 
 	if set[name] != nil {
 		// Skips the name + first comma and does the same forward search for next comma
-		ring := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
+		ring := strings.ToLower(line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1])
 		if !(slices.Contains(set[name], ring)) {
 			set[name] = append(set[name],ring)
 			tempfile.WriteString(line+"\n")	
@@ -135,6 +140,5 @@ func duplicateRemoval(filepath, name, line string, tempfile *os.File) error {
 		tempfile.WriteString(line+"\n")
 	}
 	// Overwrite filepath with tempfile (has the removed changes)
-	os.Rename("tempfile.csv", filepath)
 	return nil
 }

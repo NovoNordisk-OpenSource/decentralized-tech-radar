@@ -5,26 +5,31 @@ import (
 	"strings"
 	"testing"
 
-	Reader "github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/SpecReader"
+	//Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 func TestGenerateHtml(t *testing.T) {
 	//set up data
-	blips := Reader.Blips{
-		Blips: []Reader.Blip{
-			{
-				Name:        "Test name",
-				Quadrant:    "Test quadrant",
-				Ring:        "Test ring",
-				IsNew:       true,
-				Moved:       0,
-				Description: "Test description",
-			},
-		},
-	}
+	// blips := Reader.Blips{
+	// 	Blips: []Reader.Blip{
+	// 		{
+	// 			Name:        "Test name",
+	// 			Quadrant:    "Test quadrant",
+	// 			Ring:        "Test ring",
+	// 			IsNew:       true,
+	// 			Moved:       0,
+	// 			Description: "Test description",
+	// 		},
+	// 	},
+	// }
 
 	//Generate the HTML file
-	GenerateHtml(blips)
+	csvData := `name,ring,quadrant,isNew,moved,description
+				testHold,Hold,data management,true,0,Test for hold
+				testAssess,Assess,language,true,3,Test for assess
+				testTrial,Trial,datastore,true,-2,Test for Trail
+				testAdopt,Adopt,data management,true,2,Test for Adopt`
+	GenerateHtml(csvData)
 
 	//check if the index.html was created
 	_, err := os.Stat(htmlFileName + ".html")
@@ -37,11 +42,11 @@ func TestGenerateHtml(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Could not read the generated HTML file: %v", err)
 	}
-	
+
 	//convert content to string and check if contains the test data
 	contentStr := string(content)
-	if !strings.Contains(contentStr, "Test name") ||
-	!strings.Contains(contentStr, "Test quadrant") {
+	if !strings.Contains(contentStr, "testHold,Hold,data management,true,0,Test for hold") ||
+		!strings.Contains(contentStr, "testTrial,Trial,datastore,true,-2,Test for Trail") {
 		t.Errorf("HTML doesn't contain the expected data.")
 	}
 

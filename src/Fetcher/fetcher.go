@@ -90,7 +90,17 @@ func ListingReposForFetch(repos []string) error {
 		go FetchFiles(repos[i], repos[i+1], repos[i+2], channel)
 	}
 	finished = 0
+
+	// Make sure we print 100% when everything is fetched
+	defer func(repos int) {
+		progressBar := make([]string, repos)
+		for i := 0; i < repos; i++ {
+			progressBar[i] = "#"
+		}
+		fmt.Printf("\r| [%s] %d%%", strings.Join(progressBar, ""), 100)
+	}(len(repos)/3)
 	go progressBar(len(repos)/3)
+
 	for i := 0; i < len(repos)/3; i++ {
 		err := <- channel
 		if err != nil {

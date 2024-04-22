@@ -4,8 +4,11 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"log"
+	"os"
+	"strings"
 
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Fetcher"
 	"github.com/spf13/cobra"
@@ -25,6 +28,12 @@ var fetchCmd = &cobra.Command{
 	//Args: cobra.MinimumNArgs(3),
 
 	Run: func(cmd *cobra.Command, args []string) {
+
+		// Set flags
+		filePath, err := rootCmd.Flags().GetString("repo-file")
+		if err != nil {
+			panic(err)
+		}
 		branch, err := rootCmd.Flags().GetString("branch")
 		if err != nil {
 			panic(err)
@@ -34,7 +43,43 @@ var fetchCmd = &cobra.Command{
 			panic(err)
 		}
 
-		if len(args)%3 != 0 && branch == "" && whitelist == "" {
+		// Check flags and adjust required arguments
+		requiredArgs := 3
+		if filePath != "" {
+
+			if branch != "" {
+				requiredArgs--
+			}
+			if whitelist != "" {
+				requiredArgs--
+			}
+			file, err := os.Open(filePath)
+			if err != nil {
+				panic(err)
+			}
+
+			defer file.Close()
+
+			// Read the file
+			// Check if the file is empty or incorrect amount of arguments
+			scanner := bufio.NewScanner(file)
+			scanner.Scan()
+			temp_args := strings.Split(strings.Trim(scanner.Text(), " \n"), " ")
+
+			if len(temp_args) == 0 || len(temp_args) != requiredArgs {
+				panic(fmt.Sprintf("file is empty or arguments is not the required amount -> %d", requiredArgs))
+			}
+
+			// Add the rest of the arguments
+			for scanner.Scan() {
+				text := strings.Split(scanner.Text(), " ")
+				temp_args = append(temp_args, text...)
+			}
+
+			args = temp_args
+		}
+
+		if len(args)%3 != 0 && branch == "" && whitelist == "" && filePath == "" {
 			panic("arguments is not divisable by 3")
 		}
 
@@ -89,4 +134,6 @@ func init() {
 
 	rootCmd.PersistentFlags().String("branch", "", "Branch name for all repositories")
 	rootCmd.PersistentFlags().String("whitelist", "", "Path to a whitelist file for all repositories")
+	rootCmd.PersistentFlags().String("repo-file", "", "Path to a file containing the list of repositories to fetch")
+
 }

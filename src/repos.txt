@@ -1,0 +1,2 @@
+https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar main ./Fetcher/specfile.txt
+https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar main ./Fetcher/specfile.txt

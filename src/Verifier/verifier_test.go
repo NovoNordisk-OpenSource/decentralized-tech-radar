@@ -55,6 +55,17 @@ func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 	}
 }
 
+func TestVerifier(t *testing.T) {
+	createCsvFiles(csvfile1)
+	defer cleanUp()
+
+	err := Verifier("./testFile1.csv")
+
+	if err != nil {
+		t.Fatalf("Verifier returned an error %v", err)
+	}
+}
+
 var csvfile2 string = `name,ring,quadrant,isNew,moved,description
 Go;Adopt?Language:true:0_Its a programming Language
 Visual Studio Code:Trial^Tool:false;2:An IDE

@@ -12,7 +12,7 @@ func FetchFiles(url, branch, specFile string) error
 ```
 
 ### Asynchronous
-The fetcher runs using go functions which means it runs asynchronously. This allows the fetcher to fetch from multiple repositories at the same time greatly decreasing the total running time on fetch calls with many repositories.
+The fetcher runs using Go functions, meaning it runs asynchronously. This allows simultaneous fetching of files from multiple repositories, greatly decreasing the total running time on fetch calls with many repositories.
 
 ### Automatic Caching
 The fetcher caches fetched CSV files in a folder named `cache`. The caching works for any folder depth so long as a CSV file is present

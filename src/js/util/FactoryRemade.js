@@ -11,7 +11,7 @@ define([
   ], function(d3, _, $, autocomplete, GraphingRadar, d3, d3tip) {
     
 
-    // THIS IS FOR CONFIG IN js/config.js
+    // ROOT JS:                     js/config.js 
 
     const mainConfig = () => {
         const env = {
@@ -48,7 +48,7 @@ define([
 
 
 
-    //THIS IS CONFIG FROM js/graphing/config.js
+    // MODELS:                      js/graphing/config.js
 
     const quadrantSize = 512
     const quadrantGap = 32
@@ -115,13 +115,14 @@ define([
     }
 
 
+  // MODELS:                      js/models/quadrant.js'
 
 
 
 
 
 
-    //THIS IS CONFIG FROM js/model/radar.js
+  // MODELS:                      js/models/radar.js'
 
     const Radar = function () {
         const featureToggles = mainConfig().featureToggles
@@ -271,7 +272,7 @@ define([
 
 
 
-    // THIS IS CONFIG FROM js/models/ring.js'
+    // THIS IS ring.js FROM js/models/ring.js'
 
     const Ring = function (name, order) {
         var self = {}
@@ -301,7 +302,7 @@ define([
 
 
 
-    // THIS IS CONFIG FROM js/models/blip.js'
+    // THIS IS blip.js FROM js/models/blip.js'
 
     const IDEAL_BLIP_WIDTH = 22
     const Blip = function (name, ring, isNew, topic, description) {
@@ -373,12 +374,18 @@ define([
 
 
 
-    // THIS IS UTIL FROM js/util/mathUtils.js
+    // THIS IS mathUtils.js FROM js/util/mathUtils.js
+
     function toRadian(angleInDegrees) {
       return (Math.PI * angleInDegrees) / 180
     }
 
-    //THIS IS UTIL FROM js/util/htmlUtils.js
+
+
+
+
+    //THIS IS htmlUtils.js FROM js/util/htmlUtils.js
+
     function getElementWidth(element) {
       return element.node().getBoundingClientRect().width
     }
@@ -392,7 +399,11 @@ define([
       return element.node().getBoundingClientRect().height
     }
 
-    // THIS IS UTIL FROM js/util/stringUtil.js
+
+
+
+    // THIS IS stringUtil.js FROM js/util/stringUtil.js
+
     function getRingIdString(ringName) {
       return ringName.replaceAll(/[^a-zA-Z0-9]/g, '-').toLowerCase()
     }
@@ -421,14 +432,8 @@ define([
 
 
 
-
-
-
-
-
-
-
   //THIS IS UTIL FROM js/components/quadrants.js
+
   // const { getElementWidth, getElementHeight, decodeHTML } = htmlUtil;
   // const { toRadian } = mathUtils;
   // const { getRingIdString } = stringUtil;
@@ -1004,16 +1009,16 @@ define([
 
 
     //THIS IS UTIL FROM js/components/quadrantTables.js
+    
+    //THIS IS UTIL FROM js/components/quadrantTables.js
+
+    // THIS IS COMING FROM js/graphing/blips.js
 
 
 
 
 
-    // THIS IS CONFIG FROM js/graphing/blips.js
-
-
-
-    // THIS IS CONFIG FROM js/graphing/radar.js
+    // THIS IS COMING FROM js/graphing/radar.js
 
 
 

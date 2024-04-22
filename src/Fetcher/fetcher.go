@@ -64,7 +64,7 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 		// file := "./cache/"+fileName[len(fileName)-1]
 		err = Verifier.Verifier(newFileName)
 		if err != nil {
-			fmt.Printf("File has problems not correctly formatted CSV file: "+newFileName +"\ncontinuing to next file")
+			fmt.Printf("CSV file contains incorrectly formatted content: "+newFileName +"\nContinuing to next file...")
 		}
 	}
 

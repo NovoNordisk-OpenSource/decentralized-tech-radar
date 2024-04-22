@@ -27,9 +27,10 @@ var fetchCmd = &cobra.Command{
 		if len(args) % 3 != 0 {
 			panic("arguments is not divisable by 3")
 		} 
+		fmt.Println("")
 		Fetcher.ListingReposForFetch(args)
 		
-		fmt.Println("fetch called")
+		fmt.Println("\nFetch complete.")
 	},
 }
 

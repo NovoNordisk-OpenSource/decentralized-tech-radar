@@ -4,9 +4,10 @@ import (
 	"os"
 	"os/exec"
 	"testing"
+	"strings"
 )
 
-/*
+
 // End-to-end test
 func TestEndToEnd(t *testing.T) {
 	// Set up
@@ -80,7 +81,7 @@ func TestEndToEnd(t *testing.T) {
 
 }
 
-*/
+
 func TestE2EUsingFetcherFlags(t *testing.T) {
 	// Set up
 	os.Create("specfile.txt")

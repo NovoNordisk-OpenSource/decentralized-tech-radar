@@ -8,15 +8,14 @@
 //jquery.ui (jquery-autocomplete)
 define([
     'd3',
-    'd3tip', 
+    'd3tip',
     'd3-collection',
     'd3-selection',
-    'chance',   
+    'chance',
     'lodash',
     'jquery',
     'jquery-autocomplete'
-  ], function fac(d3, d3tip, d3col, d3sel, chance, _, $, autocomplete) {
-
+  ], function myModule(d3, d3tip, d3col, d3sel, Chance, _, $, autocomplete) {
 // ROOT JS:                     js/config.js                                IN
     const mainConfig = () => {
         const env = {
@@ -137,13 +136,13 @@ define([
 
 // MODELS:                      js/models/radar.js'                         IN
     const Radar = function () {
-        const featureToggles = mainConfig().featureToggles
+        const featureToggles1 = mainConfig().featureToggles
 
         let self, quadrants, blipNumber, addingQuadrant, alternatives, currentSheetName, rings
 
         blipNumber = 0
         addingQuadrant = 0
-        quadrants = featureToggles.UIRefresh2022
+        quadrants = featureToggles1.UIRefresh2022
         ? [
             { order: 'first', startAngle: 0 },
             { order: 'second', startAngle: -90 },
@@ -208,7 +207,7 @@ define([
         }
 
         self.rings = function () {
-        if (featureToggles.UIRefresh2022) {
+        if (featureToggles1.UIRefresh2022) {
             return rings
         }
 
@@ -1163,7 +1162,7 @@ function renderQuadrantTables(quadrants, rings) {
 
 
 // GRAPHING:                    js/graphing/blips.js
-    const featureToggles = configFunction().featureToggles;
+    const featureToggles = mainConfig().featureToggles;
 
     const getRingRadius = function (ringIndex) {
     const ratios = [0, 0.316, 0.652, 0.832, 0.992]
@@ -1853,14 +1852,14 @@ function renderQuadrantTables(quadrants, rings) {
 
 
     // GRAPHING:                    js/graphing/radar.js
-        const renderQuadrantSubnav = quadrantSubnav;
-        const renderButtons = buttons;
-        const {
-        renderRadarQuadrants,
-        renderMobileView,
-        renderRadarLegends,
-        removeScrollListener,
-        } = quadrants;
+        // const renderQuadrantSubnav = quadrantSubnav;
+        // const renderButtons = buttons;
+        // const {
+        // renderRadarQuadrants,
+        // renderMobileView,
+        // renderRadarLegends,
+        // removeScrollListener,
+        // } = quadrants;
     
         const MIN_BLIP_WIDTH = 12
         //const ANIMATION_DURATION = 1000

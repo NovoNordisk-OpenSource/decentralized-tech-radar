@@ -36,5 +36,9 @@ The merger currently has three functions:
   * **What it does**: If the cache folder exists, it reads all files from said folder, and appends them to cachePaths. It then checks whether or not cachePaths contain anything, and if so, merges the file with `MergeCSV(cachePaths)`.
 
 * `DuplicateRemoval(filepaths ...string) error`
-  * **What it is:**: A public function that takes multiple filepaths to specfiles of type string
-  * **What it does**: Goes through the files given, removes duplicates, and overwrites the original file with a new file without the duplicates.
+  * **What it is:**: A public function that takes multiple filepaths to specfiles of type string.
+  * **What it does**: Goes through the files given line by line and calls `duplicateRemoval()` with each line.
+
+* `duplicateRemoval(name, line string, tempfile *os.File, set map[string][]string) error`
+  * **What it is**: A private function that takes a name of the blip in that line, the line, the tempfile for the current specfile, and the set for all the seen blips' names.
+  * **What it does**: Writes the line to the tempfile if the blip's name is not already in that quadrant. If the blip's name is already in the quadrant it is not added to the tempfile.

@@ -35,7 +35,7 @@ var fetchCmd = &cobra.Command{
 		}
 
 		if len(args)%3 != 0 && branch == "" && whitelist == "" {
-			panic("arguments is not divisable by 3")
+			panic("Wrong number of arguments expected 3 or more with following format: <Url> <Branch> <Path/to/whitelist_file>")
 		}
 
 		if branch != "" && whitelist != "" {

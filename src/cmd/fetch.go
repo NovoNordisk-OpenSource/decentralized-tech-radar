@@ -30,7 +30,7 @@ var fetchCmd = &cobra.Command{
 		fmt.Println("")
 		Fetcher.ListingReposForFetch(args)
 		
-		fmt.Println("\nfetch complete")
+		fmt.Println("\nFetch complete.")
 	},
 }
 

@@ -19,9 +19,10 @@ The whitelist file should be a file containing filepaths to either files or fold
 ```
 ## Fetcher Flags
 `--branch=` Flag for setting the branch for all repos   
-`--whitelist=` Flag for setting the whitelist file for all repos 
+`--whitelist=` Flag for setting the whitelist file for all repos  
+`--repo-file=` Flag for setting a file containing repositories to pull from *<u>& the branch + whitelist file if those flags have no been set<u>*   
 
 Example:
 ```
-./Tech_Radar_<OS> fetch <Url> --branch=<branch> --whitelist=<path/to/whitelist>
+./Tech_Radar_<OS> fetch <Url> --branch=<branch> --whitelist=<path/to/whitelist> --file=<path/to/repo-file>
 ```

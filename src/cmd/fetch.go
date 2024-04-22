@@ -25,11 +25,11 @@ var fetchCmd = &cobra.Command{
 	//Args: cobra.MinimumNArgs(3),
 
 	Run: func(cmd *cobra.Command, args []string) {
-		branch, err := rootCmd.Flags().GetString("branch")
+		branch, err := cmd.Flags().GetString("branch")
 		if err != nil {
 			panic(err)
 		}
-		whitelist, err := rootCmd.Flags().GetString("whitelist")
+		whitelist, err := cmd.Flags().GetString("whitelist")
 		if err != nil {
 			panic(err)
 		}
@@ -87,6 +87,6 @@ var fetchCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(fetchCmd)
 
-	rootCmd.PersistentFlags().String("branch", "", "Branch name for all repositories")
-	rootCmd.PersistentFlags().String("whitelist", "", "Path to a whitelist file for all repositories")
+	fetchCmd.Flags().String("branch", "", "Branch name for all repositories")
+	fetchCmd.Flags().String("whitelist", "", "Path to a whitelist file for all repositories")
 }

@@ -43,13 +43,13 @@ func GenerateHtml(csvData string) {
 			<div class="graph-footer"></div>
 		</main>
 	</body>
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 	<script src="./js/requireConfig.js"></script>
+	<script src="./js/remakeJS.js"></script>
 
 	<!-- this script builds the radar with the go generated csv file -->
 	<script>
-		require(['./js/util/factory.js'], function(Factory) {
+		require(['./js/remakeJS.js'], function(Factory) {
 			Factory({{.}}).build(); //{{.}} refers to the csvData
 		})
 	</script>

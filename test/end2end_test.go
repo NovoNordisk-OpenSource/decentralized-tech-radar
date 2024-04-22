@@ -40,7 +40,7 @@ func TestEndToEnd(t *testing.T) {
 
 	// Merger
 	// TODO: also merge ./cache/template.csv once it the spelling mistake in the header has been fixed on Novo
-	cmd1 := exec.Command("./tech_radar.exe", "merge", "./cache/"+testFileName+"1.csv", "./cache/"+testFileName+"2.csv")
+	cmd1 := exec.Command("./tech_radar.exe", "merge", "./"+testFileName+"1.csv", "./"+testFileName+"2.csv")
 	_, err = cmd1.Output()
 	if err != nil {
 		t.Fatal(err)

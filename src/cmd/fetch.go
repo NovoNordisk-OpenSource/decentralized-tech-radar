@@ -35,7 +35,7 @@ var fetchCmd = &cobra.Command{
 		}
 
 		if len(args)%3 != 0 && branch == "" && whitelist == "" {
-			panic("Wrong number of arguments expected 3 or more with following format: <Url> <Branch> <Path/to/whitelist_file>")
+			panic("Wrong number of arguments. Expected 3 or more with following format: <Url> <Branch> <Path/to/whitelist_file>")
 		}
 
 		if branch != "" && whitelist != "" {
@@ -80,7 +80,7 @@ var fetchCmd = &cobra.Command{
 		if err != nil {
 			log.Print(err)
 		}
-		fmt.Println("fetch called")
+		fmt.Println("\nFetch complete.")
 	},
 }
 

@@ -34,7 +34,7 @@ func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 	createCsvFiles(csvfile1)
 	defer cleanUp()
 
-	Verifier("./testFile1.csv", "./testFile2.csv")
+	DuplicateRemoval("./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {
@@ -52,6 +52,17 @@ func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 
 	if string(csv2) != "name,ring,quadrant,isNew,moved,description\n" {
 		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \nActual: %s",csv2)
+	}
+}
+
+func TestVerifier(t *testing.T) {
+	createCsvFiles(csvfile1)
+	defer cleanUp()
+
+	err := Verifier("./testFile1.csv")
+
+	if err != nil {
+		t.Fatalf("Verifier returned an error %v", err)
 	}
 }
 

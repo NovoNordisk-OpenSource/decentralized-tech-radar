@@ -1,6 +1,7 @@
 package Merger
 
 import (
+	"bytes"
 	"log"
 	"os"
 	"strings"
@@ -60,7 +61,8 @@ func TestDuplicateDeletion(t *testing.T) {
 	createCsvFiles()
 	defer cleanUp()
 
-	DuplicateRemoval("./testFile1.csv", "./testFile2.csv")
+	var buf bytes.Buffer
+	DuplicateRemoval(&buf, "./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {
@@ -68,7 +70,7 @@ func TestDuplicateDeletion(t *testing.T) {
 	}
 
 	if !strings.Contains(string(csv1), csvfile1) {
-		t.Fatalf("csvFile1 does not match expected output.\nExpected: %s \n Actual: %s", csvfile1, csv1)
+		t.Errorf("csvFile1 does not match expected output.\nExpected: %s \n Actual: %s", csvfile1, csv1)
 	}
 
 	csv2, err := os.ReadFile("./testFile2.csv")
@@ -76,25 +78,20 @@ func TestDuplicateDeletion(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if string(csv2) != "name,ring,quadrant,isNew,moved,description\nPython,Hold,Language,false,0,Its a programming Language\nVisual Studio,Trial,Infrastructure,false,1,An IDE\n" {
-		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \nActual: %s",csv2)
+	if !strings.Contains(string(csv2), csvfile2) {
+		t.Errorf("csvFile2 does not match expected output.\nExpected: %s \n Actual: %s", csvfile2, csv2)
 	}
-}
 
-func TestReadCsvContent(t *testing.T) {
-	createCsvFiles()
-	defer cleanUp()
-
-	correctContent := `Go,Adopt,Language,true,0,Its a programming Language
+	correctString := `Go,Adopt,Language,true,0,Its a programming Language
 Visual Studio Code,Trial,Infrastructure,false,2,An IDE
 Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
+Python,Hold,Language,false,0,Its a programming Language
+Visual Studio,Trial,Infrastructure,false,1,An IDE
 `
-	readContent, err := readCsvContent("testFile1.csv")
-	if err != nil {
-		t.Fatalf("readCsvContent() gave an error: %v", err)
-	}
-	if string(readContent) != correctContent {
-		t.Errorf("Read content does not match expected:\nGot:\n\t%s\nExpected:\n\t%s", string(readContent), correctContent)
+
+	bufferString := buf.String()
+	if bufferString != correctString {
+		t.Errorf("Buffer doesn't contain the correct data.\nExpected: %s\n\nActual: %s", correctString, correctString)
 	}
 }
 

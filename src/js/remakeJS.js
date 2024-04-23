@@ -15,7 +15,7 @@ define([
     'lodash',
     'jquery',
     'jquery-autocomplete'
-  ], function myModule(d3, d3tip, d3col, d3sel, Chance, _, $, autocomplete) {
+  ], function myModule(d3, d3tip, d3col, d3sel, Chance, _, $, AutoComplete) {
 // ROOT JS:                     js/config.js                                IN
     const mainConfig = () => {
         const env = {
@@ -44,7 +44,7 @@ define([
     }
 
     // MODELS:                      js/graphing/config.js                       IN
-    const quadrantSize = 512
+        const quadrantSize = 512
         const quadrantGap = 32
 
         const quadrantNames = '["Language", "Infrastructure", "Datastore", "Data management"]';
@@ -1618,7 +1618,8 @@ function renderQuadrantTables(quadrants, rings) {
 
 
 // UTIL:                        js/util/autoComplete.js
-    
+      
+  const featureToggles2 = mainConfig().featureToggles;
     $.widget('custom.radarcomplete', $.ui.autocomplete, {
     _create: function () {
         this._super()
@@ -1642,12 +1643,12 @@ function renderQuadrantTables(quadrants, rings) {
     },
     })
 
-    const AutoComplete = (el, quadrants, cb) => {
+    const AutoComplete1 = (el, quadrants, cb) => {
     const blips = quadrants.reduce((acc, quadrant) => {
         return [...acc, ...quadrant.quadrant.blips().map((blip) => ({ blip, quadrant }))]
     }, [])
 
-    if (featureToggles.UIRefresh2022) {
+    if (featureToggles2.UIRefresh2022) {
         $(el).autocomplete({
         appendTo: '.search-container',
         source: (request, response) => {
@@ -1682,6 +1683,8 @@ function renderQuadrantTables(quadrants, rings) {
 
 // COMPONENTS:                  js/graphing/components/search.js
 
+  const AutoCompleteSearch = AutoComplete1
+
     function renderSearch(radarHeader, quadrants) {
     const searchContainer = radarHeader.append('div').classed('search-container', true)
 
@@ -1691,7 +1694,7 @@ function renderQuadrantTables(quadrants, rings) {
     .attr('placeholder', 'Search this radar')
     .attr('id', 'auto-complete')
 
-    AutoComplete('#auto-complete', quadrants, function (e, ui) {
+    AutoCompleteSearch('#auto-complete', quadrants, function (e, ui) {
     const blipId = ui.item.blip.id()
     const quadrant = ui.item.quadrant
 

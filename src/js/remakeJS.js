@@ -319,30 +319,13 @@ define([
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// UTIL:                        js/util/mathUtils.js                        IN
+    // UTIL:                        js/util/mathUtils.js                        IN
     function toRadian(angleInDegrees) {
         return (Math.PI * angleInDegrees) / 180
     }
 
 
-
-
-
-
-
-
-// UTIL:                        js/util/htmlUtils.js                        IN
+    // UTIL:                        js/util/htmlUtils.js                        IN
     function getElementWidth(element) {
         return element.node().getBoundingClientRect().width
     }
@@ -367,19 +350,6 @@ define([
     function removeAllSpaces(blipId) {
         return blipId.toString().replace(/\s+/g, '')
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // COMPONENTS:                  js/graphing/components/quadrants.js         IN
@@ -936,15 +906,6 @@ function removeScrollListener() {
 
 
 
-
-
-
-
-
-
-
-
-
 // COMPONENTS:                  js/graphing/components/quadrantTables.js
 
 function fadeOutAllBlips() {
@@ -1149,19 +1110,7 @@ function renderQuadrantTables(quadrants, rings) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// GRAPHING:                    js/graphing/blips.js
+    // GRAPHING:                    js/graphing/blips.js
     const featureToggles = mainConfig().featureToggles;
 
     const getRingRadius = function (ringIndex) {
@@ -1476,20 +1425,7 @@ function renderQuadrantTables(quadrants, rings) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// UTIL:                        js/util/ringCalculator.js
+    // UTIL:                        js/util/ringCalculator.js
     const RingCalculator = function (numberOfRings, maxRadius) {
         var sequence = [0, 6, 5, 3, 2, 1, 1, 1]
 
@@ -1517,18 +1453,7 @@ function renderQuadrantTables(quadrants, rings) {
         return self
     }
 
-
-
-
-
-
-
-
-
-
-
-// COMPONENTS:                  js/graphing/components/quadrantSubnav.js
-
+    // COMPONENTS:                  js/graphing/components/quadrantSubnav.js
     function addListItem(quadrantList, name, callback) {
     quadrantList
         .append('li')
@@ -1608,17 +1533,7 @@ function renderQuadrantTables(quadrants, rings) {
 
 
 
-
-
-
-
-
-
-
-
-
-// UTIL:                        js/util/autoComplete.js
-      
+  // UTIL:                        js/util/autoComplete.js
   const featureToggles2 = mainConfig().featureToggles;
     $.widget('custom.radarcomplete', $.ui.autocomplete, {
     _create: function () {

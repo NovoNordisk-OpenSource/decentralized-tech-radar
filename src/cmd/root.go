@@ -28,7 +28,10 @@ var rootCmd = &cobra.Command{
                \ \__\ \ \_______\ \_______\ \__\ \__\       \ \__\\ _\\ \__\ \__\ \_______\ \__\ \__\ \__\\ _\ 
                 \|__|  \|_______|\|_______|\|__|\|__|        \|__|\|__|\|__|\|__|\|_______|\|__|\|__|\|__|\|__|
 
-A tool for generating tech radars and manipulating csv files (by fetching and merging).`,
+A tool for generating tech radars and manipulating csv files (by fetching and merging).
+
+The tech radar rendering is done using ThoughtWorks build-your-own radar tool. All credit for the JS and CSS goes to them.
+`,
 }
 
 

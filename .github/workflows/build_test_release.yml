@@ -38,18 +38,21 @@ jobs:
       - name: publish project
         shell: bash
         run: |
+          # Copy JS folder to dist
+          cp -r ./src/js ./dist/js
+          
           tag=$(git describe --tags --abbrev=0)
           #linux build
           release_name_linux="Tech_Radar-$tag-linux"
-          tar -C ./dist -czvf "${release_name_linux}.tar.gz" Tech_Radar-linux
+          tar -C ./dist -czvf "${release_name_linux}.tar.gz" Tech_Radar-linux ./js
 
           #windows build
           release_name_win="Tech_Radar-$tag-win"
-          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows
+          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows ./js
 
           #mac build
           release_name_mac="Tech_Radar-$tag-mac"
-          tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin
+          tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin ./js
 
       - name: Release project
         uses: softprops/action-gh-release@v2

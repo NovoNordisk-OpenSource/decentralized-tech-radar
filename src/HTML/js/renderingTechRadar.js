@@ -120,7 +120,7 @@ define([
 
   /** 
    * MODELS: js/models/quadrant.js'
-  */                       IN
+   */
   const Quadrant = function (name) {
     var self, blips;
 
@@ -918,7 +918,7 @@ define([
 
     const newImage = legendsContainer
       .append("img")
-      .attr("src", "../src/js/images/new.svg")
+      .attr("src", "../src/HTML/images/new.svg")
       .attr("width", "37px")
       .attr("height", "37px")
       .attr("alt", "new blip legend icon")
@@ -926,7 +926,7 @@ define([
 
     const existingImage = legendsContainer
       .append("img")
-      .attr("src", "../src/js/images/existing.svg")
+      .attr("src", "../src/HTML/images/existing.svg")
       .attr("width", "37px")
       .attr("height", "37px")
       .attr("alt", "existing blip legend icon")
@@ -941,7 +941,7 @@ define([
       .attr("class", "all-quadrants-mobile--btn")
       .style(
         "background-image",
-        `url('../src/js/images/${quadrant.order}-quadrant-btn-bg.svg')`
+        `url('../src/HTML/images/${quadrant.order}-quadrant-btn-bg.svg')`
       )
       .attr("id", quadrant.order + "-quadrant-mobile")
       .append("div")
@@ -1127,8 +1127,9 @@ define([
     scrollFlag = false;
   }
 
-  // COMPONENTS:                  js/graphing/components/quadrantTables.js
-
+  /**
+    * COMPONENTS: js/graphing/components/quadrantTables.js
+    */
   function fadeOutAllBlips() {
     d3.selectAll("g > a.blip-link").attr("opacity", 0.3);
   }
@@ -2199,7 +2200,7 @@ define([
         .select(".radar-title")
         .append("div")
         .attr("class", "radar-title__logo")
-        .html('<img src="../images/logo.png" />');
+        .html('<img src="../HTML/images/logo.png" />');
     }
   }
 

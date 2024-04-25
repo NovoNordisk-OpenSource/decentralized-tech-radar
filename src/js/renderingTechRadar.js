@@ -120,7 +120,7 @@ define([
 
   /** 
    * MODELS: js/models/quadrant.js'
-  */                       IN
+  */
   const Quadrant = function (name) {
     var self, blips;
 

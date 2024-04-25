@@ -4,6 +4,7 @@ import (
 	"os"
 	"strings"
 	"testing"
+  
 	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
@@ -14,15 +15,11 @@ var testFileName string = "ForTesting"
 
 var csvTestString1 string = `name,ring,quadrant,isNew,moved,description
 TestBlip1,Assess,Language,true,1,This is a description
-TestBlip2,Adopt,Tool,false,0,Also a description`
+TestBlip2,Adopt,Infrastructure,false,0,Also a description`
 
 var csvTestString2 string = `name,ring,quadrant,isNew,moved,description
 TestBlip3,Assess,Language,true,1,This is a description
-TestBlip4,Adopt,Tool,false,0,Also a description`
-// Test Set up
-var csvTestString string = `name,ring,quadrant,isNew,moved,description
-TestBlip1,Assess,Language,true,1,This is a description
-TestBlip2,Adopt,Tool,false,0,Also a description`
+TestBlip4,Adopt,Infrastructure,false,0,Also a description`
 
 // Tests
 // Integration test
@@ -98,7 +95,7 @@ func TestReaderAndWriter(t *testing.T) {
 			<li>Desc: This is a description</li>
 			
 			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
+			<li>Quadrant: Infrastructure</li>
 			<li>Ring: Adopt</li>
 			<li>Is new: false</li>
 			<li>Moved: 0</li>
@@ -148,7 +145,7 @@ func TestMerger2Reader2Writer(t *testing.T) {
 			<li>Desc: This is a description</li>
 			
 			<li>Name: TestBlip2</li>
-			<li>Quadrant: Tool</li>
+			<li>Quadrant: Infrastructure</li>
 			<li>Ring: Adopt</li>
 			<li>Is new: false</li>
 			<li>Moved: 0</li>
@@ -162,7 +159,7 @@ func TestMerger2Reader2Writer(t *testing.T) {
 			<li>Desc: This is a description</li>
 			
 			<li>Name: TestBlip4</li>
-			<li>Quadrant: Tool</li>
+			<li>Quadrant: Infrastructure</li>
 			<li>Ring: Adopt</li>
 			<li>Is new: false</li>
 			<li>Moved: 0</li>

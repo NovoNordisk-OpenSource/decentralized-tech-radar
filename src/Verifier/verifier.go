@@ -34,8 +34,8 @@ var regexPattern *regexp.Regexp = nil
 func createRegexPattern(ring1, ring2, ring3, ring4 string) {
 	var err error
 	regexPattern, err = regexp.Compile(fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),-?[0123],(([^,\n])([^,\n])*)",
-								strings.ToUpper(ring1[:1]), strings.ToLower(ring1[1:]), strings.ToUpper(ring2[:1]), strings.ToLower(ring2[1:]), 
-								strings.ToUpper(ring3[:1]), strings.ToLower(ring3[1:]), strings.ToUpper(ring4[:1]), strings.ToLower(ring4[1:])))
+								strings.ToUpper(ring1[:1]) + strings.ToLower(ring1[:1]), ring1[1:], strings.ToUpper(ring2[:1]) + strings.ToLower(ring2[:1]), ring2[1:], 
+								strings.ToUpper(ring3[:1]) + strings.ToLower(ring3[:1]), ring3[1:], strings.ToUpper(ring4[:1]) + strings.ToLower(ring4[:1]), ring4[1:]))
 	if err != nil {
 		panic(err)
 	}
@@ -130,9 +130,9 @@ func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]str
 
 	if set[name] != nil {
 		// Skips the name + first comma and does the same forward search for next comma
-		ring := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
-		if !(slices.Contains(set[name], ring)) {
-			set[name] = append(set[name],ring)
+		quad := line[len(real_name)+1:strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
+		if !(slices.Contains(set[name], quad)) {
+			set[name] = append(set[name],quad)
 			tempfile.WriteString(line+"\n")	
 		}
 	} else {

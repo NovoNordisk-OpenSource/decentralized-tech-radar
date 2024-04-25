@@ -7,8 +7,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
+	"slices"
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
+
+// Map of alternative names for the same blip
+var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
 
 func getHeader(filepath string) ([]byte, error) {
 	file, err := os.Open(filepath)
@@ -86,7 +91,7 @@ func MergeCSV(filepaths []string) error {
 	}
 
 	// Run duplicate removal on files
-	err = Verifier.DuplicateRemoval(filepaths...)
+	err = DuplicateRemoval(filepaths...)
 	if err != nil {
 		panic(err)
 	}
@@ -111,6 +116,81 @@ func MergeCSV(filepaths []string) error {
 	err = os.WriteFile("Merged_file.csv", buf.Bytes(), 0644)
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func DuplicateRemoval(filepaths ...string) error {
+	// Map functions as a set (name -> quadrant)
+	var set = make(map[string][]string)
+	for _, filepath := range filepaths {
+
+		// Create temp file to overwrite primary file
+		tempfile, err := os.Create("tempfile.csv")
+		if err != nil {
+			panic(err)
+		}
+
+		defer os.RemoveAll(tempfile.Name())
+		defer tempfile.Close()
+
+		file, err := os.Open(filepath)
+		if err != nil {
+			panic(err)
+		}
+
+		defer file.Close()
+		scanner := bufio.NewScanner(file)
+
+		// Skip header
+		scanner.Scan()
+		tempfile.WriteString(scanner.Text() + "\n")
+
+		for scanner.Scan() {
+			line := scanner.Text()
+			// Faster than splitting
+			// Panic handler
+			name := ""
+			index := strings.IndexByte(line, ',')
+			if index != -1 {
+				name = line[:index]
+			}
+
+			duplicateRemoval(name, line, tempfile, set)
+
+		}
+		file.Close()
+		tempfile.Close()
+		err = os.Rename("tempfile.csv", filepath)
+		if err != nil {
+			panic(err)
+		}
+	}
+	return nil
+}
+
+func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]string) error {
+	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
+	// Or just use a baked in str read line by line or combination
+	//os.Stat("./Dictionary/alt_names.txt")
+
+	real_name := name
+	if alt_names[name] != "" {
+		//TODO: Figure out how to handle numbers in names
+		name = alt_names[strings.ToLower(name)]
+	}
+
+	if set[name] != nil {
+		// Skips the name + first comma and does the same forward search for next comma
+		quadrant := line[len(real_name)+1 : strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
+		if !(slices.Contains(set[name], quadrant)) {
+			set[name] = append(set[name], quadrant)
+			tempfile.WriteString(line + "\n")
+		}
+	} else {
+		set[name] = append(set[name], line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1])
+		tempfile.WriteString(line + "\n")
 	}
 
 	return nil

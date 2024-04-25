@@ -13,12 +13,6 @@ var styleCSS embed.FS
 var htmlFileName string = "index"
 
 func GenerateHtml(csvData string) {
-	// Read the content of the CSS file
-    cssContent, err := styleCSS.ReadFile("css/style.css")
-    if err != nil {
-        log.Fatalf("failed to read embedded CSS file: %v", err)
-    }
-
 	const tmpl = `
 	<!doctype html>
 	<html lang="en">
@@ -63,14 +57,20 @@ func GenerateHtml(csvData string) {
 	</html>
 	`
 
+	// Read the content of the CSS file
+	cssContent, err := styleCSS.ReadFile("css/style.css")
+	if err != nil {
+		log.Fatalf("failed to read embedded CSS file: %v", err)
+	}
+
 	// Create a template data structure to hold both CSS and CSV data
-    data := struct {
-        CSS  template.CSS
-        CSV  string
-    }{
-        CSS:  template.CSS(cssContent),
-        CSV:  csvData,
-    }
+	data := struct {
+		CSS template.CSS
+		CSV string
+	}{
+		CSS: template.CSS(cssContent),
+		CSV: csvData,
+	}
 
 	// Make and parse the HTML template
 	t, err := template.New(htmlFileName).Parse(tmpl)

@@ -120,7 +120,7 @@ define([
 
   /** 
    * MODELS: js/models/quadrant.js'
-   */
+  */
   const Quadrant = function (name) {
     var self, blips;
 
@@ -941,7 +941,7 @@ define([
       .attr("class", "all-quadrants-mobile--btn")
       .style(
         "background-image",
-        `url('../src/HTML/images/${quadrant.order}-quadrant-btn-bg.svg')`
+        `url('../src/js/images/${quadrant.order}-quadrant-btn-bg.svg')`
       )
       .attr("id", quadrant.order + "-quadrant-mobile")
       .append("div")
@@ -1127,9 +1127,8 @@ define([
     scrollFlag = false;
   }
 
-  /**
-    * COMPONENTS: js/graphing/components/quadrantTables.js
-    */
+  // COMPONENTS:                  js/graphing/components/quadrantTables.js
+
   function fadeOutAllBlips() {
     d3.selectAll("g > a.blip-link").attr("opacity", 0.3);
   }
@@ -2200,7 +2199,7 @@ define([
         .select(".radar-title")
         .append("div")
         .attr("class", "radar-title__logo")
-        .html('<img src="../HTML/images/logo.png" />');
+        .html('<img src="../images/logo.png" />');
     }
   }
 

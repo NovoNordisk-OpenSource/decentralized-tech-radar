@@ -18,12 +18,8 @@ func GenerateHtml(csvData string) {
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link href="../src/js/images/favicon.ico" rel="icon" />
-	<link rel="preconnect" href="https://rsms.me/" />
-	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	
 	<link href="../src/js/stylesheets/style.css" rel="stylesheet"/>
-	<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -43,7 +39,7 @@ func GenerateHtml(csvData string) {
 			<div class="graph-footer"></div>
 		</main>
 	</body>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+	<script src="./js/libraries/require.js"></script>
 	<script src="./js/requireConfig.js"></script>
 
 	<!-- this script builds the radar with the go generated csv file -->

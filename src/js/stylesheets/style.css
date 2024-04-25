@@ -1608,7 +1608,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .all-quadrants-mobile .all-quadrants-mobile--btn:after {
-    content: url(/images/arrow-white-icon.svg);
+    content: url(../images/arrow-white-icon.svg);
     margin: 4px 4px 0
 }
 

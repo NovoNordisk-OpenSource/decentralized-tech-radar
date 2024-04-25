@@ -56,6 +56,31 @@ func TestGetHeader(t *testing.T) {
 	}
 }
 
+func TestDuplicateDeletion(t *testing.T) {
+	createCsvFiles()
+	defer cleanUp()
+
+	DuplicateRemoval("./testFile1.csv", "./testFile2.csv")
+
+	csv1, err := os.ReadFile("./testFile1.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !strings.Contains(string(csv1), csvfile1) {
+		t.Fatalf("csvFile1 does not match expected output.\nExpected: %s \n Actual: %s", csvfile1, csv1)
+	}
+
+	csv2, err := os.ReadFile("./testFile2.csv")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if string(csv2) != "name,ring,quadrant,isNew,moved,description\nPython,Hold,Language,false,0,Its a programming Language\nVisual Studio,Trial,Infrastructure,false,1,An IDE\n" {
+		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \nActual: %s",csv2)
+	}
+}
+
 func TestReadCsvContent(t *testing.T) {
 	createCsvFiles()
 	defer cleanUp()

@@ -17,8 +17,8 @@ func GenerateHtml(csvData string) {
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link href="../src/js/images/favicon.ico" rel="icon" />
-	
 	<link href="../src/js/stylesheets/style.css" rel="stylesheet"/>
+
 	</head>
 
 	<body>
@@ -35,7 +35,9 @@ func GenerateHtml(csvData string) {
 			</p>
 			</div>
 			<div class="all-quadrants-mobile show-all-quadrants-mobile"></div>
-			<div class="graph-footer"></div>
+			<div class="graph-footer">
+				<p class="agree-terms">Visit the Novo Nordisk <a href="https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar">Tech Radar open source on Github</a>. This tech radar was heavily inspired by Thoughtworks.</p>
+			</div>
 		</main>
 	</body>
 	<script src="./js/libraries/require.js"></script>

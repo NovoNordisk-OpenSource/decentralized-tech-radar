@@ -45,6 +45,7 @@ func CleanUp() {
 
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
+	os.RemoveAll("cache")
 }
 
 func AssertIndexHTML(t *testing.T, html string) {

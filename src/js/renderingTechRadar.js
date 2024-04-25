@@ -1,11 +1,11 @@
-//d3
-//d3tip
-//d3-collection
-//d3-selection
-//chance
-//lodash
-//jquery
-//jquery.ui (jquery-autocomplete)
+/**
+ * The code below is stitched together from Thoughtworks build your radar open sourced project
+ * 
+ * Its Thoughtwork file path is indicated as a comment above each code block
+ * 
+ * @url [Thoughtworks](https://github.com/thoughtworks/build-your-own-radar/)
+ */
+
 define([
   "d3",
   "d3tip",
@@ -15,8 +15,12 @@ define([
   "lodash",
   "jquery",
   "jquery-autocomplete",
-], function myModule(d3, d3tip, d3col, d3sel, Chance, _, $, AutoComplete) {
-  // ROOT JS:                     js/config.js                                IN
+], function facModel(d3, d3tip, d3col, d3sel, Chance, _, $, AutoComplete) {
+  
+  
+  /**
+   * ROOT JS: js/config.js
+   */
   const mainConfig = () => {
     const env = {
       production: {
@@ -42,8 +46,11 @@ define([
       ? env[window.APP_CONFIG.ENVIRONMENT]
       : env.development;
   };
+  
+  /** 
+   * GRAPHING: js/graphing/config.js
+  */
 
-  // MODELS:                      js/graphing/config.js                       IN
   const quadrantSize = 512;
   const quadrantGap = 32;
 
@@ -111,7 +118,9 @@ define([
     return (graphConfig.quadrantHeight + graphConfig.quadrantsGap) * scale;
   }
 
-  // MODELS:                      js/models/quadrant.js'                      IN
+  /** 
+   * MODELS: js/models/quadrant.js'
+  */                       IN
   const Quadrant = function (name) {
     var self, blips;
 
@@ -137,7 +146,9 @@ define([
     return self;
   };
 
-  // MODELS:                      js/models/radar.js'                         IN
+  /** 
+   * MODELS: js/models/radar.js'
+  */   
   const Radar = function () {
     const featureToggles1 = mainConfig().featureToggles;
 
@@ -239,7 +250,9 @@ define([
     return self;
   };
 
-  // MODELS:                      js/models/ring.js'                          IN
+  /**
+   * MODELS: js/models/ring.js'  
+   */
   const Ring = function (name, order) {
     var self = {};
 
@@ -254,7 +267,9 @@ define([
     return self;
   };
 
-  // MODELS:                      js/models/blip.js'                          IN
+  /**
+   * MODELS: js/models/blip.js' 
+   */
   const IDEAL_BLIP_WIDTH = 22;
   const Blip = function (name, ring, isNew, topic, description) {
     let self, blipText, isGroup, id, groupIdInGraph;
@@ -324,13 +339,17 @@ define([
 
     return self;
   };
-
-  // UTIL:                        js/util/mathUtils.js                        IN
+  
+  /**
+   * UTIL: js/util/mathUtils.js  
+   */
   function toRadian(angleInDegrees) {
     return (Math.PI * angleInDegrees) / 180;
   }
 
-  // UTIL:                        js/util/htmlUtils.js                        IN
+  /**
+   * UTIL: js/util/htmlUtils.js
+   */
   function getElementWidth(element) {
     return element.node().getBoundingClientRect().width;
   }
@@ -356,10 +375,12 @@ define([
     return blipId.toString().replace(/\s+/g, "");
   }
 
-  // COMPONENTS:                  js/graphing/components/quadrants.js         IN
-  const ANIMATION_DURATION = 1000;
 
-  //maybe not-needed!
+  /**
+   * COMPONENTS: js/graphing/components/quadrants.js
+   */
+  const ANIMATION_DURATION = 1000;
+  
   const {
     quadrantHeight,
     quadrantWidth,
@@ -1382,7 +1403,9 @@ define([
     });
   }
 
-  // GRAPHING:                    js/graphing/blips.js
+  /**
+   * GRAPHING: js/graphing/blips.js
+   */
   const featureToggles = mainConfig().featureToggles;
 
   const getRingRadius = function (ringIndex) {
@@ -1810,7 +1833,9 @@ define([
     });
   };
 
-  // UTIL:                        js/util/ringCalculator.js
+  /**
+   * UTIL: js/util/ringCalculator.js
+   */
   const RingCalculator = function (numberOfRings, maxRadius) {
     var sequence = [0, 6, 5, 3, 2, 1, 1, 1];
 
@@ -1838,7 +1863,9 @@ define([
     return self;
   };
 
-  // COMPONENTS:                  js/graphing/components/quadrantSubnav.js
+  /**
+   * COMPONENTS: js/graphing/components/quadrantSubnav.js
+   */
   function addListItem(quadrantList, name, callback) {
     quadrantList
       .append("li")
@@ -1957,7 +1984,10 @@ define([
     });
   }
 
-  // UTIL:                        js/util/autoComplete.js
+  /**
+   * UTIL: js/util/autoComplete.js
+   */
+  
   const featureToggles2 = mainConfig().featureToggles;
   $.widget("custom.radarcomplete", $.ui.autocomplete, {
     _create: function () {
@@ -2032,7 +2062,9 @@ define([
     }
   };
 
-  // COMPONENTS:                  js/graphing/components/search.js
+  /**
+   * COMPONENTS: js/graphing/components/search.js
+   */
 
   const AutoCompleteSearch = AutoComplete1;
 
@@ -2071,7 +2103,9 @@ define([
     });
   }
 
-  // COMPONENTS:                  js/graphing/components/buttons.js
+  /**
+   * COMPONENTS: js/graphing/components/buttons.js
+   */
 
   function renderButtons(radarFooter) {
     const buttonsRow = radarFooter.append("div").classed("buttons", true);
@@ -2083,7 +2117,9 @@ define([
       .on("click", window.print.bind(window));
   }
 
-  // GRAPHING:                    js/graphing/pdfPage.js
+  /**
+   * GRAPHING: js/graphing/pdfPage.js
+   */
   const addPdfCoverTitle = (title) => {
     d3.select("main #pdf-cover-page .pdf-title").text(title);
   };
@@ -2099,7 +2135,9 @@ define([
       .text(quadrantName);
   };
 
-  // UTIL:                        js/util/urlUtils.js
+  /**
+   *  UTIL: js/util/urlUtils.js
+   */
   function constructSheetUrl(sheetName) {
     const noParamsUrl = window.location.href.substring(
       0,
@@ -2129,8 +2167,9 @@ define([
     return queryParams.sheetName;
   }
 
-  // COMPONENTS:                  js/graphing/components/banner.js
-
+  /**
+   * COMPONENTS: js/graphing/components/banner.js
+   */
   function renderBanner(renderFullRadar) {
     if (featureToggles.UIRefresh2022) {
       const documentTitle =
@@ -2159,14 +2198,14 @@ define([
       header
         .select(".radar-title")
         .append("div")
-        .attr("class", "radar-title__logo");
-      //TODO insert the novo header image for the PDF
-      //.html('<a href="https://www.thoughtworks.com"> <img src="/images/logo.png" /> </a>')
+        .attr("class", "radar-title__logo")
+        .html('<img src="../images/logo.png" />');
     }
   }
 
-  // UTIL:                        js/util/queryParamProcessor.js
-
+  /** 
+   * UTIL: js/util/queryParamProcessor.js
+   */
   const QueryParams = function (queryString) {
     var decode = function (s) {
       return decodeURIComponent(s.replace(/\+/g, " "));
@@ -2183,18 +2222,11 @@ define([
     return queryParams;
   };
 
-  // GRAPHING:                    js/graphing/radar.js
-  // const renderQuadrantSubnav = quadrantSubnav;
-  // const renderButtons = buttons;
-  // const {
-  // renderRadarQuadrants,
-  // renderMobileView,
-  // renderRadarLegends,
-  // removeScrollListener,
-  // } = quadrants;
+  /**
+   * GRAPHING: js/graphing/radar.js
+   */
 
   const MIN_BLIP_WIDTH = 12;
-  //const ANIMATION_DURATION = 1000
 
   const GraphingRadar = function (size, gRadar) {
     const CENTER = size / 2;
@@ -3141,7 +3173,6 @@ define([
       if (featureToggles.UIRefresh2022) {
         renderQuadrantSubnav(radarHeader, quadrants, renderFullRadar);
         renderSearch(radarHeader, quadrants);
-        // renderAlternativeRadars(radarFooter, alternatives, currentSheet)
         renderQuadrantTables(quadrants, rings);
         renderButtons(radarFooter);
 
@@ -3208,7 +3239,9 @@ define([
     return self;
   };
 
-  // UTIL:                        js/util/factory.js
+  /**
+   * UTIL: js/util/factory.js
+   */
   const plotRadar = function (blips, currentRadarName) {
     document.title = "plotRaderTitle";
 
@@ -3342,5 +3375,3 @@ define([
 
   return Factory;
 });
-
-//not put in: inputSanitizer

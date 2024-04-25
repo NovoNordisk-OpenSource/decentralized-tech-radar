@@ -4,7 +4,6 @@ import (
 	"html/template"
 	"log"
 	"os"
-	//"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML/scripts"
 )
 
 var htmlFileName string = "index"
@@ -63,8 +62,6 @@ func GenerateHtml(csvData string) {
 		panic(err)
 	}
 	defer file.Close()
-
-	//script := scripts.Print()
 
 	//execute the html and data
 	err = t.Execute(file, csvData)

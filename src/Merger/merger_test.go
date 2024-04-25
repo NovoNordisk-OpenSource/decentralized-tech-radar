@@ -24,6 +24,26 @@ Visual Studio Code,Trial,Infrastructure,false,2,An IDE
 Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
 Python,Hold,Language,false,0,Its a programming Language`
 
+// The strings below are used exclusively to test
+// ReadCsvFile's majority-vote-based tool-duplication deletion.
+
+var csvfile3 string = `name,ring,quadrant,isNew,moved,description
+Go,Trial,Language,true,0,Its a programming Language
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
+
+// TODO: Discuss handling ties.
+//var csvfile4 string = `name,ring,quadrant,isNew,moved,description
+//Python,Adopt,Language,false,0,Its a programming Language
+//Visual Studio,Trial,Infrastructure,false,1,An IDE
+//Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
+
+var correctMergeMajority string = `name,ring,quadrant,isNew,moved,description
+Go,Adopt,Language,true,0,Its a programming Language
+Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
+Python,Hold,Language,false,0,Its a programming Language`
+
 var TestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
 
 func createCsvFiles() {

@@ -30,7 +30,7 @@ var fetchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// Set flags
-    filePath, err >= rootCmd.Flags().GetString("repo-file")
+    filePath, err := rootCmd.Flags().GetString("repo-file")
 		if err != nil {
 			panic(err)
 		}

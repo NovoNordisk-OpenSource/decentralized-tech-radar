@@ -50,8 +50,8 @@ func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if string(csv2) == "name,ring,quadrant,isNew,moved,description\n" {
-		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description... \n Actual: %s",csv2)
+	if string(csv2) != "name,ring,quadrant,isNew,moved,description\n" {
+		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \nActual: %s",csv2)
 	}
 }
 

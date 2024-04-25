@@ -29,31 +29,6 @@ func cleanUp() {
 	os.Remove("tempfile.csv")
 }
 
-// func TestVerifierFunctionDuplicateDeletion(t *testing.T) {
-// 	createCsvFiles(csvfile1)
-// 	defer cleanUp()
-
-// 	DuplicateRemoval("./testFile1.csv", "./testFile2.csv")
-
-// 	csv1, err := os.ReadFile("./testFile1.csv")
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-
-// 	if !strings.Contains(string(csv1), csvfile1) {
-// 		t.Fatalf("csvFile1 does not match expected output.\nExpected: %s \n Actual: %s", csvfile1, csv1)
-// 	}
-
-// 	csv2, err := os.ReadFile("./testFile2.csv")
-// 	if err != nil {
-// 		t.Fatal(err)
-// 	}
-
-// 	if string(csv2) != "name,ring,quadrant,isNew,moved,description\n" {
-// 		t.Fatalf("csvFile2 does not match expected output.\nExpected: name,ring,quadrant,isNew,moved,description \nActual: %s",csv2)
-// 	}
-// }
-
 func TestVerifier(t *testing.T) {
 	createCsvFiles(csvfile1)
 	defer cleanUp()

@@ -22,23 +22,18 @@ The merger currently has three functions:
   * **What it is:** A private function taking a string argument, which returns an Array of data type bytes.
   * **What it does:** This function takes the provided filepath to an CSV file to open it, reads the specification file's header, and writes it to a byte array.
 
-* `readCsvContent(filepath string) ([]byte, error)`
-  * **What it is:** A private function taking a string argument, which returns an Array of data type bytes.
-  * **What it does:** This function takes the provided filepath to an CSV file, opens the file, ignores the file's header but proceeds to read its content line by line, where each line is added to a bytes array.
-
-
 * `MergeCSV(filepaths []string, header string) error`
   * **What it is:** A public function taking two arguments: An Array of data type string, and a string. It returns nothing.
-  * **What it does:** If Merged_file.csv already exists, this is removed. Then it uses `readCsvContent()` to read each provided csv-file, writing each file's contents line by line into one new Merged_file.csv. These are read and written in the order of the file-paths provided.
+  * **What it does:** If Merged_file.csv already exists, this is removed. Then it uses `DuplicateRemoval()` to read each provided csv-file into a buffer. The buffer is then written to a Merged_file.csv file. These are read in the order of the file-paths provided.
   
 * `MergeFromFolder(folderPath string) error`
   * **What it is**: A public function that takes one argument: A path to a folder, which in the default case, when adding the cache flag, is the cache folder itself.
   * **What it does**: If the cache folder exists, it reads all files from said folder, and appends them to cachePaths. It then checks whether or not cachePaths contain anything, and if so, merges the file with `MergeCSV(cachePaths)`.
 
-* `DuplicateRemoval(filepaths ...string) error`
-  * **What it is:**: A public function that takes multiple filepaths to specfiles of type string.
-  * **What it does**: Goes through the files given line by line and calls `duplicateRemoval()` with each line.
+* `ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error`
+  * **What it is:**: A public function that takes a pointer to a byte buffer that contains the merged specfiles' data, without the duplicates, and multiple filepaths to specfiles of type string.
+  * **What it does**: Goes through the files given, line by line, and calls `duplicateRemoval()` with each line.
 
-* `duplicateRemoval(name, line string, tempfile *os.File, set map[string][]string) error`
-  * **What it is**: A private function that takes a name of the blip in that line, the line, the tempfile for the current specfile, and the set for all the seen blips' names.
-  * **What it does**: Writes the line to the tempfile if the blip's name is not already in that quadrant. If the blip's name is already in the quadrant it is not added to the tempfile.
+* `duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]string) error`
+  * **What it is**: A private function that takes a blip name from the given line, the line, the buffer for the merged specfiles, and the map for all the seen blips' names.
+  * **What it does**: Writes the line to the buffer if the blip's name is not already in that quadrant. If the blip's name is already in the quadrant it is not added to the buffer.

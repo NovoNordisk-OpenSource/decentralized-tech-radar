@@ -1,15 +1,17 @@
 package main
 
-
 import (
 	"flag"
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Fetcher"
+	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
-	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
 func main() {
@@ -18,6 +20,7 @@ func main() {
 	file := flag.String("file", "", "This takes a path to a csv file/string")
 	fetch := flag.String("fetch", "", "This command will fetch a file from a git repo")
 	merge := flag.String("merge", "", "This takes paths to files that should be merged (space separated)")
+	verify := flag.String("verify", "", "")
 	flag.Parse()
 
 	if *fetch != "" {
@@ -55,5 +58,11 @@ func main() {
 	if *file != "" && *fetch == "" {
 		csvString := SpecReader.CsvToString(*file)
 		html.GenerateHtml(csvString)
+	}
+
+	if *verify != "" {
+		start := time.Now()
+		Verifier.Verifier(*verify)
+		fmt.Println(time.Since(start))
 	}
 }

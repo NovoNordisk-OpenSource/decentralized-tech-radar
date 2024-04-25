@@ -62,7 +62,7 @@ func TestDuplicateDeletion(t *testing.T) {
 	defer cleanUp()
 
 	var buf bytes.Buffer
-	DuplicateRemoval(&buf, "./testFile1.csv", "./testFile2.csv")
+	ReadCsvData(&buf, "./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {

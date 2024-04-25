@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"slices"
+	"strings"
+
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
@@ -61,13 +62,13 @@ func MergeFromFolder(folderPath string) error {
 
 func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
-	
+
 	// Run data verifier on files
 	err := Verifier.Verifier(filepaths...)
 	if err != nil {
 		panic(err)
 	}
-	
+
 	var buf bytes.Buffer
 	// Add header to buffer
 	header, err := getHeader(filepaths[0])
@@ -75,10 +76,10 @@ func MergeCSV(filepaths []string) error {
 		return err // Propagate error
 	}
 	buf.Write(header)
-	
-	// Run duplicate removal on files
+
+	// Read csv data which removes duplicates
 	// This only adds non-duplicates to the buffer
-	err = DuplicateRemoval(&buf, filepaths...)
+	err = ReadCsvData(&buf, filepaths...)
 	if err != nil {
 		panic(err)
 	}
@@ -92,7 +93,7 @@ func MergeCSV(filepaths []string) error {
 	return nil
 }
 
-func DuplicateRemoval(buffer *bytes.Buffer, filepaths ...string) error {
+func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 	// Map functions as a set (name -> quadrant)
 	var set = make(map[string][]string)
 	for _, filepath := range filepaths {

@@ -17,8 +17,9 @@ import (
 
 var token sync.Mutex
 var finished int
+var CSV_errs []string
 
-func FetchFiles(url, branch, specFile string, ch chan error ) {
+func FetchFiles(url, branch, specFile string, ch chan error) {
 	// Pulls files and returns the paths to said files
 	seenFolders := make(map[string]string)
 	paths, err := puller(url, branch, specFile)
@@ -46,7 +47,7 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 			if i == 0 { // Don't add a 0 to filename
 				newFileName = "cache/" + fileName
 			} else {
-				newFileName = fmt.Sprintf("cache/" + fileName[:len(fileName)-4] + "(%d)" + fileName[len(fileName)-4:], i)
+				newFileName = fmt.Sprintf("cache/"+fileName[:len(fileName)-4]+"(%d)"+fileName[len(fileName)-4:], i)
 			}
 
 			if _, err := os.Stat(newFileName); os.IsNotExist(err) {
@@ -59,12 +60,14 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 			}
 			i++
 		}
-		
+
 		// Runs data integrity verifier on downloaded file
 		// file := "./cache/"+fileName[len(fileName)-1]
 		err = Verifier.Verifier(newFileName)
 		if err != nil {
-			fmt.Printf("CSV file contains incorrectly formatted content: "+newFileName +"\nContinuing to next file...")
+			token.Lock()
+			CSV_errs = append(CSV_errs, newFileName)
+			token.Unlock()
 		}
 	}
 
@@ -77,14 +80,14 @@ func ListingReposForFetch(repos []string) error {
 		err := os.Mkdir("cache", 0700)
 		errHandler(err)
 	}
-	
+
 	// Create temp folder for .git folders
 	if _, err := os.Stat("temp"); os.IsNotExist(err) {
 		err := os.Mkdir("temp", 0700)
 		errHandler(err)
 	}
 	defer os.RemoveAll("temp")
-	
+
 	channel := make(chan error)
 	for i := 0; i < len(repos); i += 3 {
 		go FetchFiles(repos[i], repos[i+1], repos[i+2], channel)
@@ -98,11 +101,18 @@ func ListingReposForFetch(repos []string) error {
 			progressBar[i] = "#"
 		}
 		fmt.Printf("\r| [%s] %d%%", strings.Join(progressBar, ""), 100)
-	}(len(repos)/3)
-	go progressBar(len(repos)/3)
+		
+		// print files with errors
+		if len(CSV_errs) == 1 {
+			fmt.Println("\n" + "CSV file contains incorrectly formatted content: \n\t" + CSV_errs[0])
+		} else if len(CSV_errs) > 1 {
+			fmt.Println("\n" + "CSV files contain incorrectly formatted content: \n\t" + strings.Join(CSV_errs, "\n\t"))
+		}
+	}(len(repos) / 3)
+	go progressBar(len(repos) / 3)
 
 	for i := 0; i < len(repos)/3; i++ {
-		err := <- channel
+		err := <-channel
 		if err != nil {
 			return err
 		}
@@ -144,7 +154,7 @@ func executer(cmd *exec.Cmd, folder string) error {
 
 func puller(url, branch, specFile string) ([]string, error) {
 	paths := []string{}
-	
+
 	// Create temp folder for git in the system temp folder
 	var randomNum int
 	var tempFolder string
@@ -177,7 +187,7 @@ func puller(url, branch, specFile string) ([]string, error) {
 		return paths, err
 	}
 
-	err = os.WriteFile(tempFolder + "/.git/info/sparse-checkout", fileData, 0644)
+	err = os.WriteFile(tempFolder+"/.git/info/sparse-checkout", fileData, 0644)
 	if err != nil {
 		return paths, err
 	}

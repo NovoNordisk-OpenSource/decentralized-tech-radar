@@ -103,12 +103,12 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 		}
 
 		defer file.Close()
-		scanEachLine(file, buffer, set)
+		scanLine(file, buffer, set)
 	}
 	return nil
 }
 
-func scanEachLine(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
+func scanLine(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
 	scanner := bufio.NewScanner(file)
 
 	// Skip header

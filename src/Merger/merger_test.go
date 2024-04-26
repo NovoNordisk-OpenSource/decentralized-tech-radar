@@ -2,6 +2,7 @@ package Merger
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -77,7 +78,59 @@ func TestGetHeader(t *testing.T) {
 	}
 }
 
-func TestDuplicateDeletion(t *testing.T) {
+func TestDuplicateRemoval(t *testing.T) {
+	// Arrange clean-up after test finishes
+	filename := "testFile0.csv"
+
+	defer func() {
+		err := os.Remove(filename)
+		if err != nil {
+			fmt.Printf("%v\n", err)
+		}
+	}()
+
+	// Arrange input
+	var csvfile0 string = "Go,Adopt,Language,true,0,Its a programming Language\n" +
+		"Go,Adopt,Language,true,0,Its a programming Language\n" +
+		"Python,Hold,Language,false,0,Its a programming Language\n"
+
+	err := os.WriteFile(filename, []byte(csvfile0), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+
+	// Arrange csv file being closed, so it can be removed.
+	defer func() {
+		err = file.Close()
+		if err != nil {
+			fmt.Printf("%v\n", err)
+		}
+	}()
+
+	// Arrange expected output
+	var expectedString string = "Go,Adopt,Language,true,0,Its a programming Language\n" +
+		"Python,Hold,Language,false,0,Its a programming Language\n"
+
+	// Arrange other variables to be used
+	var set = make(map[string][]string)
+	var buf bytes.Buffer
+
+	// Act to call scanLine that calls duplicateRemoval() on each line
+	scanFile(file, &buf, set)
+
+	// Assert
+	bufferString := buf.String()
+	if bufferString != expectedString {
+		t.Errorf("Buffer doesn't contain the expected data.\nExpected: %s\n\nActual: %s", expectedString, bufferString)
+	}
+}
+
+func TestReadCsvData(t *testing.T) {
 	createCsvFiles()
 	defer cleanUp()
 

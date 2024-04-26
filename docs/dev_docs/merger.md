@@ -32,7 +32,11 @@ The merger currently has three functions:
 
 * `ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error`
   * **What it is:**: A public function that takes a pointer to a byte buffer that contains the merged specfiles' data, without the duplicates, and multiple filepaths to specfiles of type string.
-  * **What it does**: Goes through the files given, line by line, and calls `duplicateRemoval()` with each line.
+  * **What it does**: Goes through the files given, line by line, and calls `scanFile()` with each line.
+
+* `scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string)`
+ * **What it is:**: A private function that takes a file, a byte buffer and a map for all the seen blips' names.
+ * **What it does:** Scans and calls duplicateRemoval() for each line in the file.
 
 * `duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]string) error`
   * **What it is**: A private function that takes a blip name from the given line, the line, the buffer for the merged specfiles, and the map for all the seen blips' names.

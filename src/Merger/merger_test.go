@@ -46,21 +46,43 @@ Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
 Python,Hold,Language,false,0,Its a programming Language`
 
 var TestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
+var AllTestFiles []string = []string{"testFile1.csv", "testFile2.csv", "testFile3.csv"}
+
+func createSomeCsv(count int) {
+
+	if count > len(AllTestFiles) {
+		log.Fatal("The count given is greater than the number of test files.")
+	}
+
+	for i := 1; i < count; i++ {
+		csvfile := AllTestFiles[i]
+		err := os.WriteFile(AllTestFiles[i], []byte(csvfile), 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+}
 
 func createCsvFiles() {
-	err := os.WriteFile("testFile1.csv", []byte(csvfile1), 0644)
-	if err != nil {
-		log.Fatal(err)
+	createSomeCsv(2)
+}
+
+func cleanSomeCsv(count int) {
+
+	if count > len(AllTestFiles) {
+		log.Fatal("The count given is greater than the number of test files.")
 	}
-	err = os.WriteFile("testFile2.csv", []byte(csvfile2), 0644)
-	if err != nil {
-		log.Fatal(err)
+
+	for i := 1; i < count; i++ {
+		err := os.Remove(AllTestFiles[i])
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
 func cleanUp() {
-	os.Remove("testFile1.csv")
-	os.Remove("testFile2.csv")
+	cleanSomeCsv(2)
 	os.Remove("Merged_file.csv")
 	os.RemoveAll("./cache")
 }

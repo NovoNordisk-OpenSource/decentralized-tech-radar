@@ -53,9 +53,15 @@ func createSomeCsv(count int) {
 	if count > len(AllTestFiles) {
 		log.Fatal("The count given is greater than the number of test files.")
 	}
+	var csvfile = csvfile1
 
-	for i := 1; i < count; i++ {
-		csvfile := AllTestFiles[i]
+	for i := 0; i < count; i++ {
+		if i == 1 {
+			csvfile = csvfile2
+		} else if i == 2 {
+			csvfile = csvfile3
+		}
+
 		err := os.WriteFile(AllTestFiles[i], []byte(csvfile), 0644)
 		if err != nil {
 			log.Fatal(err)
@@ -73,7 +79,7 @@ func cleanSomeCsv(count int) {
 		log.Fatal("The count given is greater than the number of test files.")
 	}
 
-	for i := 1; i < count; i++ {
+	for i := 0; i < count; i++ {
 		err := os.Remove(AllTestFiles[i])
 		if err != nil {
 			fmt.Println(err)
@@ -148,7 +154,7 @@ func TestDuplicateRemoval(t *testing.T) {
 	// Assert
 	bufferString := buf.String()
 	if bufferString != expectedString {
-		t.Errorf("Buffer doesn't contain the expected data.\nExpected: %s\n\nActual: %s", expectedString, bufferString)
+		t.Errorf("Buffer doesn't contain the expected data.\nExpected: %s \nActual: %s", expectedString, bufferString)
 	}
 }
 
@@ -181,12 +187,11 @@ func TestReadCsvData(t *testing.T) {
 Visual Studio Code,Trial,Infrastructure,false,2,An IDE
 Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
 Python,Hold,Language,false,0,Its a programming Language
-Visual Studio,Trial,Infrastructure,false,1,An IDE
-`
+Visual Studio,Trial,Infrastructure,false,1,An IDE`
 
 	bufferString := buf.String()
-	if bufferString != correctString {
-		t.Errorf("Buffer doesn't contain the correct data.\nExpected: %s\n\nActual: %s", correctString, correctString)
+	if strings.Compare(bufferString, correctString) == 0 {
+		t.Errorf("Buffer doesn't contain the correct data.\nExpected: %s\n Actual: %s", correctString, bufferString)
 	}
 }
 

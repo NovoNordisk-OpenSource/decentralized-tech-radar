@@ -7,7 +7,7 @@ src/Fetcher/*.txt
 src/cache
 test/cache
 test/specfile.txt
-
+**/Merged_file.csv
 
 # https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 .vscode/*

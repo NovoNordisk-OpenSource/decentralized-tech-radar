@@ -43,9 +43,11 @@ func CleanUp() {
 	os.Remove("Merged_file.csv")
 	os.RemoveAll("cache/")
 	os.Remove("specfile.txt")
+	os.Remove("repos.txt")
 
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
+	os.RemoveAll("cache")
 }
 
 func AssertIndexHTML(t *testing.T, html string) {

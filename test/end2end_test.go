@@ -40,7 +40,7 @@ func TestEndToEnd(t *testing.T) {
 
 	// Merger
 	// TODO: also merge ./cache/template.csv once it the spelling mistake in the header has been fixed on Novo
-	cmd1 := exec.Command("./tech_radar.exe", "merge", "./cache/"+testFileName+"1.csv", "./cache/"+testFileName+"2.csv")
+	cmd1 := exec.Command("./tech_radar.exe", "merge", "./"+testFileName+"1.csv", "./"+testFileName+"2.csv")
 	_, err = cmd1.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -77,5 +77,64 @@ func TestEndToEnd(t *testing.T) {
 			t.Errorf("Expected Blip-name %q not found in index.html", name)
 		}
 	}
+
+}
+
+func TestE2EUsingFetcherFlags(t *testing.T) {
+	// Set up
+	os.Create("specfile.txt")
+	err := os.WriteFile("specfile.txt", []byte("examples/csv_templates/template.csv"), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create specfile.txt: %v", err)
+	}
+	os.Create("repos.txt")
+	err = os.WriteFile("repos.txt", []byte("https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar main specfile.txt"), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create repos.txt: %v", err)
+	}
+
+	CreateCsvFile()
+	defer CleanUp()
+	defer os.Remove("specfile.txt")
+
+	// Works on Unix and Windows
+	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
+	_, err = cmd.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	// Fetch files using CLI arguments and flags
+	cmd1 := exec.Command("./tech_radar.exe", "fetch", "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar", "--branch=main", "--whitelist=./specfile.txt")
+	_, err = cmd1.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check if the file was downloaded
+	_, err = os.Stat("cache/template.csv")
+	if os.IsNotExist(err) {
+		t.Fatal("Failed to create Merged_file.csv")
+	}
+
+	// Fetch files using file flag
+	cmd2 := exec.Command("./tech_radar.exe", "fetch", "--repo-file=./repos.txt")
+	_, err = cmd2.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = os.WriteFile("repos.txt", []byte("https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create repos.txt: %v", err)
+	}
+
+	// Check combination of both flags
+	cmd3 := exec.Command("./tech_radar.exe", "fetch", "--repo-file=./repos.txt", "--branch=main", "--whitelist=./specfile.txt")
+	_, err = cmd3.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+
 }
 

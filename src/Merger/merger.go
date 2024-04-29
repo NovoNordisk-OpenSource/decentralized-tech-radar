@@ -119,7 +119,7 @@ func zapLogger(f *os.File) *zap.SugaredLogger {
 	return l.Sugar()
 
 }
-
+var dup_count := 0
 func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 	// Map functions as a set (name -> quadrant)
 	var set = make(map[string][]string)
@@ -128,11 +128,11 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 
 	os.Remove("Merge_log.txt")
 	file, _ := os.OpenFile("Merge_log.txt", os.O_RDWR|os.O_CREATE, 0644)
-	zapLogger(file)
+  
 	sugar := zapLogger(file)
 	defer sugar.Sync()
 
-	dup_count := 0
+	
 	for _, filepath := range filepaths {
 		file, err := os.Open(filepath)
 		if err != nil {
@@ -140,7 +140,18 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 		}
 
 		defer file.Close()
-		scanner := bufio.NewScanner(file)
+
+		scanFile(file, buffer, set)
+
+	}
+	if dup_count == 0 {
+		os.Remove("Merge_log.txt")
+	}
+	return nil
+}
+
+func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string, sugar *zap.SugaredLogger) {
+	scanner := bufio.NewScanner(file)
 
 		// Skip header
 		scanner.Scan()
@@ -169,14 +180,9 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 					"\n\tNot-Picked: ", filepath+"\n")
 			}
 		}
-	}
-	if dup_count == 0 {
-		os.Remove("Merge_log.txt")
-	}
-	return nil
-}
 
 func duplicateRemoval(name, line, filepath string, buffer *bytes.Buffer, set map[string][]string, filepaths_set map[string]string) error {
+
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")

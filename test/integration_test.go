@@ -20,8 +20,6 @@ var csvTestString2 string = `name,ring,quadrant,isNew,moved,description
 TestBlip3,Assess,Language,true,1,This is a description
 TestBlip4,Adopt,Infrastructure,false,0,Also a description`
 
-// Tests
-// Integration test
 func check(e error) {
 	if e != nil {
 		panic(e)
@@ -118,7 +116,7 @@ func TestMerger2Reader2Writer(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to read index.html: %v", err)
 	}
-	
+
 	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\nTestBlip1,Assess,Language,true,1,This is a description\nTestBlip2,Adopt,Infrastructure,false,0,Also a description\nTestBlip3,Assess,Language,true,1,This is a description\nTestBlip4,Adopt,Infrastructure,false,0,Also a description\n").build();`
 
 	if !strings.Contains(string(indexHTMLContent), stringToCheck) {

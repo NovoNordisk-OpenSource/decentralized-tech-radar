@@ -141,11 +141,11 @@ func duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]
 
 	ring_len := len(line[len(real_name)+1 : strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1])
 	if set[name] != nil {
-	// Skips the name + ring + 2 commas and does the same forward search for next comma
-	// Example of a line from a csv file:
-	// 		Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.
-	// Quadrant:
-	//		language
+		// Skips the name + ring + 2 commas and does the same forward search for next comma
+		// Example of a line from a csv file:
+		// 		Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+		// Quadrant:
+		//		language
 		quadrant := line[len(real_name)+ring_len+2 : strings.IndexByte(line[len(real_name)+ring_len+2:], ',')+len(real_name)+ring_len+2]
 		if !(slices.Contains(set[name], quadrant)) {
 			set[name] = append(set[name], quadrant)

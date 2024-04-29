@@ -1,5 +1,0 @@
-name,ring,quadrant,isNew,moved,description
-testHold,Hold,language,true,0,Test for hold
-testAssess,Assess,language,true,3,Test for assess
-testTrial,Trial,language,true,-2,Test for Trail
-testAdopt,Adopt,language,true,2,Test for Adopt

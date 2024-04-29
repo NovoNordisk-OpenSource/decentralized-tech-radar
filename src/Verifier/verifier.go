@@ -29,6 +29,11 @@ var regexPattern *regexp.Regexp = nil
 // Creates the regex pattern string with the names on the rings
 func createRegexPattern(ring1, ring2, ring3, ring4 string) {
 	var err error
+	// This is the regex pattern that matches the correct format for a data line in the csv specfile
+	// Example of a correct line:
+	// 		Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.
+	// Example of a incorrect line:
+	// 		Python,wait,infrastructure,False,5,Lorem ipsum dolor sit amet consectetur adipiscing elit.
 	regexPattern, err = regexp.Compile(fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([Dd]ata management|[Dd]atastore|[Ii]nfrastructure|[Ll]anguage),(false|true),-?[0123],(([^,\n])([^,\n])*)",
 		strings.ToUpper(ring1[:1])+strings.ToLower(ring1[:1]), ring1[1:], strings.ToUpper(ring2[:1])+strings.ToLower(ring2[:1]), ring2[1:],
 		strings.ToUpper(ring3[:1])+strings.ToLower(ring3[:1]), ring3[1:], strings.ToUpper(ring4[:1])+strings.ToLower(ring4[:1]), ring4[1:]))

@@ -1,12 +1,13 @@
 package test
 
 import (
-	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
-	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
-	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 	"os"
 	"strings"
 	"testing"
+
+	html "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML"
+	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Merger"
+	Reader "github.com/NovoNordisk-OpenSource/decentralized-tech-radar/SpecReader"
 )
 
 // Test Set up
@@ -42,9 +43,11 @@ func CleanUp() {
 	os.Remove("Merged_file.csv")
 	os.RemoveAll("cache/")
 	os.Remove("specfile.txt")
+	os.Remove("repos.txt")
 
 	//Works on Unix and Windows
 	os.Remove("tech_radar.exe")
+	os.RemoveAll("cache")
 }
 
 func AssertIndexHTML(t *testing.T, html string) {

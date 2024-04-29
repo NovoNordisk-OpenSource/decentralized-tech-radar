@@ -159,7 +159,7 @@ func TestReadCsvData(t *testing.T) {
 	defer cleanUp(2)
 
 	var buf bytes.Buffer
-	ReadCsvData(&buf, "./testFile1.csv", "./testFile2.csv")
+	MergeFiles(&buf, "./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {

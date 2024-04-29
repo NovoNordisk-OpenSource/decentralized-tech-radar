@@ -16,6 +16,12 @@ import (
 // Map of alternative names for the same blip
 var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
 
+type MergeStrat interface {
+	MergeFiles(buffer *bytes.Buffer, filepaths ...string) error
+}
+
+type Fcfs struct {}
+
 func getHeader(filepath string) ([]byte, error) {
 	file, err := os.Open(filepath)
 	if err != nil {
@@ -31,7 +37,7 @@ func getHeader(filepath string) ([]byte, error) {
 	return headerBytes, nil
 }
 
-func MergeFromFolder(folderPath string) error {
+func MergeFromFolder(folderPath string, start MergeStrat) error {
 	_, err := os.Stat(folderPath)
 	if os.IsNotExist(err) {
 		return errors.New("Folder does not exist or could not be found. \nError: " + err.Error())
@@ -55,12 +61,12 @@ func MergeFromFolder(folderPath string) error {
 		fmt.Println("There are currently no files in the cache.")
 	}
 
-	MergeCSV(cachePaths)
+	MergeCSV(cachePaths, start)
 
 	return nil
 }
 
-func MergeCSV(filepaths []string) error {
+func MergeCSV(filepaths []string, strat MergeStrat) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 
 	// Run data verifier on files
@@ -79,7 +85,7 @@ func MergeCSV(filepaths []string) error {
 
 	// Read csv data which removes duplicates
 	// This only adds non-duplicates to the buffer
-	err = ReadCsvData(&buf, filepaths...)
+	err = strat.MergeFiles(&buf, filepaths...)
 	if err != nil {
 		panic(err)
 	}
@@ -93,7 +99,7 @@ func MergeCSV(filepaths []string) error {
 	return nil
 }
 
-func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
+func (f Fcfs) MergeFiles(buffer *bytes.Buffer, filepaths ...string) error {
 	// Map functions as a set (name -> quadrant)
 	var set = make(map[string][]string)
 	for _, filepath := range filepaths {
@@ -103,12 +109,12 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 		}
 
 		defer file.Close()
-		scanFile(file, buffer, set)
+		f.scanFile(file, buffer, set)
 	}
 	return nil
 }
 
-func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
+func (f Fcfs) scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
 	scanner := bufio.NewScanner(file)
 
 	// Skip header
@@ -124,11 +130,11 @@ func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
 			name = line[:index]
 		}
 
-		duplicateRemoval(name, line, buffer, set)
+		f.duplicateRemoval(name, line, buffer, set)
 	}
 }
 
-func duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]string) error {
+func (f Fcfs) duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]string) error {
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")

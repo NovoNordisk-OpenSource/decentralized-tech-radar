@@ -1,6 +1,3 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
@@ -22,7 +19,7 @@ Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile
 	Run: func(cmd *cobra.Command, args []string) {
 		useCache, _ := cmd.Flags().GetBool("cache")
 		if useCache {
-			err := Merger.MergeFromFolder("./cache")
+			err := Merger.MergeFromFolder("./cache", Merger.Fcfs{})
 			if err != nil {
 				panic(err)
 			}
@@ -30,7 +27,7 @@ Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile
 			if len(args) < 2 {
 				panic("Not enough arguments have been provided.")
 			}
-			err := Merger.MergeCSV(args)
+			err := Merger.MergeCSV(args, Merger.Fcfs{})
 			if err != nil {
 				panic(err)
 			}

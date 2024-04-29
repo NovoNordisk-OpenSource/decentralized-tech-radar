@@ -148,7 +148,7 @@ func TestDuplicateRemoval(t *testing.T) {
 	var set = make(map[string][]string)
 	var buf bytes.Buffer
 
-	// Act to call scanLine that calls duplicateRemoval() on each line
+	// Act to call scanFile that calls duplicateRemoval() on each line
 	scanFile(file, &buf, set)
 
 	// Assert

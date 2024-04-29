@@ -68,7 +68,7 @@ func TestFetchFilesValidArguments(t *testing.T) {
 		template_lines = append(template_lines, scanner.Text())
 	}
 
-	expected_lines := []string{"name,ring,quadrant,isNew,move,description",
+	expected_lines := []string{"name,ring,quadrant,isNew,moved,description",
 	"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
 	"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
 	"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}

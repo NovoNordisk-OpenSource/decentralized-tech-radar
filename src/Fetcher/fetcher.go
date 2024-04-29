@@ -3,6 +3,7 @@ package Fetcher
 import (
 	"fmt"
 	"io/fs"
+	"math"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -17,8 +18,9 @@ import (
 
 var token sync.Mutex
 var finished int
+var CSV_errs []string
 
-func FetchFiles(url, branch, specFile string, ch chan error ) {
+func FetchFiles(url, branch, specFile string, ch chan error) {
 	// Pulls files and returns the paths to said files
 	seenFolders := make(map[string]string)
 	paths, err := puller(url, branch, specFile)
@@ -46,7 +48,7 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 			if i == 0 { // Don't add a 0 to filename
 				newFileName = "cache/" + fileName
 			} else {
-				newFileName = fmt.Sprintf("cache/" + fileName[:len(fileName)-4] + "(%d)" + fileName[len(fileName)-4:], i)
+				newFileName = fmt.Sprintf("cache/"+fileName[:len(fileName)-4]+"(%d)"+fileName[len(fileName)-4:], i)
 			}
 
 			if _, err := os.Stat(newFileName); os.IsNotExist(err) {
@@ -59,12 +61,14 @@ func FetchFiles(url, branch, specFile string, ch chan error ) {
 			}
 			i++
 		}
-		
+
 		// Runs data integrity verifier on downloaded file
 		// file := "./cache/"+fileName[len(fileName)-1]
 		err = Verifier.Verifier(newFileName)
 		if err != nil {
-			fmt.Printf("File has problems not correctly formatted CSV file: "+newFileName +"\ncontinuing to next file")
+			token.Lock()
+			CSV_errs = append(CSV_errs, newFileName)
+			token.Unlock()
 		}
 	}
 
@@ -77,22 +81,38 @@ func ListingReposForFetch(repos []string) error {
 		err := os.Mkdir("cache", 0700)
 		errHandler(err)
 	}
-	
+
 	// Create temp folder for .git folders
 	if _, err := os.Stat("temp"); os.IsNotExist(err) {
 		err := os.Mkdir("temp", 0700)
 		errHandler(err)
 	}
 	defer os.RemoveAll("temp")
-	
+
 	channel := make(chan error)
 	for i := 0; i < len(repos); i += 3 {
 		go FetchFiles(repos[i], repos[i+1], repos[i+2], channel)
 	}
 	finished = 0
-	go progressBar(len(repos)/3)
+
+	// Make sure we print 100% when everything is fetched
+	defer func(repos int) {
+		progressBar := make([]string, 20)
+		for i := 0; i < 20; i++ {
+			progressBar[i] = "#"
+		}
+		fmt.Printf("\r| [%s] %d%%", strings.Join(progressBar, ""), 100)
+		// print files with errors
+		if len(CSV_errs) == 1 {
+			fmt.Println("\n" + "CSV file contains incorrectly formatted content: \n\t" + CSV_errs[0])
+		} else if len(CSV_errs) > 1 {
+			fmt.Println("\n" + "CSV files contain incorrectly formatted content: \n\t" + strings.Join(CSV_errs, "\n\t"))
+		}
+	}(len(repos) / 3)
+	go progressBar(len(repos) / 3)
+
 	for i := 0; i < len(repos)/3; i++ {
-		err := <- channel
+		err := <-channel
 		if err != nil {
 			return err
 		}
@@ -101,17 +121,23 @@ func ListingReposForFetch(repos []string) error {
 	return nil
 }
 
+// https://stackoverflow.com/questions/39544571/golang-round-to-nearest-0-05
+func Round(x, unit float64) float64 {
+	return math.Round(x/unit) * unit
+}
+
 func progressBar(numOfFiles int) {
 	progressBar := []string{}
-	for i := 0; i < numOfFiles; i++ {
+	for i := 0; i < 20; i++ {
 		progressBar = append(progressBar, ".")
 	}
 	for {
 		for _, r := range `-\|/` {
-			for i := 0; i < finished; i++ {
+			percent_fin := float32(finished) / float32(numOfFiles) * 100.0
+			rounded_percent := Round((float64(finished) / float64(numOfFiles)), 0.05) * 100
+			for i := 0; i < int(rounded_percent)/5; i++ {
 				progressBar[i] = "#"
 			}
-			percent_fin := float32(finished) / float32(numOfFiles) * 100.0
 			fmt.Printf("\r%c [%s] %d%%", r, strings.Join(progressBar, ""), int32(percent_fin))
 			time.Sleep(100 * time.Millisecond)
 		}
@@ -134,7 +160,7 @@ func executer(cmd *exec.Cmd, folder string) error {
 
 func puller(url, branch, specFile string) ([]string, error) {
 	paths := []string{}
-	
+
 	// Create temp folder for git in the system temp folder
 	var randomNum int
 	var tempFolder string
@@ -167,7 +193,7 @@ func puller(url, branch, specFile string) ([]string, error) {
 		return paths, err
 	}
 
-	err = os.WriteFile(tempFolder + "/.git/info/sparse-checkout", fileData, 0644)
+	err = os.WriteFile(tempFolder+"/.git/info/sparse-checkout", fileData, 0644)
 	if err != nil {
 		return paths, err
 	}

@@ -69,10 +69,6 @@ func createSomeCsv(count int) {
 	}
 }
 
-func createCsvFiles() {
-	createSomeCsv(2)
-}
-
 func cleanSomeCsv(count int) {
 
 	if count > len(AllTestFiles) {
@@ -87,15 +83,15 @@ func cleanSomeCsv(count int) {
 	}
 }
 
-func cleanUp() {
-	cleanSomeCsv(2)
+func cleanUp(count int) {
+	cleanSomeCsv(count)
 	os.Remove("Merged_file.csv")
 	os.RemoveAll("./cache")
 }
 
 func TestGetHeader(t *testing.T) {
-	createCsvFiles()
-	defer cleanUp()
+	createSomeCsv(1)
+	defer cleanUp(1)
 	correctHeader := "name,ring,quadrant,isNew,moved,description\n"
 	header, err := getHeader("testFile1.csv")
 	if err != nil {
@@ -159,8 +155,8 @@ func TestDuplicateRemoval(t *testing.T) {
 }
 
 func TestReadCsvData(t *testing.T) {
-	createCsvFiles()
-	defer cleanUp()
+	createSomeCsv(2)
+	defer cleanUp(2)
 
 	var buf bytes.Buffer
 	ReadCsvData(&buf, "./testFile1.csv", "./testFile2.csv")
@@ -197,8 +193,8 @@ Visual Studio,Trial,Infrastructure,false,1,An IDE`
 
 func TestMergeCSV(t *testing.T) {
 	// Setup
-	createCsvFiles()
-	defer cleanUp()
+	createSomeCsv(2)
+	defer cleanUp(2)
 
 	// Call function
 	err := MergeCSV(TestFiles)
@@ -225,8 +221,8 @@ func TestMergeCSV(t *testing.T) {
 }
 
 func TestMergeFromFolder(t *testing.T) {
-	createCsvFiles()
-	defer cleanUp()
+	createSomeCsv(2)
+	defer cleanUp(2)
 
 	err := os.Mkdir("cache", 0700)
 	if err != nil {

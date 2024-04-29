@@ -12,12 +12,6 @@ import (
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
-type Repo struct {
-	URL      string
-	Branch   string
-	SpecFile string
-}
-
 func FetchFiles(url, branch, specFile string) error {
 	defer DotGitDelete()
 
@@ -35,14 +29,13 @@ func FetchFiles(url, branch, specFile string) error {
 	}
 
 	for _, path := range paths {
-	
-    var fileName []string 
-    if runtime.GOOS == "windows" {
-      fileName = strings.Split(path, "\\")
-    } else {
-      fileName = strings.Split(path, "/")
-    }
-		
+		var fileName []string
+		if runtime.GOOS == "windows" {
+			fileName = strings.Split(path, "\\")
+		} else {
+			fileName = strings.Split(path, "/")
+		}
+
 		if _, ok := seenFolders[fileName[0]]; !ok {
 			seenFolders[fileName[0]] = ""
 		}
@@ -60,15 +53,17 @@ func FetchFiles(url, branch, specFile string) error {
 	}
 
 	for folder, _ := range seenFolders {
-		os.RemoveAll(("./" + folder))
-	}
+        if folder != "cache" {
+            os.RemoveAll(("./" + folder))
+        }
+    }
 
 	return nil
 }
 
-func ListingReposForFetch(repos []Repo) error {
-	for _, repo := range repos {
-		err := FetchFiles(repo.URL, repo.Branch, repo.SpecFile)
+func ListingReposForFetch(repos []string) error {
+	for i := 0; i < len(repos); i += 3 {
+		err := FetchFiles(repos[i], repos[i+1], repos[i+2])
 		if err != nil {
 			return err
 		}

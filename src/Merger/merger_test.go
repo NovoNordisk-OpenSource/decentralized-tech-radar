@@ -145,7 +145,7 @@ func TestDuplicateRemoval(t *testing.T) {
 	var buf bytes.Buffer
 
 	// Act to call scanFile that calls duplicateRemoval() on each line
-	scanFile(file, &buf, set)
+	Fcfs{}.scanFile(file, &buf, set)
 
 	// Assert
 	bufferString := buf.String()
@@ -159,7 +159,7 @@ func TestReadCsvData(t *testing.T) {
 	defer cleanUp(2)
 
 	var buf bytes.Buffer
-	MergeFiles(&buf, "./testFile1.csv", "./testFile2.csv")
+	Fcfs{}.MergeFiles(&buf, "./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {
@@ -199,7 +199,7 @@ func TestMergeCSV(t *testing.T) {
 	mergeTestFiles := append([]string{}, testFiles[0], testFiles[1])
 
 	// Call function
-	err := MergeCSV(mergeTestFiles)
+	err := MergeCSV(mergeTestFiles, Fcfs{})
 	if err != nil {
 		t.Fatalf("MergeCSV gave an error: %v", err)
 	}
@@ -239,7 +239,7 @@ func TestMergeFromFolder(t *testing.T) {
 	os.Rename(testFiles[0], "./cache/"+testFiles[0])
 	os.Rename(testFiles[1], "./cache/"+testFiles[1])
 
-	err = MergeFromFolder("./cache")
+	err = MergeFromFolder("./cache", Fcfs{})
 	if err != nil {
 		t.Fatal(err)
 	}

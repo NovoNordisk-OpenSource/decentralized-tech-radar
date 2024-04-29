@@ -60,7 +60,7 @@ go run main.go merge --cache
 go run main.go generate "./Merged_file.csv"
 
 # Check OS and open the html file in the browser
-if [[ "$OSTYPE" == "darwin" ]]; then 
+if [[ "$OSTYPE" == "darwin"* ]]; then 
     open index.html
 else 
     xdg-open index.html

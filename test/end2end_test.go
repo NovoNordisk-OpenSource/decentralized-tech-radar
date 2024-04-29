@@ -7,6 +7,16 @@ import (
 	"testing"
 )
 
+func startProgram(t *testing.T) {
+	// Uses CLI commands to start program
+	// Works on Unix and Windows
+	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
+	_, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+}
+
 // End-to-end test
 func TestEndToEnd(t *testing.T) {
 	// Set up
@@ -16,15 +26,9 @@ func TestEndToEnd(t *testing.T) {
 	// Read test file
 	// specs := Reader.ReadCsvSpec(testFileName + "1.csv")
 	// html.GenerateHtml(specs)
+	//os.Args = []string{"cmd", testFileName + "1.csv"}
 
-	// Start program using CLI arguments
-	os.Args = []string{"cmd", testFileName + "1.csv"}
-	//Works on Unix and Windows
-	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
-	_, err := cmd.Output()
-	if err != nil {
-		t.Fatalf("%v", err)
-	}
+	startProgram(t)
 
 	// Fetcher
 	url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
@@ -33,7 +37,7 @@ func TestEndToEnd(t *testing.T) {
 	specFile := "specfile.txt"
 
 	cmd0 := exec.Command("./tech_radar.exe", "fetch", url, "main", specFile)
-	_, err = cmd0.Output()
+	_, err := cmd0.Output()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -83,17 +87,11 @@ func TestAddCmd(t *testing.T) {
 	CreateCsvFile()
 	defer CleanUp()
 
-	// Start program using CLI arguments
-	// Works on Unix and Windows
-	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
-	_, err := cmd.Output()
-	if err != nil {
-		t.Fatalf("%v", err)
-	}
+	startProgram(t)
 
 	// Run the Add command
 	cmd1 := exec.Command("./tech_radar.exe", "add", "ForTesting1.csv", "fakeLang", "assess", "language", "false", "0", "no lorem")
-	_, err = cmd1.Output()
+	_, err := cmd1.Output()
 	if err != nil {
 		t.Fatalf("%v", err)
 	}

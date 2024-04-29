@@ -103,25 +103,29 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 		}
 
 		defer file.Close()
-		scanner := bufio.NewScanner(file)
-
-		// Skip header
-		scanner.Scan()
-
-		for scanner.Scan() {
-			line := scanner.Text()
-			// Faster than splitting
-			// Panic handler
-			name := ""
-			index := strings.IndexByte(line, ',')
-			if index != -1 {
-				name = line[:index]
-			}
-
-			duplicateRemoval(name, line, buffer, set)
-		}
+		scanFile(file, buffer, set)
 	}
 	return nil
+}
+
+func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
+	scanner := bufio.NewScanner(file)
+
+	// Skip header
+	scanner.Scan()
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		// Faster than splitting
+		// Panic handler
+		name := ""
+		index := strings.IndexByte(line, ',')
+		if index != -1 {
+			name = line[:index]
+		}
+
+		duplicateRemoval(name, line, buffer, set)
+	}
 }
 
 func duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]string) error {

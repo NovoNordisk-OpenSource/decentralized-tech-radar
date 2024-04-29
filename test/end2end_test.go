@@ -77,5 +77,45 @@ func TestEndToEnd(t *testing.T) {
 			t.Errorf("Expected Blip-name %q not found in index.html", name)
 		}
 	}
+}
 
+func TestAddCmd(t *testing.T) {
+	CreateCsvFile()
+	defer CleanUp()
+
+	// Start program using CLI arguments
+	// Works on Unix and Windows
+	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
+	_, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	// Run the Add command
+	cmd1 := exec.Command("./tech_radar.exe", "add", "ForTesting1.csv", "fakeLang", "assess", "language", "false", "0", "no lorem")
+	_, err = cmd1.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	// Create slice with expected elements in the line appended
+	correctAdd := []string{"fakeLang", "assess", "language", "false", "0", "no lorem"}
+
+	// Read the ForTesting1.csv for asserts later
+	readTestFile, err := os.ReadFile("ForTesting1.csv")
+	if err != nil {
+		t.Fatalf("Failed to read ForTesting1.csv: %v", err)
+	}
+
+	// Check ForTesting1 DOES NOT contain TestBlip1.
+	if !strings.Contains(string(readTestFile), "TestBlip1") {
+		t.Errorf("ForTesting1.csv does not contain blip-name: TestBlip1")
+	}
+
+	// Check if csv DOES NOT contain the fakeLang line.
+	for _, lineElem := range correctAdd {
+		if !strings.Contains(string(readTestFile), lineElem) {
+			t.Errorf("Expected appended line %q not found in index.html", lineElem)
+		}
+	}
 }

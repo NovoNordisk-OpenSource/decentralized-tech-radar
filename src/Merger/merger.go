@@ -100,8 +100,8 @@ func zapLogger(f *os.File) *zap.SugaredLogger {
 	pe := zap.NewProductionEncoderConfig()
 
 	//fileEncoder := zapcore.NewJSONEncoder(pe)
-	
-	cfg := zap.NewProductionConfig()	
+
+	cfg := zap.NewProductionConfig()
 
 	cfg.EncoderConfig.LevelKey = zapcore.OmitKey
 	cfg.EncoderConfig.TimeKey = zapcore.OmitKey
@@ -119,7 +119,9 @@ func zapLogger(f *os.File) *zap.SugaredLogger {
 	return l.Sugar()
 
 }
-var dup_count := 0
+
+var dup_count = 0
+
 func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 	// Map functions as a set (name -> quadrant)
 	var set = make(map[string][]string)
@@ -128,11 +130,10 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 
 	os.Remove("Merge_log.txt")
 	file, _ := os.OpenFile("Merge_log.txt", os.O_RDWR|os.O_CREATE, 0644)
-  
+
 	sugar := zapLogger(file)
 	defer sugar.Sync()
 
-	
 	for _, filepath := range filepaths {
 		file, err := os.Open(filepath)
 		if err != nil {
@@ -141,7 +142,7 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 
 		defer file.Close()
 
-		scanFile(file, buffer, set)
+		scanFile(file, buffer, set, sugar, filepath, filepaths_set)
 
 	}
 	if dup_count == 0 {
@@ -150,36 +151,37 @@ func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 	return nil
 }
 
-func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string, sugar *zap.SugaredLogger) {
+func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string, sugar *zap.SugaredLogger, filepath string, filepaths_set map[string]string) {
 	scanner := bufio.NewScanner(file)
 
-		// Skip header
-		scanner.Scan()
-		line_num := 0
-		for scanner.Scan() {
-			line := scanner.Text()
-			line_num++
+	// Skip header
+	scanner.Scan()
+	line_num := 0
+	for scanner.Scan() {
+		line := scanner.Text()
+		line_num++
 
-			// Faster than splitting
-			// Panic handler
-			name := ""
-			index := strings.IndexByte(line, ',')
-			if index != -1 {
-				name = line[:index]
-			}
-
-			err := duplicateRemoval(name, line, filepath, buffer, set, filepaths_set)
-			if err != nil {
-				if dup_count == 0 {
-					sugar.Info("Duplicates found in the following files:\n")
-				}
-				dup_count++
-				sugar.Info("Duplicate overwrite "+fmt.Sprint(dup_count)+":",
-					"\n\tLine "+fmt.Sprint(line_num)+":", err.Error(),
-					"\n\tPicked: ", filepaths_set[name],
-					"\n\tNot-Picked: ", filepath+"\n")
-			}
+		// Faster than splitting
+		// Panic handler
+		name := ""
+		index := strings.IndexByte(line, ',')
+		if index != -1 {
+			name = line[:index]
 		}
+
+		err := duplicateRemoval(name, line, filepath, buffer, set, filepaths_set)
+		if err != nil {
+			if dup_count == 0 {
+				sugar.Info("Duplicates found in the following files:\n")
+			}
+			dup_count++
+			sugar.Info("Duplicate overwrite "+fmt.Sprint(dup_count)+":",
+				"\n\tLine "+fmt.Sprint(line_num)+":", err.Error(),
+				"\n\tPicked: ", filepaths_set[name],
+				"\n\tNot-Picked: ", filepath+"\n")
+		}
+	}
+}
 
 func duplicateRemoval(name, line, filepath string, buffer *bytes.Buffer, set map[string][]string, filepaths_set map[string]string) error {
 

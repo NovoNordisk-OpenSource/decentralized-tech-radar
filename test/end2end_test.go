@@ -3,10 +3,9 @@ package test
 import (
 	"os"
 	"os/exec"
-	"testing"
 	"strings"
+	"testing"
 )
-
 
 // End-to-end test
 func TestEndToEnd(t *testing.T) {
@@ -81,7 +80,6 @@ func TestEndToEnd(t *testing.T) {
 
 }
 
-
 func TestE2EUsingFetcherFlags(t *testing.T) {
 	// Set up
 	os.Create("specfile.txt")
@@ -89,6 +87,12 @@ func TestE2EUsingFetcherFlags(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create specfile.txt: %v", err)
 	}
+	os.Create("repos.txt")
+	err = os.WriteFile("repos.txt", []byte("https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar main specfile.txt"), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create repos.txt: %v", err)
+	}
+
 	CreateCsvFile()
 	defer CleanUp()
 	defer os.Remove("specfile.txt")
@@ -111,6 +115,25 @@ func TestE2EUsingFetcherFlags(t *testing.T) {
 	_, err = os.Stat("cache/template.csv")
 	if os.IsNotExist(err) {
 		t.Fatal("Failed to create Merged_file.csv")
+	}
+
+	// Fetch files using file flag
+	cmd2 := exec.Command("./tech_radar.exe", "fetch", "--repo-file=./repos.txt")
+	_, err = cmd2.Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = os.WriteFile("repos.txt", []byte("https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"), 0644)
+	if err != nil {
+		t.Fatalf("Failed to create repos.txt: %v", err)
+	}
+
+	// Check combination of both flags
+	cmd3 := exec.Command("./tech_radar.exe", "fetch", "--repo-file=./repos.txt", "--branch=main", "--whitelist=./specfile.txt")
+	_, err = cmd3.Output()
+	if err != nil {
+		t.Fatal(err)
 	}
 
 }

@@ -18,6 +18,7 @@ import (
 
 var token sync.Mutex
 var finished int
+var CSV_errs []string
 
 func FetchFiles(url, branch, specFile string, ch chan error) {
 	// Pulls files and returns the paths to said files
@@ -65,7 +66,9 @@ func FetchFiles(url, branch, specFile string, ch chan error) {
 		// file := "./cache/"+fileName[len(fileName)-1]
 		err = Verifier.Verifier(newFileName)
 		if err != nil {
-			fmt.Printf("CSV file contains incorrectly formatted content: " + newFileName + "\nContinuing to next file...")
+			token.Lock()
+			CSV_errs = append(CSV_errs, newFileName)
+			token.Unlock()
 		}
 	}
 
@@ -99,6 +102,12 @@ func ListingReposForFetch(repos []string) error {
 			progressBar[i] = "#"
 		}
 		fmt.Printf("\r| [%s] %d%%", strings.Join(progressBar, ""), 100)
+		// print files with errors
+		if len(CSV_errs) == 1 {
+			fmt.Println("\n" + "CSV file contains incorrectly formatted content: \n\t" + CSV_errs[0])
+		} else if len(CSV_errs) > 1 {
+			fmt.Println("\n" + "CSV files contain incorrectly formatted content: \n\t" + strings.Join(CSV_errs, "\n\t"))
+		}
 	}(len(repos) / 3)
 	go progressBar(len(repos) / 3)
 

@@ -3,6 +3,7 @@ package Fetcher
 import (
 	"fmt"
 	"io/fs"
+	"math"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -96,12 +97,11 @@ func ListingReposForFetch(repos []string) error {
 
 	// Make sure we print 100% when everything is fetched
 	defer func(repos int) {
-		progressBar := make([]string, repos)
-		for i := 0; i < repos; i++ {
+		progressBar := make([]string, 20)
+		for i := 0; i < 20; i++ {
 			progressBar[i] = "#"
 		}
 		fmt.Printf("\r| [%s] %d%%", strings.Join(progressBar, ""), 100)
-		
 		// print files with errors
 		if len(CSV_errs) == 1 {
 			fmt.Println("\n" + "CSV file contains incorrectly formatted content: \n\t" + CSV_errs[0])
@@ -121,17 +121,23 @@ func ListingReposForFetch(repos []string) error {
 	return nil
 }
 
+// https://stackoverflow.com/questions/39544571/golang-round-to-nearest-0-05
+func Round(x, unit float64) float64 {
+	return math.Round(x/unit) * unit
+}
+
 func progressBar(numOfFiles int) {
 	progressBar := []string{}
-	for i := 0; i < numOfFiles; i++ {
+	for i := 0; i < 20; i++ {
 		progressBar = append(progressBar, ".")
 	}
 	for {
 		for _, r := range `-\|/` {
-			for i := 0; i < finished; i++ {
+			percent_fin := float32(finished) / float32(numOfFiles) * 100.0
+			rounded_percent := Round((float64(finished) / float64(numOfFiles)), 0.05) * 100
+			for i := 0; i < int(rounded_percent)/5; i++ {
 				progressBar[i] = "#"
 			}
-			percent_fin := float32(finished) / float32(numOfFiles) * 100.0
 			fmt.Printf("\r%c [%s] %d%%", r, strings.Join(progressBar, ""), int32(percent_fin))
 			time.Sleep(100 * time.Millisecond)
 		}

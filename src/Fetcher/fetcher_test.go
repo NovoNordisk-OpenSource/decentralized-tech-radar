@@ -3,7 +3,6 @@ package Fetcher
 import (
 	"bufio"
 	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -14,9 +13,14 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 	url := "https://invalid-url.com/nonexistent-repo"
 	branch := "branch"
 	specFile := "nonexistent-file.txt"
-
-	err := FetchFiles(url, branch, specFile)
-
+	
+	os.Mkdir("cache", 0700)
+	defer os.RemoveAll("cache")
+	os.Mkdir("temp", 0700)
+	defer os.RemoveAll("temp")
+	ch := make(chan error)
+	go FetchFiles(url, branch, specFile, ch)
+	err := <- ch
 	// We expect an error since the arguments are invalid
 	if err == nil {
 		t.Error("FetchFiles did not return an error when given invalid arguments")
@@ -26,7 +30,6 @@ func TestFetchFilesInvalidArguments(t *testing.T) {
 func TestFetchFilesValidArguments(t *testing.T) {
 	defer os.Remove("specfile.txt")
 	defer os.RemoveAll("./cache/")
-	defer DotGitDelete()
 
 	// dev repo link and create specfile
 	url := "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar"
@@ -35,9 +38,13 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	data := []byte("examples/csv_templates/template.csv")
 	os.WriteFile("./specfile.txt", data, 0644)
 	specFile := "specfile.txt"
-
-	err := FetchFiles(url, branch, specFile)
-
+	
+	os.Mkdir("cache", 0700)
+	os.Mkdir("temp", 0700)
+	defer os.RemoveAll("temp")
+	ch := make(chan error)
+	go FetchFiles(url, branch, specFile, ch)
+	err := <- ch
 	if err != nil {
 		t.Errorf("FetchFiles returned an err %v", err)
 	}
@@ -61,7 +68,7 @@ func TestFetchFilesValidArguments(t *testing.T) {
 		template_lines = append(template_lines, scanner.Text())
 	}
 
-	expected_lines := []string{"name,ring,quadrant,isNew,move,description",
+	expected_lines := []string{"name,ring,quadrant,isNew,moved,description",
 	"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
 	"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
 	"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
@@ -77,7 +84,6 @@ func TestListingReposForFetch(t *testing.T) {
 	defer os.RemoveAll("./TestingTextFile.txt")
 	defer os.RemoveAll("./cache/")
 	//syscall.Rmdir(dirName)
-	defer DotGitDelete()
 	
 	// Creates a text file named "TestingTextFile.txt" to hold a temporary
 	// list of repo specifications for testing the ListingReposForFetch function
@@ -116,21 +122,4 @@ func TestListingReposForFetch(t *testing.T) {
 		t.Errorf("Expected an error containing '%s', but got '%s'", expectedErrorMessage, err.Error())
 	}
 
-}
-
-func TestGitDelete(t *testing.T) {
-	// Makes a filepath for the folder
-	dotGitpath := filepath.Join(".", ".git")
-
-	// Makes a folder from the given parameters
-	err := os.MkdirAll(dotGitpath, os.ModePerm)
-	if err != nil {
-		t.Errorf(err.Error() + " : Couldnt make the .git folder")
-	}
-
-	DotGitDelete()
-
-	if _, err := os.Stat("./.git"); !os.IsNotExist(err) {
-		t.Errorf(err.Error() + " : .git still exists")
-	}
 }

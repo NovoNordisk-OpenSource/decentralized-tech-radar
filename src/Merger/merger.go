@@ -141,7 +141,7 @@ func duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]
 
 	ring_len := len(line[len(real_name)+1 : strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1])
 	if set[name] != nil {
-		// Skips the name + first comma and does the same forward search for next comma// This is the regex pattern that matches the correct format for a data line in the csv specfile
+	// Skips the name + ring + 2 commas and does the same forward search for next comma
 	// Example of a line from a csv file:
 	// 		Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.
 	// Quadrant:

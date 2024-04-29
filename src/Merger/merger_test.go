@@ -45,12 +45,12 @@ Visual Studio Code,Trial,Infrastructure,false,2,An IDE
 Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
 Python,Hold,Language,false,0,Its a programming Language`
 
-var TestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
-var AllTestFiles []string = []string{"testFile1.csv", "testFile2.csv", "testFile3.csv"}
+var oldTestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
+var testFiles []string = []string{"testFile1.csv", "testFile2.csv", "testFile3.csv"}
 
 func createSomeCsv(count int) {
 
-	if count > len(AllTestFiles) {
+	if count > len(testFiles) {
 		log.Fatal("The count given is greater than the number of test files.")
 	}
 	var csvfile = csvfile1
@@ -62,7 +62,7 @@ func createSomeCsv(count int) {
 			csvfile = csvfile3
 		}
 
-		err := os.WriteFile(AllTestFiles[i], []byte(csvfile), 0644)
+		err := os.WriteFile(testFiles[i], []byte(csvfile), 0644)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -71,12 +71,12 @@ func createSomeCsv(count int) {
 
 func cleanSomeCsv(count int) {
 
-	if count > len(AllTestFiles) {
+	if count > len(testFiles) {
 		log.Fatal("The count given is greater than the number of test files.")
 	}
 
 	for i := 0; i < count; i++ {
-		err := os.Remove(AllTestFiles[i])
+		err := os.Remove(testFiles[i])
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -196,8 +196,10 @@ func TestMergeCSV(t *testing.T) {
 	createSomeCsv(2)
 	defer cleanUp(2)
 
+	mergeTestFiles := append([]string{}, testFiles[0], testFiles[1])
+
 	// Call function
-	err := MergeCSV(TestFiles)
+	err := MergeCSV(mergeTestFiles)
 	if err != nil {
 		t.Fatalf("MergeCSV gave an error: %v", err)
 	}
@@ -222,14 +224,20 @@ func TestMergeCSV(t *testing.T) {
 
 func TestMergeFromFolder(t *testing.T) {
 	createSomeCsv(2)
+
+	// Note: It will print "remove testFileX.csv: ..."
+	// This is because the files have been renamed/moved into cache
+	// So it cannot find the original file names
+	// But cleanup also handles removing the cache-folder, so this is ok.
+
 	defer cleanUp(2)
 
 	err := os.Mkdir("cache", 0700)
 	if err != nil {
 		t.Fatal(err)
 	}
-	os.Rename(TestFiles[0], "./cache/"+TestFiles[0])
-	os.Rename(TestFiles[1], "./cache/"+TestFiles[1])
+	os.Rename(testFiles[0], "./cache/"+testFiles[0])
+	os.Rename(testFiles[1], "./cache/"+testFiles[1])
 
 	err = MergeFromFolder("./cache")
 	if err != nil {

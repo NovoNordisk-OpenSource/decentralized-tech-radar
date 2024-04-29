@@ -1,6 +1,5 @@
 package test
 
-
 /*import (
 	"os"
 	"os/exec"
@@ -88,5 +87,4 @@ func TestEndToEnd(t *testing.T) {
 	</body>
 </html>`
 	AssertIndexHTML(t, correctHTML)
-}
-*/
+}*/

@@ -86,4 +86,5 @@ func TestEndToEnd(t *testing.T) {
 		</ul>
 	</body>
 </html>`
+	AssertIndexHTML(t, correctHTML)
 }*/

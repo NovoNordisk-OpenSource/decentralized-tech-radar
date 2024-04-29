@@ -17,6 +17,8 @@ import (
 var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
 
 type MergeStrat interface {
+	// A function that updates the buffer with the correct information 
+	// depending on that merge strategy
 	MergeFiles(buffer *bytes.Buffer, filepaths ...string) error
 }
 

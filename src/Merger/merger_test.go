@@ -218,6 +218,7 @@ func TestMergeCSV(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Merged_file.csv could not be opened: %v", err)
 	}
+	defer contentFile.Close()
 
 	scanner := bufio.NewScanner(contentFile)
 
@@ -262,6 +263,7 @@ func TestMergeFromFolder(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Merged_file.csv could not be opened: %v", err)
 	}
+	defer contentFile.Close()
 
 	scanner := bufio.NewScanner(contentFile)
 

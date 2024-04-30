@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"slices"
-	"strings"
 
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 	"go.uber.org/zap"
@@ -17,6 +15,10 @@ import (
 
 // Map of alternative names for the same blip
 var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+
+var dup_count = 0 // Counter for duplicates
+
+var filepaths_set = make(map[string]string) // Map of names to filepaths (name -> filepath) to keep track of which file the name was picked from
 
 type MergeStrat interface {
 	// A function that updates the buffer with the correct information
@@ -126,95 +128,4 @@ func zapLogger(f *os.File) *zap.SugaredLogger {
 
 }
 
-var dup_count = 0
 
-func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
-	// Map functions as a set (name -> quadrant)
-	var set = make(map[string][]string)
-	var filepaths_set = make(map[string]string)
-	// Create a new logger
-
-	os.Remove("Merge_log.txt")
-	file, _ := os.OpenFile("Merge_log.txt", os.O_RDWR|os.O_CREATE, 0644)
-
-	sugar := zapLogger(file)
-	defer sugar.Sync()
-
-	for _, filepath := range filepaths {
-		file, err := os.Open(filepath)
-		if err != nil {
-			panic(err)
-		}
-
-		defer file.Close()
-
-		scanFile(file, buffer, set, sugar, filepath, filepaths_set)
-
-	}
-	if dup_count == 0 {
-		os.Remove("Merge_log.txt")
-	}
-	return nil
-}
-
-func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string, sugar *zap.SugaredLogger, filepath string, filepaths_set map[string]string) {
-	scanner := bufio.NewScanner(file)
-
-	// Skip header
-	scanner.Scan()
-	line_num := 0
-	for scanner.Scan() {
-		line := scanner.Text()
-		line_num++
-
-		// Faster than splitting
-		// Panic handler
-		name := ""
-		index := strings.IndexByte(line, ',')
-		if index != -1 {
-			name = line[:index]
-		}
-
-		err := duplicateRemoval(name, line, filepath, buffer, set, filepaths_set)
-		if err != nil {
-			if dup_count == 0 {
-				sugar.Info("Duplicates found in the following files:\n")
-			}
-			dup_count++
-			sugar.Info("Duplicate overwrite "+fmt.Sprint(dup_count)+":",
-				"\n\tLine "+fmt.Sprint(line_num)+":", err.Error(),
-				"\n\tPicked: ", filepaths_set[name],
-				"\n\tNot-Picked: ", filepath+"\n")
-		}
-	}
-}
-
-func duplicateRemoval(name, line, filepath string, buffer *bytes.Buffer, set map[string][]string, filepaths_set map[string]string) error {
-
-	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
-	// Or just use a baked in str read line by line or combination
-	//os.Stat("./Dictionary/alt_names.txt")
-	real_name := name
-	if alt_names[name] != "" {
-		//TODO: Figure out how to handle numbers in names
-		name = alt_names[strings.ToLower(name)]
-	}
-
-	if set[name] != nil {
-		// Skips the name + first comma and does the same forward search for next comma
-		quadrant := line[len(real_name)+1 : strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
-		if !(slices.Contains(set[name], quadrant)) {
-			set[name] = append(set[name], quadrant)
-			filepaths_set[name] = filepath
-			buffer.Write([]byte(line + "\n"))
-		} else {
-			return fmt.Errorf(line)
-		}
-	} else {
-		set[name] = append(set[name], line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1])
-		filepaths_set[name] = filepath
-		buffer.Write([]byte(line + "\n"))
-	}
-
-	return nil
-}

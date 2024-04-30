@@ -17,7 +17,7 @@ To create a new merge strategy can be done by:
 The struct for the new merge strategy can now be used when calling the merger.
 
 # Existing merger strategies
-## First Come, First Served
+## Fcfs: First Come, First Served
 Adds the first version of a technology in quadrant to the buffer and skips other occurrences.  
 This strategy is defined as `type Fcfs struct {}`. This struct then implements the following functions:
 

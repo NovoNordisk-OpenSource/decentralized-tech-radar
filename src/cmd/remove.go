@@ -25,14 +25,11 @@ name,ring,quadrant,isNew,moved,description`,
 		var buf bytes.Buffer
 		scanner := bufio.NewScanner(oldFile)
 
-		// Skip header
-		scanner.Scan()
-
 		for scanner.Scan() {
 			line := strings.TrimSpace(scanner.Text())
 
-			if !strings.Contains(line, args[1]) &&
-				!strings.Contains(line, args[2]) {
+			if !strings.Contains(strings.ToLower(line), strings.ToLower(args[1])) &&
+				!strings.Contains(strings.ToLower(line), strings.ToLower(args[2])) {
 				buf.Write([]byte(line + "\n"))
 			}
 		}

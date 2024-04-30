@@ -21,7 +21,8 @@ The merger currently has three functions:
   * **What it does:** This function takes the provided filepath to an CSV file to open it, reads the specification file's header, and writes it to a byte array.
 
 * `MergeCSV(filepaths []string, header string, strat MergeStrat) error`
-  * **What it is:** A public function taking two arguments: An Array of data type string, and a string. It returns nothing.
+  * **What it is:** A public function taking three arguments: An Array of data type string, a string defining the header, and an implementation of the MergeStrat interface.
+
   * **What it does:** If Merged_file.csv already exists, this is removed. Then it uses `ReadCsvData()` to read each provided csv-file into a buffer. The buffer is then written to a Merged_file.csv file. These are read in the order of the file-paths provided.
   
 * `MergeFromFolder(folderPath string, strat MergeStrat) error`

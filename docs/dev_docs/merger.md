@@ -29,7 +29,8 @@ The merger currently has three functions:
   * **What it is**: A public function that takes two arguments: A path to a folder, which in the default case, when adding the cache flag, is the cache folder itself; and an implementation of the MergeStrat interface.
   * **What it does**: If the cache folder exists, it reads all files from said folder, and appends them to cachePaths. It then checks whether or not cachePaths contain anything, and if so, merges the file with `MergeCSV(cachePaths)`.
 
-The merger also has the interface for merging strategies:
+The merger also contains the interface for merging strategies:
+
 
 ```Go
 type MergeStrat {

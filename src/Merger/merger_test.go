@@ -131,8 +131,6 @@ func TestDuplicateRemoval(t *testing.T) {
 		panic(err)
 	}
 
-	filepath_set := make(map[string]string)
-
 	// Arrange csv file being closed, so it can be removed.
 	defer func() {
 		err = file.Close()
@@ -158,7 +156,7 @@ func TestDuplicateRemoval(t *testing.T) {
 
 
 	// Act to call scanFile that calls duplicateRemoval() on each line
-	Fcfs{}.scanFile(file, &buf, set, sugar, filename, filepath_set)
+	Fcfs{}.scanFile(file, &buf, set, sugar)
 
 	// Assert
 	bufferString := buf.String()

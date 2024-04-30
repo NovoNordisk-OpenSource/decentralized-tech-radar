@@ -4199,7 +4199,8 @@ ul.ui-autocomplete li div.ui-state-active:active {
         font-weight: 100;
         line-height: 1.6em;
         margin: 0;
-        padding: 0
+        padding: 0;
+        overflow-x: hidden;
     }
 }
 

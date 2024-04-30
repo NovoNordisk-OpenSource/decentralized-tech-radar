@@ -138,3 +138,42 @@ func TestE2EUsingFetcherFlags(t *testing.T) {
 
 }
 
+func TestRemCmd(t *testing.T) {
+	CreateCsvFile()
+	defer CleanUp()
+
+	// Works on Unix and Windows
+	cmd := exec.Command("go", "build", "-o", "tech_radar.exe", "../src")
+	_, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	// Run the Remove command
+	cmd1 := exec.Command("./tech_radar.exe", "remove", "ForTesting1.csv", "TestBlip2", "Infrastructure")
+	_, err = cmd1.Output()
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
+
+	// Create slice with expected element to be removed
+	lineToRemove := []string{"TestBlip2", "Adopt", "Infrastructure", "false", "0", "Also a description"}
+
+	// Read the ForTesting1.csv for asserts later
+	readTestFile, err := os.ReadFile("ForTesting1.csv")
+	if err != nil {
+		t.Fatalf("Failed to read ForTesting1.csv: %v", err)
+	}
+
+	// Check ForTesting1 still contains TestBlip1.
+	if !strings.Contains(string(readTestFile), "TestBlip1") {
+		t.Error("1: ForTesting1.csv does not contain blip-name: TestBlip1")
+	}
+
+	// Check if csv DOES NOT contain the removed line.
+	for _, lineElem := range lineToRemove {
+		if strings.Contains(string(readTestFile), lineElem) {
+			t.Errorf("Expected removed line %q found in ForTesting1.csv", lineElem)
+		}
+	}
+}

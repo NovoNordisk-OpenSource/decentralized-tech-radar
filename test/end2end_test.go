@@ -156,9 +156,6 @@ func TestRemCmd(t *testing.T) {
 		t.Fatalf("%v", err)
 	}
 
-	// Create slice with expected element to be removed
-	lineToRemove := []string{"TestBlip2", "Adopt", "Infrastructure", "false", "0", "Also a description"}
-
 	// Read the ForTesting1.csv for asserts later
 	readTestFile, err := os.ReadFile("ForTesting1.csv")
 	if err != nil {
@@ -171,9 +168,7 @@ func TestRemCmd(t *testing.T) {
 	}
 
 	// Check if csv DOES NOT contain the removed line.
-	for _, lineElem := range lineToRemove {
-		if strings.Contains(string(readTestFile), lineElem) {
-			t.Errorf("Expected removed line %q found in ForTesting1.csv", lineElem)
-		}
+	if strings.Contains(string(readTestFile), "TestBlip2,Adopt,Infrastructure,false,0,Also a description") {
+		t.Error("1: ForTesting1.csv contains TestBlip2 in Infrastructure")
 	}
 }

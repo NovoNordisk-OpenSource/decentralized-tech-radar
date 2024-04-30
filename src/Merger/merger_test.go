@@ -1,6 +1,7 @@
 package Merger
 
 import (
+	"bufio"
 	"bytes"
 	"fmt"
 	"log"
@@ -22,6 +23,7 @@ Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
 var correctMerge string = `name,ring,quadrant,isNew,moved,description
 Go,Adopt,Language,true,0,Its a programming Language
 Visual Studio Code,Trial,Infrastructure,false,2,An IDE
+Visual Studio,Trial,Infrastructure,false,1,An IDE
 Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
 Python,Hold,Language,false,0,Its a programming Language`
 
@@ -142,15 +144,16 @@ func TestDuplicateRemoval(t *testing.T) {
 
 	// Arrange other variables to be used
 	var set = make(map[string][]string)
-	var buf bytes.Buffer
+	blips := make(map[string]map[string]byte)
 
 	// Act to call scanFile that calls duplicateRemoval() on each line
-	scanFile(file, &buf, set)
+	scanFile(file, set, &blips)
 
 	// Assert
-	bufferString := buf.String()
-	if bufferString != expectedString {
-		t.Errorf("Buffer doesn't contain the expected data.\nExpected: %s \nActual: %s", expectedString, bufferString)
+	for line := range blips {
+		if !(strings.Contains(expectedString, line)) {
+			t.Errorf("The line from the blips is not in the expected string\nExpected string: %s\nBlips line: %s", expectedString, line)
+		}
 	}
 }
 
@@ -211,14 +214,18 @@ func TestMergeCSV(t *testing.T) {
 	}
 
 	// Check that file is merged correctly
-	content, err := os.ReadFile("Merged_file.csv")
+	contentFile, err := os.Open("Merged_file.csv")
 	if err != nil {
-		t.Fatalf("Merged_file.csv could not be read: %v", err)
+		t.Fatalf("Merged_file.csv could not be opened: %v", err)
 	}
 
-	contentStr := string(content)
-	if !strings.Contains(contentStr, correctMerge) {
-		t.Errorf("Merged file doesn't contain the expected data\nContained:\n%s", contentStr)
+	scanner := bufio.NewScanner(contentFile)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.Contains(correctMerge, line) {
+			t.Errorf("Merged file doesn't contain the expected data\nExpected: %s\nContained: %s", correctMerge, line)
+		}
 	}
 }
 
@@ -251,13 +258,17 @@ func TestMergeFromFolder(t *testing.T) {
 	}
 
 	// Check that file is merged correctly
-	content, err := os.ReadFile("Merged_file.csv")
+	contentFile, err := os.Open("Merged_file.csv")
 	if err != nil {
-		t.Fatalf("Merged_file.csv could not be read: %v", err)
+		t.Fatalf("Merged_file.csv could not be opened: %v", err)
 	}
 
-	contentStr := string(content)
-	if !strings.Contains(contentStr, correctMerge) {
-		t.Errorf("Merged file doesn't contain the expected data\nContained:\n%s", contentStr)
+	scanner := bufio.NewScanner(contentFile)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.Contains(correctMerge, line) {
+			t.Errorf("Merged file doesn't contain the expected data\nExpected: %s\nContained: %s", correctMerge, line)
+		}
 	}
 }

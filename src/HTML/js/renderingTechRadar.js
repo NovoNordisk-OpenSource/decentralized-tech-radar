@@ -938,7 +938,7 @@ define([
       .attr("class", "all-quadrants-mobile--btn")
       .style(
         "background-image",
-        `url('../src/js/images/${quadrant.order}-quadrant-btn-bg.svg')`
+        `url('../src/HTML/images/${quadrant.order}-quadrant-btn-bg.svg')`
       )
       .attr("id", quadrant.order + "-quadrant-mobile")
       .append("div")

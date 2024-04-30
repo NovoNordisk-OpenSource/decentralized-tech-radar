@@ -9,7 +9,7 @@ Merger strategies are used by the merger for merging multiple specfiles into one
 All merge strategies need to implement the `MergeStrat` interface from [Merger](./merger.md). This requires that the function `MergeFiles(buffer *bytes.Buffer, filepaths ...string) error` is implemented by the struct for the merging strategy. 
 
 ## Creating a Merge strategy
-To create a new merge strategy can be done by:
+Creating a new merge strategy can be done by:
 - Creating a new file in the Merger package
 - Create a struct for the merger strategy
 - Implement the interface on the struct

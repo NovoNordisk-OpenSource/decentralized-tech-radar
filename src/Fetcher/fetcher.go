@@ -1,8 +1,11 @@
 package Fetcher
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
 	"io/fs"
+	"log"
 	"math"
 	"math/rand"
 	"os"
@@ -27,6 +30,8 @@ func FetchFiles(url, branch, specFile string, ch chan error) {
 	if err != nil {
 		ch <- err
 	}
+	splitUrl := strings.Split(url, "/")
+	repoName := splitUrl[len(splitUrl)-1]
 	for _, path := range paths {
 		var fileNamePath []string
 		if runtime.GOOS == "windows" {
@@ -70,6 +75,39 @@ func FetchFiles(url, branch, specFile string, ch chan error) {
 			CSV_errs = append(CSV_errs, newFileName)
 			token.Unlock()
 		}
+
+		var buf bytes.Buffer
+		var scanner *bufio.Scanner
+		openfile, err := os.OpenFile(newFileName, os.O_RDWR, 0644)
+		if err != nil {
+			log.Printf("Error in opening %s. Error: %v | Continuing...\n", newFileName, err)
+			goto skip
+		}
+		
+		scanner = bufio.NewScanner(openfile)
+
+		scanner.Scan()
+		_, err = buf.Write(scanner.Bytes())
+		if err != nil {
+			log.Printf("Error in writing to buffer. Error: %v | Continuing...\n", err)
+			goto skip
+		}
+		
+		for scanner.Scan() {
+			line := strings.Trim(scanner.Text(),"\n") + fmt.Sprintf("<br>Repos:<br> <a href=%s>%s</a>\n", url, repoName)
+			_, err = buf.Write([]byte(line))
+			if err != nil {
+				log.Printf("Error in writing to buffer. Error: %v | Continuing...\n", err)
+				goto skip
+			}
+		}
+		openfile.Close()
+		err = os.WriteFile(newFileName, buf.Bytes(), 0644)
+		if err != nil {
+			log.Printf("Error in writing file %s. Error: %v | Continuing...\n", newFileName, err)
+		}
+
+		skip:
 	}
 
 	ch <- nil

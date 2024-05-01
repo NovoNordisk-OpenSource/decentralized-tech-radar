@@ -13,13 +13,6 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// Map of alternative names for the same blip
-var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
-
-var dup_count = 0 // Counter for duplicates
-
-var filepaths_set = make(map[string]string) // Map of names to filepaths (name -> filepath) to keep track of which file the name was picked from
-
 type MergeStrat interface {
 	// A function that updates the buffer with the correct information
 	// depending on that merge strategy

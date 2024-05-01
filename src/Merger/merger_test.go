@@ -131,8 +131,6 @@ func TestDuplicateRemoval(t *testing.T) {
 		panic(err)
 	}
 
-	filepath_set := make(map[string]string)
-
 	// Arrange csv file being closed, so it can be removed.
 	defer func() {
 		err = file.Close()
@@ -158,7 +156,7 @@ func TestDuplicateRemoval(t *testing.T) {
 
 
 	// Act to call scanFile that calls duplicateRemoval() on each line
-	scanFile(file, &buf, set, sugar,filename, filepath_set)
+	Fcfs{}.scanFile(file, &buf, set, sugar)
 
 	// Assert
 	bufferString := buf.String()
@@ -172,7 +170,7 @@ func TestReadCsvData(t *testing.T) {
 	defer cleanUp(2)
 
 	var buf bytes.Buffer
-	ReadCsvData(&buf, "./testFile1.csv", "./testFile2.csv")
+	Fcfs{}.MergeFiles(&buf, "./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {
@@ -212,7 +210,7 @@ func TestMergeCSV(t *testing.T) {
 	mergeTestFiles := append([]string{}, testFiles[0], testFiles[1])
 
 	// Call function
-	err := MergeCSV(mergeTestFiles)
+	err := MergeCSV(mergeTestFiles, Fcfs{})
 	if err != nil {
 		t.Fatalf("MergeCSV gave an error: %v", err)
 	}
@@ -252,7 +250,7 @@ func TestMergeFromFolder(t *testing.T) {
 	os.Rename(testFiles[0], "./cache/"+testFiles[0])
 	os.Rename(testFiles[1], "./cache/"+testFiles[1])
 
-	err = MergeFromFolder("./cache")
+	err = MergeFromFolder("./cache", Fcfs{})
 	if err != nil {
 		t.Fatal(err)
 	}

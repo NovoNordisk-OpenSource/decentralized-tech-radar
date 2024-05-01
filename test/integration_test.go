@@ -98,7 +98,7 @@ func TestMerger2Reader2Writer(t *testing.T) {
 	defer CleanUp()
 
 	// Merge test csv files
-	err := Merger.MergeCSV([]string{testFileName + "1.csv", testFileName + "2.csv"})
+	err := Merger.MergeCSV([]string{testFileName + "1.csv", testFileName + "2.csv"}, Merger.Fcfs{})
 	if err != nil {
 		t.Fatalf("MergeCSV() gave an error: %v", err)
 	}

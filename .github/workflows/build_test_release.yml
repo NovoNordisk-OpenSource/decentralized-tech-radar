@@ -38,12 +38,14 @@ jobs:
       - name: publish project
         shell: bash
         run: |
-          # Copy JS folder to dist
-          cp -r ./src/js ./dist/js
-          
           # Rename the binary to include exe extension
           mv ./dist/Tech_Radar-windows ./dist/Tech_Radar-windows.exe
           
+          # Copy JS folder to dist
+          cp -r src/HTML/js ./dist/js
+          cp -r src/HTML/css ./dist/css
+          cp -r src/HTML/images ./dist/img
+
           tag=$(git describe --tags --abbrev=0)
           #linux build
           release_name_linux="Tech_Radar-$tag-linux"

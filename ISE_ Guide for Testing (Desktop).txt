@@ -1,0 +1,204 @@
+﻿For ISE, 01/04/24
+Test Guide
+
+
+Note!
+Download the latest release from https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev and 
+the w.txt file from https://github.com/JonasSkjodt/specFile . Insert the w.txt file in your tech radar folder
+
+
+Phase 1: Fetch specification file(s)
+
+
+1. Open Command Prompt
+
+
+2. Open the program by inserting one of the following commands
+Note: use the command appropriate to your operating system
+
+
+For mac:
+./Tech_Radar-darwin fetch https://github.com/JonasSkjodt/specFile main w.txt
+	
+
+For windows:
+.\Tech_Radar-windows fetch https://github.com/JonasSkjodt/specFile main w.txt
+	
+
+Note: to fetch, this is how we write it in the command prompt:
+./Tech_Radar fetch <git-url> <branch> <path/to/whitelistfile>
+
+
+git-url being any valid public git repository
+
+
+branch being any valid branch name for the given repository
+
+
+path/to/whitelistfile being a path to a locally stored whitelist file, see more in fetcher_usage.md
+
+
+Anything being encased within <> is obligatory to write with the command
+
+
+
+
+3. Inspect and see if you have fetched the specification files in your cached folder
+Note: find the cached folder in your downloaded tech radar folder
+Phase 2: Merge csv files
+
+
+4. Click into the Command Prompt again
+
+
+5. Insert the following CLI command to merge (and thereby validate) the specification file
+
+
+For mac:
+./Tech_Radar-mac merge ./cache/specfile.csv ./cache/specfile2.csv
+	
+
+For windows:
+./Tech_Radar-windows merge .\cache\specfile.csv .\cache\specfile2.csv
+	
+
+Note: To merge, this is how we write it in the command prompt: 
+./Tech_Radar merge <path/to/csvfile> <path/to/csvfile2> [path/to/csvfile3] …
+
+
+path/to/csvfile being a path to a locally stored csvfile with correct format
+
+
+        Anything enclosed within [ ] is optional to write.
+
+
+
+
+6. Inspect your Tech Radar folder to find the merged file
+
+
+
+
+
+
+________________
+
+
+Phase 3: Generate index.html file
+
+
+7. Click into the Command Prompt again
+
+
+8. Insert the following CLI command to generate the tech radar
+
+
+For mac
+ ./Tech_Radar-darwin generate .\Merged_file.csv
+	
+
+For windows: 
+.\Tech_Radar-windows generate .\Merged_file.csv
+	
+
+9. Inspect your Tech Radar folder to find the index.html file
+
+
+
+
+
+
+
+
+________________
+
+
+Phase 4: Tech Radar
+
+
+10. Open the generated index.html file in your browser
+
+
+
+
+
+
+Phase 4.1: Blip Search
+
+
+11. Look for a blip (a colored data point) in the tech radar 
+
+
+12. Click the blip you have found
+
+
+13. Go back to the full tech radar
+
+
+
+
+
+
+Phase 4.2: Quadrant search
+
+
+14. Find the quadrant “languages”
+
+
+15. Click on the quadrant “languages”
+
+
+16. Go back to the full tech radar
+
+
+
+
+
+
+Phase 4.3: Input Search
+
+
+17. Locate and click on the search field
+
+
+18. Search for a blip, any blip, in the search field input bar
+
+
+19. press enter and fulfill the search
+
+
+20. Go back to the full tech radar
+
+
+
+
+Phase 4.4: Header links
+
+
+21. Find the header link to Data management
+
+
+22. Click on the link to Data management
+
+
+
+
+
+
+Phase 4.5: Printing the tech radar
+
+
+23. Locate the button labeled “Print This Radar”
+
+
+24. Click the button labeled “Print This Radar”
+
+
+
+
+
+
+Phase 4.6: Novo blip
+
+
+25. Locate the novo blip

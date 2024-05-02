@@ -457,7 +457,7 @@ header div {
 }
 
 header div span {
-    font-family: "Noto Sans", sans-serif;
+    font-family: Inter,sans-serif;
     font-weight: 630;
     margin-right: 5px
 }
@@ -495,7 +495,7 @@ footer {
 }
 
 footer p {
-    font-family: "Noto Sans", sans-serif;
+    font-family: Inter,sans-serif;
     font-size: 16px!important;
     font-weight: 400;
     margin: 30px auto auto;
@@ -725,13 +725,13 @@ footer p {
 
     .quadrant-subnav__list-item:not(.active-item):hover {
         color: #bd4257;
-        -webkit-text-decoration: none;
-        text-decoration: none;
+        -webkit-text-decoration: underline;
+        text-decoration: underline;
         text-underline-offset: 6px
     }
 
     .quadrant-subnav__list-item:not(.active-item):hover>* {
-        color: #E6553F
+        color: #bd4257
     }
 }
 
@@ -846,7 +846,7 @@ footer p {
 .search-container__input {
     background: #edf1f3 url(../src/HTML/images/search-active-wave.svg) no-repeat 98%;
     color: #163c4d;
-    font-family: "Noto Sans", sans-serif;
+    font-family: Inter,sans-serif;
     height: 48px;
     margin-bottom: 30px;
     scroll-margin-top: 60px
@@ -876,7 +876,7 @@ ul.ui-autocomplete li div {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    font-family: "Noto Sans", sans-serif;
+    font-family: Inter,sans-serif;
     font-size: 16px;
     height: 48px;
     padding-left: 16px
@@ -1154,7 +1154,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .buttons__wave-btn {
-    background-color: #001965
+    background-color: #001965;
 }
 
 .buttons__flamingo-btn {
@@ -1622,19 +1622,19 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .all-quadrants-mobile #first-quadrant-mobile {
-    background-color: #005AD2
+    background-color: #47a1ad
 }
 
 .all-quadrants-mobile #second-quadrant-mobile {
-    background-color: #EAAB00
+    background-color: #cc850a
 }
 
 .all-quadrants-mobile #third-quadrant-mobile {
-    background-color: #3F9C35
+    background-color: #6b9e78
 }
 
 .all-quadrants-mobile #fourth-quadrant-mobile {
-    background-color: #E6553F
+    background-color: #e16a7c
 }
 
 @media screen and (min-width: 360px) {
@@ -1752,7 +1752,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 .blip-list__item-container__name-value {
     display: inline-block;
-    font-family: "Noto Sans", sans-serif;
+    font-family: Inter,sans-serif;
     font-size: 1rem;
     pointer-events: none;
     width: 90%
@@ -2003,7 +2003,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     .tooltipster-default .tooltipster-content {
-        font-family: "Noto Sans", sans-serif;
+        font-family: Arial,sans-serif;
         font-size: 14px;
         line-height: 16px;
         overflow: hidden;
@@ -3054,7 +3054,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     h1,h2,h3,h4,h5,h6 {
-        font-family: "Noto Sans", sans-serif;
+        font-family: Open Sans,Microsoft YaHei,Hiragino Sans GB,Hiragino Sans GB W3,å¾®è½¯é›…é»‘,Helvetica Neue,Arial,sans-serif;
         font-weight: 400;
         line-height: 1.6em;
         margin: 0 0 20px;
@@ -3415,7 +3415,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
     }
 
     .callout,.lead-line-black {
-        font-family: "Noto Sans", sans-serif;
+        font-family: Open Sans,FangSong,ä»¿å®‹,STFangSong,åŽæ–‡ä»¿å®‹,serif;
         font-size: 22px;
         line-height: 1.3em
     }
@@ -3540,7 +3540,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 @media screen {
     .author-and-date {
         color: #221d1f;
-        font-family: "Noto Sans", sans-serif;
+        font-family: Open Sans,FangSong,ä»¿å®‹,STFangSong,åŽæ–‡ä»¿å®‹,serif;
         font-size: 18px
     }
 
@@ -3636,8 +3636,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
         -moz-box-sizing: border-box;
         color: #666;
         display: inline-block;
-        /*font-family: Open Sans,Microsoft YaHei,Hiragino Sans GB,Hiragino Sans GB W3,å¾®è½¯é›…é»‘,Helvetica Neue,Arial,sans-serif;*/
-        font-family: "Noto Sans", sans-serif;
+        font-family: Open Sans,Microsoft YaHei,Hiragino Sans GB,Hiragino Sans GB W3,å¾®è½¯é›…é»‘,Helvetica Neue,Arial,sans-serif;
         font-size: 16px;
         height: 2.4em;
         margin-bottom: 5px;
@@ -40078,7 +40077,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     body h2 {
-        font-family: "Noto Sans", sans-serif;
+        font-family: Inter,serif;
         font-size: 1.25rem;
         font-weight: 630;
         letter-spacing: normal;
@@ -40118,7 +40117,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     body p {
-        font-family: "Noto Sans", sans-serif;
+        font-family: Inter,sans-serif;
         font-size: 1rem
     }
 }

@@ -392,20 +392,6 @@ define([
   let quadrantScrollHandlerReference;
   let scrollFlag = false;
 
-  const createElement = (tagName, text, attributes) => {
-    const tag = document.createElement(tagName);
-    Object.keys(attributes).forEach((keyName) => {
-      tag.setAttribute(keyName, attributes[keyName]);
-    });
-    tag.appendChild(document.createTextNode(text));
-    return tag;
-  };
-
-  const replaceChild = (element, child) => {
-    element.textContent = "";
-    element.appendChild(child);
-  };
-
   function selectRadarQuadrant(order, startAngle, name) {
     const noOfBlips = d3
       .selectAll(".quadrant-group-" + order + " .blip-link")
@@ -646,22 +632,20 @@ define([
     const words = text.split(" ");
     let line = "";
 
-    replaceChild(
-      element,
-      createElement("tspan", text, { id: "text-width-check" })
-    );
+    element.innerHTML = `<tspan id="text-width-check">${text}</tspan >`
+    
     const testElem = document.getElementById("text-width-check");
 
     function maxCharactersToFit(testLine, suffix) {
       let j = 1;
       let firstLineWidth = 0;
       const testElem1 = document.getElementById("text-width-check");
-      testElem1.textContent = testLine;
+      testElem1.innerHTML = testLine
       if (testElem1.getBoundingClientRect().width < maxWidth) {
         return testLine.length;
       }
       while (firstLineWidth < maxWidth && testLine.length > j) {
-        testElem1.textContent = testLine.substring(0, j) + suffix;
+        testElem1.innerHTML = testLine.substring(0, j) + suffix
         firstLineWidth = testElem1.getBoundingClientRect().width;
 
         j++;
@@ -686,16 +670,15 @@ define([
     if (testElem.getBoundingClientRect().width > maxWidth) {
       for (let i = 0; i < words.length; i++) {
         let testLine = line + words[i] + " ";
-        testElem.textContent = testLine;
+        testElem.innerHTML = testLine
         const textWidth = testElem.getBoundingClientRect().width;
 
         if (textWidth > maxWidth) {
           if (i === 0) {
             let lineBreakIndex = maxCharactersToFit(testLine, "-");
             const elementText = `${words[i].substring(0, lineBreakIndex)}-`;
-            element.appendChild(
-              createElement("tspan", elementText, { x: "0", dy })
-            );
+            element.innerHTML += '<tspan x="0" dy="' + dy + '">' + words[i].substring(0, lineBreakIndex) + '-</tspan>'
+          
             const secondLine =
               words[i].substring(lineBreakIndex, words[i].length) +
               " " +
@@ -705,21 +688,35 @@ define([
               lineBreakIndex,
               secondLine
             )}`;
-            element.appendChild(
-              createElement("tspan", text, { x: "0", dy: "20" })
-            );
+
+            element.innerHTML +=
+            '<tspan x="0" dy="' +
+            20 +
+            '">' +
+            secondLine.substring(0, lineBreakIndex) +
+            ellipsis(lineBreakIndex, secondLine) +
+            '</tspan>'
+            
             break;
           } else {
-            element.appendChild(createElement("tspan", line, { x: "0", dy }));
+            element.innerHTML += '<tspan x="0" dy="' + dy + '">' + line + '</tspan>'
+            
             const secondLine = words.slice(i).join(" ");
             const lineBreakIndex = maxCharactersToFit(secondLine, "...");
             const text = `${secondLine.substring(0, lineBreakIndex)}${ellipsis(
               lineBreakIndex,
               secondLine
             )}`;
-            element.appendChild(
-              createElement("tspan", text, { x: "0", dy: "20" })
-            );
+
+            element.innerHTML +=
+            '<tspan x="0" dy="' +
+            20 +
+            '">' +
+            secondLine.substring(0, lineBreakIndex) +
+            ellipsis(lineBreakIndex, secondLine) +
+            '</tspan>'
+        
+            
           }
           line = words[i] + " ";
         } else {
@@ -727,7 +724,7 @@ define([
         }
       }
     } else {
-      element.appendChild(createElement("tspan", text, { x: "0" }));
+      element.innerHTML += `<tspan x="0" class="">` + text + `</tspan>`;
     }
 
     document.getElementById("text-width-check").remove();
@@ -941,7 +938,7 @@ define([
       .attr("class", "all-quadrants-mobile--btn")
       .style(
         "background-image",
-        `url('../src/js/images/${quadrant.order}-quadrant-btn-bg.svg')`
+        `url('../src/HTML/images/${quadrant.order}-quadrant-btn-bg.svg')`
       )
       .attr("id", quadrant.order + "-quadrant-mobile")
       .append("div")

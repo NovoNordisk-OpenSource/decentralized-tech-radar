@@ -12,11 +12,15 @@ import (
 	"strings"
 
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
-// Map of alternative names for the same blip
-// Uncomment this to use the alt_names map
-// var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+type MergeStrat interface {
+	// A function that updates the buffer with the correct information
+	// depending on that merge strategy
+	MergeFiles(buffer *bytes.Buffer, filepaths ...string) error
+}
 
 func getHeader(filepath string) ([]byte, error) {
 	file, err := os.Open(filepath)
@@ -33,7 +37,7 @@ func getHeader(filepath string) ([]byte, error) {
 	return headerBytes, nil
 }
 
-func MergeFromFolder(folderPath string) error {
+func MergeFromFolder(folderPath string, start MergeStrat) error {
 	_, err := os.Stat(folderPath)
 	if os.IsNotExist(err) {
 		return errors.New("Folder does not exist or could not be found. \nError: " + err.Error())
@@ -57,12 +61,12 @@ func MergeFromFolder(folderPath string) error {
 		fmt.Println("There are currently no files in the cache.")
 	}
 
-	MergeCSV(cachePaths)
+	MergeCSV(cachePaths, start)
 
 	return nil
 }
 
-func MergeCSV(filepaths []string) error {
+func MergeCSV(filepaths []string, strat MergeStrat) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
 
 	// Run data verifier on files
@@ -81,7 +85,7 @@ func MergeCSV(filepaths []string) error {
 
 	// Read csv data which removes duplicates
 	// This only adds non-duplicates to the buffer
-	err = ReadCsvData(&buf, filepaths...)
+	err = strat.MergeFiles(&buf, filepaths...)
 	if err != nil {
 		panic(err)
 	}
@@ -93,6 +97,31 @@ func MergeCSV(filepaths []string) error {
 	}
 
 	return nil
+}
+
+func zapLogger(f *os.File) *zap.SugaredLogger {
+	// https://stackoverflow.com/questions/50933936/zap-logger-print-both-to-console-and-to-log-file
+	pe := zap.NewProductionEncoderConfig()
+
+	//fileEncoder := zapcore.NewJSONEncoder(pe)
+
+	cfg := zap.NewProductionConfig()
+
+	cfg.EncoderConfig.LevelKey = zapcore.OmitKey
+	cfg.EncoderConfig.TimeKey = zapcore.OmitKey
+
+	pe.EncodeTime = zapcore.ISO8601TimeEncoder
+	consoleEncoder := zapcore.NewConsoleEncoder(cfg.EncoderConfig)
+
+	core := zapcore.NewTee(
+		zapcore.NewCore(consoleEncoder, zapcore.AddSync(f), zap.InfoLevel),
+		zapcore.NewCore(consoleEncoder, zapcore.AddSync(os.Stdout), zap.InfoLevel),
+	)
+
+	l := zap.New(core)
+
+	return l.Sugar()
+
 }
 
 func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {

@@ -18,7 +18,7 @@ To run the fetcher you can use the following command:
 `path/to/whitelistfile` being a path to a locally stored whitelist file *__see fetcher_usage.md__*  
 
 Example:  
-![Gif of fetching using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/docs_quickstart_user_guide/docs/images/quickstart_gifs/Fetching.gif)
+![Gif of fetching using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/main/docs/images/quickstart_gifs/Fetch.gif)
 
 ## The Merger
 The merger takes in one or more CSV files and merges them into one big file called `Merged_file.csv`. The merger will use a verifier to check if any of the CSV files are formatted wrong or contain the wrong information.
@@ -29,7 +29,7 @@ To run the merger you can use the following command:
 `path/to/csvfile` being a path to a locally stored csvfile with correct format *__see spec_file_format.md__*  
 
 Example:  
-![Gif of merging using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/docs_quickstart_user_guide/docs/images/quickstart_gifs/Merging.gif)
+![Gif of merging using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/main/docs/images/quickstart_gifs/Merging.gif)
 
 The merger also includes a cache flag this will run the merger using the cache folder generated from the fetcher (If the cache is located next to the program):
 ```bash
@@ -43,4 +43,4 @@ To run the generator you can use the following command
 ./Tech_Radar generate <path/to/csvfile>
 ```
 Example:  
-![Gif of generating using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/docs_quickstart_user_guide/docs/images/quickstart_gifs/Generate.gif)
+![Gif of generating using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/main/docs/images/quickstart_gifs/Generate.gif)

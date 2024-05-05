@@ -38,6 +38,9 @@ jobs:
       - name: publish project
         shell: bash
         run: |
+          # Rename the binary to include exe extension
+          mv ./dist/Tech_Radar-windows ./dist/Tech_Radar-windows.exe
+          
           # Copy JS folder to dist
           cp -r src/HTML/js ./dist/js
           cp -r src/HTML/css ./dist/css
@@ -50,7 +53,7 @@ jobs:
 
           #windows build
           release_name_win="Tech_Radar-$tag-win"
-          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows ./js
+          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows.exe ./js
 
           #mac build
           release_name_mac="Tech_Radar-$tag-mac"

@@ -51,15 +51,15 @@ jobs:
           tag=$(git describe --tags --abbrev=0)
           #linux build
           release_name_linux="Tech_Radar-$tag-linux"
-          tar -C ./dist -czvf "${release_name_linux}.tar.gz" Tech_Radar-linux ./js
+          tar -C ./dist -czvf "${release_name_linux}.tar.gz" Tech_Radar-linux ./HTML
 
           #windows build
           release_name_win="Tech_Radar-$tag-win"
-          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows.exe ./js
+          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows.exe ./HTML
 
           #mac build
           release_name_mac="Tech_Radar-$tag-mac"
-          tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin ./js
+          tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin ./HTML
 
       - name: Release project
         uses: softprops/action-gh-release@v2

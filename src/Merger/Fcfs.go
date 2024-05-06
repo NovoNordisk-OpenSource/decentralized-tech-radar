@@ -20,6 +20,7 @@ var dup_count = 0 // Counter for duplicates
 var filepaths_set = make(map[string]string) // Map of names to filepaths (name -> filepath) to keep track of which file the name was picked from
 
 type Fcfs struct{}
+
 var blipRepos = make(map[string]map[string]byte)
 
 func (f Fcfs) MergeFiles(buffer *bytes.Buffer, filepaths ...string) error {
@@ -68,7 +69,7 @@ func (f Fcfs) scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]str
 			name = line[:index]
 		}
 
-		err := f.duplicateRemoval(name, line, set, blipRepos)
+		err := f.duplicateRemoval(name, line, file.Name() , set, blipRepos)
 		if err != nil { // Duplicate found
 			if dup_count == 0 {
 				// Log the header of the merge log file
@@ -92,7 +93,7 @@ var regexPattern *regexp.Regexp = nil
 //	Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev>decentralized-tech-radar_dev</a>
 var pattern = "<br>Repos:(<br><a href=((https://www.|http://www.|https://|http://)([-a-zA-Z0-9]{2,})(.[a-zA-Z0-9]{2,})(.[a-zA-Z0-9]{2,})?(/[-a-zA-Z0-9_/.]{2,}))>([-a-zA-Z\\d_.]+)</a>)+"
 
-func (f Fcfs) duplicateRemoval(name, line string, set map[string][]string, blipRepos map[string]map[string]byte) error {
+func (f Fcfs) duplicateRemoval(name, line, filename string, set map[string][]string, blipRepos map[string]map[string]byte) error {
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")
@@ -107,12 +108,12 @@ func (f Fcfs) duplicateRemoval(name, line string, set map[string][]string, blipR
 
 	// Check if the line has repo urls
 	if regexPattern.MatchString(line) {
-		err := f.duplicateRemovalWithUrl(name, line, set, blipRepos)
+		err := f.duplicateRemovalWithUrl(name, line, filename , set, blipRepos)
 		if err != nil {
 			return err
 		}
 	} else {
-		err := f.duplicateRemovalWithoutUrl(name, line, set, blipRepos)
+		err := f.duplicateRemovalWithoutUrl(name, line, filename , set, blipRepos)
 		if err != nil {
 			return err
 		}
@@ -121,7 +122,7 @@ func (f Fcfs) duplicateRemoval(name, line string, set map[string][]string, blipR
 	return nil
 }
 
-func (f Fcfs) duplicateRemovalWithoutUrl(name, line string, set map[string][]string, blipRepos map[string]map[string]byte) error {
+func (f Fcfs) duplicateRemovalWithoutUrl(name, line, filename string, set map[string][]string, blipRepos map[string]map[string]byte) error {
 	// This code does noting right now but can be added back if alt_names get properly populated
 	// real_name := name
 	// if alt_names[name] != "" {
@@ -134,19 +135,21 @@ func (f Fcfs) duplicateRemovalWithoutUrl(name, line string, set map[string][]str
 		quadrant := strings.Split(line, ",")[2]
 		if !(slices.Contains(set[name], quadrant)) { // If blip name not in quadrant
 			set[name] = append(set[name], quadrant) // Add quadrant to blip set
+			filepaths_set[name] = filename           // Add the name to the filepaths set
 			blipRepos[line] = make(map[string]byte) // Add line to the pseudo buffer (dumb map of map thing)
 		} else {
 			return fmt.Errorf(line)
 		}
 	} else { // Blip with current name is not in blip set
 		set[name] = append(set[name], strings.Split(line, ",")[2]) // Add quadrant to blip set
+		filepaths_set[name] = filename                               // Add the name to the filepaths set
 		blipRepos[line] = make(map[string]byte)                    // Add line to the pseudo buffer (dumb map of map thing)
 	}
 
 	return nil
 }
 
-func (f Fcfs) duplicateRemovalWithUrl(name, line string, set map[string][]string, blipRepos map[string]map[string]byte) error {
+func (f Fcfs) duplicateRemovalWithUrl(name, line, filename string, set map[string][]string, blipRepos map[string]map[string]byte) error {
 	// This code does noting right now but can be added back if alt_names get properly populated
 	// real_name := name
 	// if alt_names[name] != "" {
@@ -161,6 +164,7 @@ func (f Fcfs) duplicateRemovalWithUrl(name, line string, set map[string][]string
 		quadrant := strings.Split(line, ",")[2]
 		if !(slices.Contains(set[name], quadrant)) { // If blip name not in quadrant
 			set[name] = append(set[name], quadrant) // Add quadrant to blip set
+			filepaths_set[name] = filename       // Add the name to the filepaths set
 
 			// Split up the blip info and the repos
 			// Example of line with repos:
@@ -186,6 +190,7 @@ func (f Fcfs) duplicateRemovalWithUrl(name, line string, set map[string][]string
 	} else { // Blip with current name is not in blip set
 		// See comments above
 		set[name] = append(set[name], strings.Split(line, ",")[2])
+		filepaths_set[name] = filename
 		blipRepos[blipInfo] = make(map[string]byte)
 		for _, repo := range strings.Split(splitLine[1], "<br>") {
 			blipRepos[blipInfo][repo] = 0

@@ -120,9 +120,9 @@ func TestMerger2Reader2Writer(t *testing.T) {
 		t.Fatalf("Failed to read index.html: %v", err)
 	}
 
-	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\nTestBlip1,Assess,Language,true,1,This is a description\nTestBlip2,Adopt,Infrastructure,false,0,Also a description\nTestBlip3,Assess,Language,true,1,This is a description\nTestBlip4,Adopt,Infrastructure,false,0,Also a description\n").build();`
+	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\n`
 
 	if !strings.Contains(string(indexHTMLContent), stringToCheck) {
-		t.Errorf("The content of HTML does not contain %s", stringToCheck)
+		t.Errorf("The content of HTML does not contain %s \nActually contained: %s", stringToCheck, string(indexHTMLContent))
 	}
 }

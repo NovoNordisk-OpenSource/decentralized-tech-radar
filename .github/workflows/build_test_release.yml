@@ -44,9 +44,7 @@ jobs:
           
           # Copy JS folder to dist
           cp -r src/HTML/js ./dist/HTML/js
-          #shouldn't be required for HTML file to be generated
-          #cp -r src/HTML/css ./dist/css
-          #cp -r src/HTML/images ./dist/img
+          cp -r src/HTML/images ./dist/images
 
           tag=$(git describe --tags --abbrev=0)
           #linux build

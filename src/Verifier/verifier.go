@@ -34,9 +34,6 @@ func createRegexPattern(ring1, ring2, ring3, ring4, quadrant1, quadrant2, quadra
 	// 		Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.
 	// Example of a incorrect line:
 	// 		Python,wait,infrastructure,False,5,Lorem ipsum dolor sit amet consectetur adipiscing elit.
-	fmt.Printf("[%s]%s|[%s]%s|[%s]%s|[%s]%s",
-		strings.ToUpper(quadrant1[:1])+strings.ToLower(quadrant1[:1]), quadrant1[1:], strings.ToUpper(quadrant2[:1])+strings.ToLower(quadrant2[1:]), quadrant2[1:],
-		strings.ToUpper(quadrant3[:1])+strings.ToLower(quadrant3[:1]), quadrant3[1:], strings.ToUpper(quadrant4[:1])+strings.ToLower(quadrant4[1:]), quadrant4[1:])
 
 	regexPattern, err = regexp.Compile(fmt.Sprintf("^(([^,\n])([^,\n])*),([%s]%s|[%s]%s|[%s]%s|[%s]%s),([%s]%s|[%s]%s|[%s]%s|[%s]%s),(false|true),-?[0123],(([^,\n])([^,\n])*)",
 		strings.ToUpper(ring1[:1])+strings.ToLower(ring1[:1]), ring1[1:], strings.ToUpper(ring2[:1])+strings.ToLower(ring2[:1]), ring2[1:],
@@ -47,8 +44,6 @@ func createRegexPattern(ring1, ring2, ring3, ring4, quadrant1, quadrant2, quadra
 		panic(err)
 	}
 }
-
-// ([Tt]echniques|[Pp]latforms|[Tt]ools|[Ll]anguages & Frameworks)
 
 // Checks that the given string matches the correct
 // format for data in a specfile

@@ -1,0 +1,49 @@
+name: Radar Build Workflow
+on:
+  push:
+    tags:
+      - "make_radar-v*"
+
+jobs:
+  build_test_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # This part is to get the CI workflow files for dagger this can be specified to a specific repo
+      # and branch using the with part below
+      - uses: actions/checkout@v4
+        # with:
+        #     repository: NovoNordisk-OpenSource/decentralized-tech-radar_dev
+        #     ref: main
+      - uses: robinraju/release-downloader@v1.10
+        with:
+            latest: true
+            fileName: 'Tech_Radar-v*.*.*-linux.tar.gz'
+      - name: Unzip the release
+        run: tar -xf Tech_Radar-v*.*.*-linux.tar.gz
+      - name: Untar the linux release
+        run: tar -xf *-linux.tar.gz
+      - name: Create whitelist file
+        run: echo "/*" > whitelist.txt
+    # This part can be used to download any repo list file from a curlable source
+    #   - name: Download Repo list 
+    #     run: curl https://raw.githubusercontent.com/NovoNordisk-OpenSource/decentralized-tech-radar_dev/main/examples/fetcher_input_files/repos.txt > repos.txt
+      # Maybe look into sparse checkout using actions checkout
+      - name: Copy repofile into root
+        run: ls && cp examples/fetcher_input_files/repos.txt ./
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.21.x'
+      - run: go work init ./ci
+      - run: cd ./ci && go get dagger.io/dagger@latest && cd ..
+      - run: go run ci/radar_build.go
+      - name: Tar the radar and dependecies
+        run: tar -czvf radar.tar.gz index.html ./HTML
+      - name: Archive the built radar
+        uses: actions/upload-artifact@v4
+        with:
+          name: Radar Artifact 
+          path: ./radar.tar.gz
+
+      

@@ -14,7 +14,7 @@ jobs:
             latest: true
             fileName: 'Tech_Radar-v*.*.*-linux.tar.gz'
       - name: Unzip the release
-        run: tar -xf radar.tar.gz
+        run: tar -xf Tech_Radar-v*.*.*-linux.tar.gz
       - name: Untar the linux release
         run: tar -xf *-linux.tar.gz
       - name: Create whitelist file

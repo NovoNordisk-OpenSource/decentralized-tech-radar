@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+        # with:
+        #     ref: main
       - uses: robinraju/release-downloader@v1.10
         with:
             latest: true
@@ -21,9 +24,6 @@ jobs:
         run: echo "/*" > whitelist.txt
     #   - name: Download Repo list 
     #     run: curl https://raw.githubusercontent.com/Agile-Arch-Angels/decentralized-tech-radar_dev/main/examples/fetcher_input_files/repos.txt > repos.txt
-      - uses: actions/checkout@v4
-        # with:
-        #     ref: main
       # Maybe look into sparse checkout using actions checkout
       - name: Copy repofile into root
         run: ls && cp examples/fetcher_input_files/repos.txt ./

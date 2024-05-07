@@ -27,7 +27,7 @@ func checkHeader(header string) bool {
 var regexPattern *regexp.Regexp = nil
 
 // Creates the regex pattern string with the names on the rings
-func createRegexPattern(ring1, ring2, ring3, ring4 string) {
+func createRegexPattern(ring1, ring2, ring3, ring4, qudrant1, quadrant2, quadrant3, quadrant4 string) {
 	var err error
 	// This is the regex pattern that matches the correct format for a data line in the csv specfile
 	// Example of a correct line:

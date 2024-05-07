@@ -12,7 +12,7 @@ jobs:
       - uses: robinraju/release-downloader@v1.10
         with:
             latest: true
-            fileName: 'radar.tar.gz'
+            fileName: 'Tech_Radar-v*.*.*-linux.tar.gz'
       - name: Unzip the release
         run: tar -xf radar.tar.gz
       - name: Untar the linux release

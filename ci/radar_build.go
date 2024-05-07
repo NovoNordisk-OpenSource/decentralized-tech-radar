@@ -41,8 +41,10 @@ func main() {
 	// Run the HTML generator using the binary
 	exporter := runner.WithWorkdir("/d_src/").WithExec([]string{"./Tech_Radar-linux", "generate", "Merged_file.csv"})
 
+	exp_dir := exporter.Directory("/d_src/d_src")
+
 	// Output the HTML file to the host
-	_, err = exporter.Export(ctx, "index.html")
+	_, err = exp_dir.Export(ctx, ".")
 	if err != nil {
 		panic(err)
 	}

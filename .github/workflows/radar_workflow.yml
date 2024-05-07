@@ -2,15 +2,18 @@ name: Radar Build Workflow
 on:
   push:
     tags:
-      - "make_radar"
+      - "make_radar-v*"
 
 jobs:
   build_test_release:
     runs-on: ubuntu-latest
 
     steps:
+      # This part is to get the CI workflow files for dagger this can be specified to a specific repo
+      # and branch using the with part below
       - uses: actions/checkout@v4
         # with:
+        #     repository: NovoNordisk-OpenSource/decentralized-tech-radar_dev
         #     ref: main
       - uses: robinraju/release-downloader@v1.10
         with:
@@ -22,8 +25,9 @@ jobs:
         run: tar -xf *-linux.tar.gz
       - name: Create whitelist file
         run: echo "/*" > whitelist.txt
+    # This part can be used to download any repo list file from a curlable source
     #   - name: Download Repo list 
-    #     run: curl https://raw.githubusercontent.com/Agile-Arch-Angels/decentralized-tech-radar_dev/main/examples/fetcher_input_files/repos.txt > repos.txt
+    #     run: curl https://raw.githubusercontent.com/NovoNordisk-OpenSource/decentralized-tech-radar_dev/main/examples/fetcher_input_files/repos.txt > repos.txt
       # Maybe look into sparse checkout using actions checkout
       - name: Copy repofile into root
         run: ls && cp examples/fetcher_input_files/repos.txt ./
@@ -39,7 +43,7 @@ jobs:
       - name: Archive the built radar
         uses: actions/upload-artifact@v4
         with:
-          name: code-coverage-report
+          name: Radar Artifact 
           path: ./radar.tar.gz
 
       

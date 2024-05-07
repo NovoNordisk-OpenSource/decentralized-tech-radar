@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       # Maybe look into sparse checkout using actions checkout
       - name: Copy repofile into root
-        run: cp ./examples/fetcher_input_files/repos.txt ./
+        run: ls && cp examples/fetcher_input_files/repos.txt ./
       - name: Setup Go
         uses: actions/setup-go@v2
         with:

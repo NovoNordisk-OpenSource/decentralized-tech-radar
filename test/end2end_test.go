@@ -90,14 +90,14 @@ func TestAddCmd(t *testing.T) {
 	startProgram(t)
 
 	// Run the Add command
-	cmd1 := exec.Command("./tech_radar.exe", "add", "ForTesting1.csv", "fakeLang", "assess", "language", "false", "0", "no lorem")
+	cmd1 := exec.Command("./tech_radar.exe", "add", "ForTesting1.csv", "fakeLang", "assess", "Languages & Frameworks", "false", "0", "no lorem")
 	_, err := cmd1.Output()
 	if err != nil {
 		t.Fatalf("%v", err)
 	}
 
 	// Create slice with expected elements in the line appended
-	correctAdd := []string{"fakeLang", "assess", "language", "false", "0", "no lorem"}
+	correctAdd := []string{"fakeLang", "assess", "Languages & Frameworks", "false", "0", "no lorem"}
 
 	// Read the ForTesting1.csv for asserts later
 	readTestFile, err := os.ReadFile("ForTesting1.csv")
@@ -188,7 +188,7 @@ func TestRemCmd(t *testing.T) {
 	}
 
 	// Run the Remove command
-	cmd1 := exec.Command("./tech_radar.exe", "remove", "ForTesting1.csv", "TestBlip2", "Infrastructure")
+	cmd1 := exec.Command("./tech_radar.exe", "remove", "ForTesting1.csv", "TestBlip2", "Platforms")
 	_, err = cmd1.Output()
 	if err != nil {
 		t.Fatalf("%v", err)
@@ -206,7 +206,7 @@ func TestRemCmd(t *testing.T) {
 	}
 
 	// Check if csv DOES NOT contain the removed line.
-	if strings.Contains(string(readTestFile), "TestBlip2,Adopt,Infrastructure,false,0,Also a description") {
-		t.Error("1: ForTesting1.csv contains TestBlip2 in Infrastructure")
+	if strings.Contains(string(readTestFile), "TestBlip2,Adopt,Platforms,false,0,Also a description") {
+		t.Error("1: ForTesting1.csv contains TestBlip2 in Platforms")
 	}
 }

@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"os"
+	//"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML/scripts"
 )
 
 var htmlFileName string = "index"
@@ -44,13 +45,13 @@ func GenerateHtml(csvData string) {
 			</div>
 		</main>
 	</body>
-
+  
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
 	<script src="./js/requireConfig.js"></script>
 
 	<!-- this script builds the radar with the go generated csv file -->
 	<script>
-		require(['./js/util/factory.js'], function(Factory) {
+		require(['./js/remakeJS.js'], function(Factory) {
 			Factory({{.}}).build(); //{{.}} refers to the csvData
 		})
 	</script>
@@ -69,6 +70,8 @@ func GenerateHtml(csvData string) {
 		panic(err)
 	}
 	defer file.Close()
+
+	//script := scripts.Print()
 
 	//execute the html and data
 	err = t.Execute(file, csvData)

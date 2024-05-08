@@ -30,7 +30,7 @@ jobs:
     #     run: curl https://raw.githubusercontent.com/NovoNordisk-OpenSource/decentralized-tech-radar_dev/main/examples/fetcher_input_files/repos.txt > repos.txt
       # Maybe look into sparse checkout using actions checkout
       - name: Copy repofile into root
-        run: ls && cp examples/fetcher_input_files/repos.txt ./
+        run: cp examples/fetcher_input_files/repos.txt ./
       - name: Setup Go
         uses: actions/setup-go@v2
         with:

@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"slices"
+	"strings"
+
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 )
 
@@ -28,27 +29,6 @@ func getHeader(filepath string) ([]byte, error) {
 	headerBytes = append(headerBytes, []byte("\n")...)
 
 	return headerBytes, nil
-}
-
-func readCsvContent(filepath string) ([]byte, error) {
-	var fileBytes []byte
-
-	// Open file
-	file, err := os.Open(filepath)
-	if err != nil {
-		return fileBytes, err // Propagate error
-	}
-	defer file.Close()
-
-	// Read file line by line, skipping first line
-	scanner := bufio.NewScanner(file)
-	scanner.Scan()
-	for scanner.Scan() {
-		fileBytes = append(fileBytes, scanner.Bytes()...)
-		fileBytes = append(fileBytes, []byte("\n")...) // Add newline between each line in the file, otherwise it's all on one line
-	}
-
-	return fileBytes, nil
 }
 
 func MergeFromFolder(folderPath string) error {
@@ -82,7 +62,6 @@ func MergeFromFolder(folderPath string) error {
 
 func MergeCSV(filepaths []string) error {
 	os.Remove("Merged_file.csv") // Remove file in case it already exists
-	var buf bytes.Buffer
 
 	// Run data verifier on files
 	err := Verifier.Verifier(filepaths...)
@@ -90,12 +69,7 @@ func MergeCSV(filepaths []string) error {
 		panic(err)
 	}
 
-	// Run duplicate removal on files
-	err = DuplicateRemoval(filepaths...)
-	if err != nil {
-		panic(err)
-	}
-
+	var buf bytes.Buffer
 	// Add header to buffer
 	header, err := getHeader(filepaths[0])
 	if err != nil {
@@ -103,13 +77,11 @@ func MergeCSV(filepaths []string) error {
 	}
 	buf.Write(header)
 
-	// Read file content and add to buffer
-	for _, file := range filepaths {
-		content, err := readCsvContent(file)
-		if err != nil {
-			return err
-		}
-		buf.Write(content)
+	// Read csv data which removes duplicates
+	// This only adds non-duplicates to the buffer
+	err = ReadCsvData(&buf, filepaths...)
+	if err != nil {
+		panic(err)
 	}
 
 	// Write combined files to one file
@@ -121,56 +93,42 @@ func MergeCSV(filepaths []string) error {
 	return nil
 }
 
-func DuplicateRemoval(filepaths ...string) error {
+func ReadCsvData(buffer *bytes.Buffer, filepaths ...string) error {
 	// Map functions as a set (name -> quadrant)
 	var set = make(map[string][]string)
 	for _, filepath := range filepaths {
-
-		// Create temp file to overwrite primary file
-		tempfile, err := os.Create("tempfile.csv")
-		if err != nil {
-			panic(err)
-		}
-
-		defer os.RemoveAll(tempfile.Name())
-		defer tempfile.Close()
-
 		file, err := os.Open(filepath)
 		if err != nil {
 			panic(err)
 		}
 
 		defer file.Close()
-		scanner := bufio.NewScanner(file)
-
-		// Skip header
-		scanner.Scan()
-		tempfile.WriteString(scanner.Text() + "\n")
-
-		for scanner.Scan() {
-			line := scanner.Text()
-			// Faster than splitting
-			// Panic handler
-			name := ""
-			index := strings.IndexByte(line, ',')
-			if index != -1 {
-				name = line[:index]
-			}
-
-			duplicateRemoval(name, line, tempfile, set)
-
-		}
-		file.Close()
-		tempfile.Close()
-		err = os.Rename("tempfile.csv", filepath)
-		if err != nil {
-			panic(err)
-		}
+		scanFile(file, buffer, set)
 	}
 	return nil
 }
 
-func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]string) error {
+func scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string) {
+	scanner := bufio.NewScanner(file)
+
+	// Skip header
+	scanner.Scan()
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		// Faster than splitting
+		// Panic handler
+		name := ""
+		index := strings.IndexByte(line, ',')
+		if index != -1 {
+			name = line[:index]
+		}
+
+		duplicateRemoval(name, line, buffer, set)
+	}
+}
+
+func duplicateRemoval(name, line string, buffer *bytes.Buffer, set map[string][]string) error {
 	//TODO: Unmarshal the json file (or some other file based solution) to get the alternative names
 	// Or just use a baked in str read line by line or combination
 	//os.Stat("./Dictionary/alt_names.txt")
@@ -186,11 +144,11 @@ func duplicateRemoval(name, line string, tempfile *os.File, set map[string][]str
 		quadrant := line[len(real_name)+1 : strings.IndexByte(line[len(real_name)+1:], ',')+len(real_name)+1]
 		if !(slices.Contains(set[name], quadrant)) {
 			set[name] = append(set[name], quadrant)
-			tempfile.WriteString(line + "\n")
+			buffer.Write([]byte(line + "\n"))
 		}
 	} else {
 		set[name] = append(set[name], line[len(name)+1:strings.IndexByte(line[len(name)+1:], ',')+len(name)+1])
-		tempfile.WriteString(line + "\n")
+		buffer.Write([]byte(line + "\n"))
 	}
 
 	return nil

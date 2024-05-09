@@ -97,19 +97,6 @@
     padding-top: 200px
 }
 
-.input-sheet .input-sheet__banner {
-    background-color: #eee;
-    background-image: url(/images/tech-radar-landing-page-wide.png);
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: table;
-    margin: 0 auto;
-    min-height: 285px;
-    text-align: center;
-    width: 100%
-}
-
 .input-sheet .input-sheet__form {
     margin: 0 auto;
     padding-top: 30px;
@@ -399,7 +386,7 @@ header {
 
 #alternative-buttons .search-radar {
     background-color: inherit;
-    background-image: url(/images/search-logo-2x.svg);
+    background-image: url(../src/HTML/images/search-logo-2x.svg);
     background-position: 10px;
     background-repeat: no-repeat;
     border: 1px solid #aaa
@@ -854,7 +841,7 @@ footer p {
 }
 
 .search-container__input {
-    background: #edf1f3 url(../images/search-active-wave.svg) no-repeat 98%;
+    background: #edf1f3 url(../src/HTML/images/search-active-wave.svg) no-repeat 98%;
     color: #163c4d;
     font-family: Inter,sans-serif;
     height: 48px;
@@ -1610,7 +1597,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .all-quadrants-mobile .all-quadrants-mobile--btn:after {
-    content: url(/images/arrow-white-icon.svg);
+    content: url(../src/HTML/images/arrow-white-icon.svg);
     margin: 4px 4px 0
 }
 
@@ -8475,36 +8462,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         font-weight: 400
     }
 
-    #selectable-banner-dialog {
-        max-width: 750px;
-        width: 720px
-    }
-
-    #selectable-banner-dialog h4 {
-        margin: 0;
-        padding: 30px 0 0 70px
-    }
-
-    #selectable-banner-dialog p {
-        margin-bottom: 0
-    }
-
-    #selectable-banner-dialog .warning-message {
-        color: #ee312d;
-        font-size: 16px;
-        padding-left: 30px
-    }
-
-    #selectable-banner-dialog .banner-description {
-        color: #666;
-        font-size: 16px;
-        padding-left: 30px
-    }
-
-    #selectable-banner-dialog .dialog-buttons {
-        padding: 0 70px 30px
-    }
-
     .metatags_warning_message {
         border: 2px dashed #d2d2d2;
         margin-bottom: 1.4em;
@@ -8519,10 +8476,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
     .metatags_warning_message .icon-warning-sign {
         margin-right: 10px
-    }
-
-    .hero-banner--news {
-        margin-bottom: 48px
     }
 
     .contacts-label {
@@ -9744,29 +9697,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
     .blurb .grid__cell {
         margin-bottom: 0;
         padding: 0
-    }
-
-    .blurb .top-banner {
-        height: 103px;
-        position: relative
-    }
-
-    .blurb .top-banner img {
-        height: inherit;
-        -o-object-fit: cover;
-        object-fit: cover;
-        position: absolute;
-        width: 100%
-    }
-
-    .blurb .top-banner .heading__text {
-        color: #fff;
-        font-size: 36px;
-        font-weight: 900;
-        margin: 30px 0;
-        position: absolute;
-        text-align: center;
-        width: 100%
     }
 
     .blurb .grid-bottom-background {
@@ -11524,90 +11454,9 @@ ul.ui-autocomplete li div.ui-state-active:active {
         border-top: 6.25px solid #83ad78
     }
 
-    .call-to-action-banner {
-        background-color: #f4f5f8;
-        background-image: url(/imgs/big-data/pink-arrow.png);
-        background-position: 97% 85%;
-        background-position-x: 97%;
-        background-position-y: 85%;
-        background-repeat: no-repeat;
-        background-size: 27px 27px;
-        border-bottom: none;
-        border-top: 6.25px solid #ee0b77;
-        display: block;
-        padding: 25px 12.5px
-    }
-
-    .call-to-action-banner .call-to-action-banner__image {
-        float: left;
-        margin-left: 12.5px;
-        margin-right: 12.5px;
-        width: 50px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .call-to-action-banner .call-to-action-banner__image {
-        width:100px
-    }
 }
 
 @media screen {
-    .call-to-action-banner .call-to-action-banner__content {
-        margin-left: 20px
-    }
-
-    .call-to-action-banner .call-to-action-banner__header {
-        color: #ee0b77;
-        font-size: 26px;
-        min-height: 26px
-    }
-
-    .call-to-action-banner .call-to-action-banner__description {
-        color: #221d1f;
-        font-size: 18px;
-        line-height: 1.5em;
-        margin-bottom: 0;
-        margin-right: 40px;
-        min-height: 21px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .call-to-action-banner .call-to-action-banner__description {
-        margin-bottom:25px;
-        margin-right: 70px
-    }
-}
-
-@media screen {
-    .call-to-action-banner--blue {
-        background-color: #7dcad2;
-        background-image: url(/imgs/glyphs/arrow-white.png);
-        background-position: 97% 85%;
-        background-position-x: 97%;
-        background-position-y: 85%;
-        background-repeat: no-repeat;
-        background-size: 27px 27px;
-        border-top: 6.25px solid #221d1f
-    }
-
-    .call-to-action-banner--blue .call-to-action-banner__header {
-        color: #fff;
-        font-size: 30px
-    }
-
-    .call-to-action-banner--blue .call-to-action-banner__header[contenteditable=true]:focus,.call-to-action-banner--blue .call-to-action-banner__header[contenteditable=true]:hover {
-        background-color: grey
-    }
-
-    .call-to-action-banner--blue .call-to-action-banner__description {
-        font-size: 22px
-    }
-
-    .call-to-action-banner--blue-top-border {
-        border-top-color: #80c9d2
-    }
 
     .call-to-action-form .module__accordion__section {
         border: none
@@ -15731,577 +15580,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 @media screen {
-    .hero-banner-editable {
-        background-size: cover;
-        display: block;
-        margin-top: -25px;
-        overflow: hidden;
-        padding: 0;
-        position: relative;
-        width: 100%
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .hero-banner-editable .desktop-view {
-        display:none
-    }
-
-    .hero-banner-editable .mobile-view {
-        display: block
-    }
-}
-
-@media screen and (min-width: 800px) {
-    .hero-banner-editable .desktop-view {
-        display:block
-    }
-
-    .hero-banner-editable .mobile-view {
-        display: none
-    }
-}
-
-@media screen {
-    .hero-banner-editable.display-type--large {
-        height: 540px
-    }
-
-    .hero-banner-editable.display-type--large h1.hero-banner-editable__title {
-        left: 32%;
-        text-align: left;
-        -webkit-transform: translate(-50%,-50%);
-        transform: translate(-50%,-50%);
-        width: 35%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .hero-banner-editable.display-type--large h1.hero-banner-editable__title {
-        top:45%
-    }
-}
-
-@media screen and (max-width: 985px) {
-    .hero-banner-editable.display-type--large {
-        -webkit-box-align:center;
-        -ms-flex-align: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        justify-content: center
-    }
-
-    .hero-banner-editable.display-type--large img {
-        position: absolute
-    }
-
-    .hero-banner-editable.display-type--large h1.hero-banner-editable__title {
-        left: 0;
-        margin: 0;
-        text-align: center;
-        -webkit-transform: none;
-        transform: none;
-        width: 100%
-    }
-}
-
-@media screen {
-    .hero-banner-editable.display-type--small {
-        height: 300px
-    }
-
-    .hero-banner-editable.display-type--small .placeholder-message {
-        padding: 120px 0
-    }
-
-    .hero-banner-editable.display-type--small .hero-banner-editable__title {
-        left: 5%;
-        margin: 0 auto;
-        position: absolute;
-        right: 5%;
-        text-align: center;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%)
-    }
-}
-
-@media screen and (min-width: 600px)and (max-width:984px) {
-    .hero-banner-editable.display-type--small .hero-banner-editable__title {
-        font-size:50px
-    }
-}
-
-@media screen {
-    .hero-banner-editable .placeholder-message {
-        background-color: #ededed;
-        border: 1px dashed #333;
-        padding: 210px 0;
-        text-align: center
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .hero-banner-editable {
-        margin-top:-50px
-    }
-}
-
-@media screen {
-    .hero-banner-editable .hero-banner-editable__title {
-        -ms-flex-item-align: center;
-        align-self: center;
-        color: #fff;
-        letter-spacing: -.05em;
-        line-height: .8em;
-        z-index: 1
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .hero-banner-editable .hero-banner-editable__title {
-        font-size:40px
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .hero-banner-editable .hero-banner-editable__title {
-        font-size:34px
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .hero-banner-editable .hero-banner-editable__image {
-        position:absolute;
-        width: inherit
-    }
-
-    .hero-banner-editable h1.hero-banner-editable__title {
-        position: absolute
-    }
-}
-
-@media screen {
-    .hero-banner-editable .hero-banner-editable__image {
-        min-height: 100%;
-        -o-object-fit: cover;
-        object-fit: cover
-    }
-
-    .hero-banner {
-        margin-top: -25px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .hero-banner {
-        margin-top:-50px
-    }
-}
-
-@media screen {
-    .hero-banner .hero-banner__title {
-        color: #fff;
-        display: block;
-        font-size: 40px;
-        font-weight: 900;
-        letter-spacing: -.08em;
-        line-height: 1em;
-        margin: 25px 0;
-        padding: 0;
-        text-align: center;
-        text-transform: uppercase
-    }
-
-    html:lang(cn) .hero-banner .hero-banner__title {
-        letter-spacing: 0;
-        line-height: 1.1em
-    }
-}
-
-@media screen and (max-width: 370px) {
-    .hero-banner .hero-banner__title {
-        font-size:34px
-    }
-}
-
-@media screen and (min-width: 601px)and (max-width:780px) {
-    .hero-banner .hero-banner__title {
-        font-size:70px
-    }
-}
-
-@media screen and (min-width: 781px) {
-    .hero-banner .hero-banner__title {
-        font-size:80px
-    }
-}
-
-@media screen {
-    .hero-banner .hero-banner__title small {
-        font-size: 18px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .hero-banner .hero-banner__title {
-        margin:50px 0
-    }
-}
-
-@media screen {
-    .hero-banner .hero-banner__subtitle {
-        background: #221d1f;
-        color: #eee;
-        font-size: 18px;
-        font-style: italic;
-        font-weight: 400;
-        line-height: 1.4em;
-        margin: 0 auto 40px;
-        padding: 30px 40px;
-        text-align: left
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .hero-banner .hero-banner__subtitle {
-        text-align:center;
-        width: 48%
-    }
-}
-
-@media screen {
-    .hero-banner .hero-banner__subtitle p {
-        margin-bottom: 0
-    }
-
-    .hero-banner .hero-banner__logo {
-        margin: 25px 0 0;
-        max-width: 250px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .hero-banner .hero-banner__logo {
-        margin:50px 0 0;
-        max-width: 290px
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--products {
-        background: #1972ba no-repeat url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/products-banner-mobile.jpg) 50%;
-        background-size: cover;
-        margin-bottom: 0
-    }
-}
-
-@media screen and (min-width: 400px) {
-    .hero-banner.hero-banner--products {
-        background-image:url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/products-banner-tablet.jpg)
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .hero-banner.hero-banner--products {
-        background-image:url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/products-banner-desktop.jpg)
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--events {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/events-banner-mobile.jpg) 50%;
-        background-size: cover
-    }
-}
-
-@media screen and (min-width: 400px) {
-    .hero-banner.hero-banner--events {
-        background-image:url(https://static.thoughtworks.com/images/events-banner-tablet.jpg)
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .hero-banner.hero-banner--events {
-        background-image:url(https://static.thoughtworks.com/images/events-banner-desktop.jpg)
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--events-refresh {
-        background: no-repeat url(https://static.thoughtworks.com/images/events/events_mobile.jpg) 50%;
-        background-size: cover;
-        display: block;
-        height: 400px
-    }
-
-    .hero-banner.hero-banner--events-refresh .hero-banner__title {
-        display: none
-    }
-
-    .hero-banner.hero-banner--events-refresh .hero-banner__subtitle {
-        display: none;
-        font-size: 16px;
-        font-style: normal;
-        padding: 0
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .hero-banner.hero-banner--events-refresh {
-        background-size:contain;
-        min-width: auto;
-        width: 100%
-    }
-}
-
-@media screen and (min-width: 600px)and (max-width:1550px) {
-    .hero-banner.hero-banner--events-refresh {
-        background-image:url(https://static.thoughtworks.com/images/events/events_mobile.jpg)
-    }
-}
-
-@media screen and (min-width: 1550px) {
-    .hero-banner.hero-banner--events-refresh {
-        background-image:url(https://static.thoughtworks.com/images/events/events.jpg)
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--insights {
-        background: #e95899 no-repeat url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/insights-banner-mobile.jpg) 50%;
-        background-size: cover
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .hero-banner.hero-banner--insights {
-        background-image:url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/insights-banner-desktop.jpg)
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--old_services {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/services-background-hero.jpg) top;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--services {
-        background: #1a73ba no-repeat url(https://static.thoughtworks.com/images/services-new-background-hero.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--news {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/news-banner.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--contact-us {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/contact-us-background-hero.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--clients {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/clients-background-hero.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--about-us {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/about-us-banner.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--join {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/join-banner.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--careers {
-        background: #e95899 no-repeat url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/careers-banner.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--careers-application-process {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/careers-application-process-banner.jpg) top;
-        background-size: cover;
-        padding: 3vw 0;
-        position: relative
-    }
-
-    .hero-banner.hero-banner--careers-application-process :after {
-        background: repeat-x url(/imgs/glyphs/glyph-sea.png) 0 100%;
-        background-size: contain;
-        bottom: -2px;
-        content: "";
-        display: block;
-        height: 80px;
-        left: 0;
-        position: absolute;
-        width: 100%
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .hero-banner.hero-banner--careers-application-process :after {
-        background-size:cover;
-        height: 50px
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--glyph-sea-blue {
-        margin-bottom: 0;
-        padding: 3vw 0;
-        position: relative
-    }
-
-    .hero-banner.hero-banner--glyph-sea-blue :after {
-        background: repeat-x url(/imgs/glyphs/glyph-sea-blue.png) 0 100%;
-        background-size: contain;
-        bottom: -2px;
-        content: "";
-        display: block;
-        height: 80px;
-        left: 0;
-        position: absolute;
-        width: 100%
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .hero-banner.hero-banner--glyph-sea-blue :after {
-        background-size:cover;
-        height: 50px
-    }
-}
-
-@media screen {
-    .hero-banner.hero-banner--open-source {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/open-source-banner.jpg) 50%;
-        background-size: cover
-    }
-
-    .hero-banner.hero-banner--financial-services {
-        background: #e95899
-    }
-
-    .hero-banner.hero-banner--services .grid {
-        max-width: 960px
-    }
-
-    .hero-banner.hero-banner--services .grid .grid__cell {
-        margin-bottom: 0
-    }
-
-    .hero-banner.hero-banner--services .hero-banner__title {
-        font-size: 80px;
-        letter-spacing: -.05em;
-        margin-bottom: 9%;
-        margin-top: 9%;
-        text-align: center
-    }
-}
-
-@media screen and (max-width: 985px) {
-    .hero-banner.hero-banner--services .hero-banner__title {
-        font-size:50px;
-        padding-left: 6%
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .hero-banner.hero-banner--services .hero-banner__title {
-        font-size:40px;
-        margin-top: 93%;
-        padding-left: 0;
-        text-align: center;
-        width: 100%
-    }
-}
-
-@media screen {
-    .logo-banner img {
-        max-width: 45%;
-        padding-top: 30px
-    }
-
-    .logo-banner .logo-banner__subtitle p {
-        font-size: 18px;
-        margin-bottom: 0
-    }
-
-    .logo-banner .grid__cell {
-        margin-bottom: 25px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .logo-banner .logo-banner__subtitle p {
-        font-size:26px;
-        font-weight: 400;
-        line-height: 1.4em;
-        margin-bottom: 0
-    }
-
-    .logo-banner img {
-        max-width: 25%;
-        padding-top: 30px
-    }
-}
-
-@media screen {
-    .simple-banner {
-        background: #e95899;
-        color: #fff
-    }
-
-    .simple-banner .grid {
-        padding: 35px 0
-    }
-
-    .simple-banner.simple-banner--xander {
-        background: #fff no-repeat url(https://static.thoughtworks.com/images/xander_banner.png) 50%;
-        background-size: cover
-    }
-
-    .simple-banner.simple-banner--xander .description {
-        text-align: center
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .simple-banner.simple-banner--xander .description {
-        width:50%
-    }
-}
-
-@media screen {
-    .simple-banner.simple-banner--xander.simple-banner--story {
-        background: #fff no-repeat url(https://static.thoughtworks.com/images/xander_banner.png) 50%;
-        background-size: cover
-    }
-
-    .simple-banner.simple-banner--xander .simple-banner__title {
-        font-size: 28px;
-        font-weight: 400
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .simple-banner.simple-banner--xander .simple-banner__title {
-        font-size:36px
-    }
-}
-
-@media screen {
-    .simple-banner.simple-banner--xander .simple-banner__description {
-        font-size: 24px
-    }
-
     .full-width-image-overlay__container {
         bottom: 0;
         display: inline-block;
@@ -16395,291 +15673,8 @@ ul.ui-autocomplete li div.ui-state-active:active {
         display: inline-block;
         vertical-align: middle
     }
-
-    .client-stories-banner-module {
-        -ms-grid-columns: 1fr;
-        -ms-grid-rows: minmax(216px,1fr);
-        display: -ms-grid;
-        display: grid;
-        grid-template-areas: "overflow";
-        grid-template-columns: 1fr;
-        grid-template-rows: minmax(216px,1fr)
-    }
-
-    .client-stories-banner-module .full-width-image img {
-        -o-object-position: top;
-        object-position: top
-    }
-
-    .client-stories-banner-module .desktop-view {
-        display: none;
-        grid-area: overflow
-    }
-
-    .client-stories-banner-module .mobile-view {
-        display: block;
-        grid-area: overflow
-    }
 }
 
-@media screen and (min-width: 800px) {
-    .client-stories-banner-module .desktop-view {
-        display:block
-    }
-
-    .client-stories-banner-module .mobile-view {
-        display: none
-    }
-}
-
-@media screen {
-    .client-stories-banner-module .client-stories-banner-overlay__container {
-        -ms-grid-row-align: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -ms-grid;
-        display: grid;
-        grid-area: overflow
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container.grid.new_grid {
-        margin: 16% 0 48%
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container .icon-play:before {
-        font-size: 16px;
-        padding-right: 10px
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container .grid-wrapper,.client-stories-banner-module .client-stories-banner-overlay__container .grid-wrapper .grid__cell {
-        padding: 0
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container .grid-wrapper .grid__cell.grid__cell--centered {
-        text-align: left
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container a {
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0;
-        line-height: 24px
-    }
-
-    .client-stories-banner-module h2.heading__section {
-        font-size: 30px;
-        font-weight: 700;
-        letter-spacing: -1.6px;
-        line-height: 40px
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .client-stories-banner-module h2.heading__section {
-        font-size:32px
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .client-stories-banner-module h2.heading__section {
-        margin-bottom:11px
-    }
-}
-
-@media screen {
-    .client-stories-banner-module .message {
-        font-size: 40px;
-        font-size: 48px;
-        font-weight: 700;
-        letter-spacing: -3.2px;
-        line-height: 58px;
-        word-break: break-word
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .client-stories-banner-module .message {
-        font-size:56px;
-        font-size: 70px;
-        letter-spacing: -2.6px;
-        letter-spacing: -4px;
-        line-height: 62px;
-        line-height: 78px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .client-stories-banner-module .client-stories-banner-overlay__container.grid.new_grid {
-        margin:9% 0 18%
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .client-stories-banner-module {
-        -ms-grid-rows:minmax(336px,1fr);
-        grid-template-rows: minmax(336px,1fr)
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container.grid.new_grid {
-        margin: 9% 0
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container .client-stories-banner-overlay__content h2.heading__section {
-        text-align: left
-    }
-
-    .client-stories-banner-module .client-stories-banner-overlay__container .grid-wrapper .grid {
-        margin: 0;
-        max-width: 56vw
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .client-stories-banner-module .client-stories-banner-overlay__container.grid.new_grid {
-        margin:9% auto
-    }
-}
-
-@media screen {
-    .new-video-banner .video-banner-container {
-        grid-area: overflow
-    }
-
-    .new-video-banner .video-banner-container video {
-        height: 100%;
-        -o-object-fit: cover;
-        object-fit: cover
-    }
-
-    @supports(-ms-ime-align:auto) {
-        .new-video-banner .video-banner-container video {
-            height: auto
-        }
-    }
-}
-
-@media screen and (-ms-high-contrast:active),screen and (-ms-high-contrast:none) {
-    .new-video-banner .video-banner-container video {
-        height: auto
-    }
-}
-
-@media screen {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container.new_grid {
-        margin: 32% 0;
-        z-index: 1
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container.new_grid {
-        margin:12% 0
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container.new_grid {
-        margin:9% 0
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container.new_grid {
-        margin:9% auto
-    }
-}
-
-@media screen {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .new-heading__main {
-        font-size: 40px;
-        font-size: 48px;
-        font-weight: 700;
-        letter-spacing: -3.2px;
-        line-height: 58px
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .new-heading__main {
-        font-size:56px;
-        font-size: 70px;
-        letter-spacing: -2.6px;
-        letter-spacing: -4px;
-        line-height: 62px;
-        line-height: 78px
-    }
-}
-
-@media screen {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .sub-heading__section {
-        font-size: 30px;
-        font-weight: 700;
-        letter-spacing: -1.6px;
-        line-height: 40px;
-        margin-bottom: 16px
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .sub-heading__section {
-        font-size:32px
-    }
-}
-
-@media screen {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .video-banner-description h2.heading__section {
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0;
-        line-height: 28px;
-        margin-bottom: 0;
-        margin-top: 16px
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .video-banner-description h2.heading__section {
-        font-size:24px;
-        line-height: 36px
-    }
-}
-
-@media screen {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .grid__cell {
-        word-wrap: normal
-    }
-
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .grid__cell.grid__cell--more-top-margin {
-        margin-top: 56px
-    }
-}
-
-@media screen and (min-width: 800px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .video-banner-description h2.heading__section {
-        margin-top:8px
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .new-video-banner .client-stories-banner-module .client-stories-banner-overlay__container .grid__cell.grid__cell--more-top-margin {
-        margin-top:48px
-    }
-
-    .new-video-banner .client-stories-banner-module {
-        -ms-grid-rows: 40vw;
-        grid-template-rows: .7fr
-    }
-
-    .new-video-banner .client-stories-banner-module .video-banner-container {
-        display: block;
-        overflow: hidden
-    }
-
-    .new-video-banner .client-stories-banner-module .desktop-view {
-        display: none
-    }
-}
 
 @media screen {
     .parallax-image-module {
@@ -17080,38 +16075,9 @@ ul.ui-autocomplete li div.ui-state-active:active {
         font-weight: 900
     }
 
-    .global-health-banner {
-        background: #e95899 no-repeat url(https://static.thoughtworks.com/images/global-health-polio-background.jpg) 50%;
-        background-size: cover;
-        margin-top: -25px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .global-health-banner {
-        margin-bottom:50px;
-        margin-top: -50px
-    }
 }
 
 @media screen {
-    .global-health-banner a {
-        border-bottom: none;
-        color: #fff;
-        float: right;
-        font-size: 10px;
-        font-weight: 800;
-        text-shadow: 1px 1px 0 #000,0 0 10px #000;
-        text-transform: uppercase
-    }
-
-    .global-health-banner a:hover {
-        color: #ee0b77;
-        cursor: pointer;
-        -webkit-text-decoration: none;
-        text-decoration: none
-    }
-
     .insights-article__title {
         color: #fff;
         display: block;
@@ -17736,107 +16702,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 @media screen {
-    .radar-header.radar-edition-2020-10 {
-        background-color: #f4f5f8
-    }
-
-    .radar-header.radar-edition-2020-10 .radar-header-small__title .radar-header__date,.radar-header.radar-edition-2020-10 .radar-header__title .radar-header__date {
-        color: #ef5ba1
-    }
-
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph {
-        background-color: #f4f5f8;
-        background-image: url(https://static.thoughtworks.com/images/radar/2020-10/tech-radar-202010-landing-page-small.jpg);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        max-width: 100%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-10/tech-radar-202010-landing-page-ipad-wide.jpg)
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-10/tech-radar-202010-landing-page-wide.jpg)
-    }
-}
-
-@media screen {
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph .radar-header__radar-headline .radar-header__subtitle,.radar-header.radar-edition-2020-10 .radar-header__radar-glyph .radar-header__radar-headline a {
-        color: #fff!important
-    }
-
-    .radar-header.radar-edition-2021-04 {
-        background-color: #f4f5f8
-    }
-
-    .radar-header.radar-edition-2021-04 .radar-header-small__title .radar-header__date,.radar-header.radar-edition-2021-04 .radar-header__title .radar-header__date {
-        color: #ef5ba1
-    }
-
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph {
-        background-color: #f4f5f8;
-        background-image: url(https://static.thoughtworks.com/images/radar/2021-04/tech-radar-202104-landing-page-small.jpg);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        max-width: 100%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2021-04/tech-radar-202104-landing-page-ipad-wide.jpg)
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2021-04/tech-radar-202104-landing-page-wide.jpg)
-    }
-}
-
-@media screen {
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph .radar-header__radar-headline .radar-header__subtitle,.radar-header.radar-edition-2021-04 .radar-header__radar-glyph .radar-header__radar-headline a {
-        color: #fff!important
-    }
-
-    .radar-header.radar-edition-2020-05 {
-        background-color: #f4f5f8
-    }
-
-    .radar-header.radar-edition-2020-05 .radar-header-small__title .radar-header__date,.radar-header.radar-edition-2020-05 .radar-header__title .radar-header__date {
-        color: #ef5ba1
-    }
-
-    .radar-header.radar-edition-2020-05 .radar-header__radar-glyph {
-        background-color: #f4f5f8;
-        background-image: url(https://static.thoughtworks.com/images/radar/2020-05/tech-radar-202005-landing-page-small.jpg);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        max-width: 100%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .radar-header.radar-edition-2020-05 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-05/tech-radar-202005-landing-page-ipad-wide.jpg)
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .radar-header.radar-edition-2020-05 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-05/tech-radar-202005-landing-page-wide.jpg)
-    }
-}
-
-@media screen {
     .radar-header.radar-edition-2020-05 .radar-header__radar-glyph .radar-header__radar-headline .radar-header__subtitle,.radar-header.radar-edition-2020-05 .radar-header__radar-glyph .radar-header__radar-headline a {
         color: #fff!important
     }
@@ -18391,18 +17256,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
     .cta-banner-deck .cta-banner-deck__item {
         height: 100%
     }
-
-    .cta-banner-deck .cta-banner-deck__item .call-to-action-banner {
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        display: inline-block;
-        height: 90%;
-        width: 100%
-    }
-
-    :lang(de) .cta-banner-deck .call-to-action-banner__header {
-        font-size: 22px
-    }
 }
 
 @media screen {
@@ -18410,176 +17263,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         background-color: #9e785f;
         color: #fff;
         padding-top: 25px
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .side-column-blurb__style-example {
-        background-image:url(/imgs/on-site-interview-come-meet-us.png);
-        background-position: 60% 15%;
-        background-size: cover;
-        min-height: 300px
-    }
-}
-
-@media screen {
-    #contact-us-vertical {
-        background-color: #f5f5f5;
-        border: 1px solid #ebebeb;
-        padding: 20px
-    }
-
-    #contact-us-vertical .office.active {
-        padding: 0
-    }
-
-    #contact-us-vertical .office-title {
-        color: #221d1f;
-        font-size: 1.8em;
-        font-weight: 700;
-        margin: .7em 0 0;
-        padding: 0 12.5px
-    }
-
-    #contact-us-vertical .office-additional-information {
-        margin-top: 12.5px
-    }
-
-    #contact-us-vertical .office-address {
-        margin-top: .7em
-    }
-
-    #contact-us-vertical #vertical-offices .office,#contact-us-vertical #vertical-offices .office-group h2 {
-        display: none
-    }
-
-    #contact-us-vertical #vertical-offices .office.active {
-        display: block
-    }
-}
-
-@media screen and (min-width: 601px) {
-    #contact-us-vertical {
-        background:#f5f5f5;
-        border: none;
-        padding: 0
-    }
-
-    #contact-us-vertical .office-title {
-        font-size: 28px;
-        font-weight: 100;
-        line-height: 1em;
-        line-height: 1.4em;
-        margin: 0 0 .2em
-    }
-
-    #contact-us-vertical .office-title small {
-        font-size: 18px
-    }
-
-    #contact-us-vertical .office-title:first-child {
-        margin-top: 0
-    }
-
-    #contact-us-vertical .office-address {
-        margin-top: .2em
-    }
-
-    #desktop-office {
-        background: #f5f5f5;
-        border-bottom-left-radius: 5px;
-        border-top-left-radius: 5px;
-        float: left;
-        width: 9em
-    }
-
-    #desktop-office .office-group {
-        border-bottom: none;
-        color: #666;
-        cursor: pointer;
-        display: block;
-        padding: 3px 10px;
-        -webkit-text-decoration: none;
-        text-decoration: none
-    }
-
-    #desktop-office .office-group:hover {
-        background: #ebebeb
-    }
-
-    #desktop-office .office-group.active,#desktop-office .office-group.active:hover {
-        background: #fff
-    }
-
-    #desktop-office-list {
-        float: left;
-        width: 9em
-    }
-
-    #desktop-office-list .office-city {
-        border-bottom: none;
-        color: #666;
-        cursor: pointer;
-        display: block;
-        padding: 3px 10px;
-        -webkit-text-decoration: none;
-        text-decoration: none
-    }
-
-    #desktop-office-list .office-city:hover {
-        background: #ebebeb
-    }
-
-    #desktop-office-list .office-city.active,#desktop-office-list .office-city.active:hover {
-        background: #fff
-    }
-
-    #vertical-offices {
-        background: #f1f1f1;
-        border-bottom: 1px solid #ebebeb;
-        margin-left: 9em
-    }
-
-    #vertical-offices .office-group {
-        background: #eee;
-        margin-left: 9em;
-        overflow: hidden
-    }
-
-    #vertical-offices .office-group .office.active {
-        padding: 25px 12.5px 0
-    }
-}
-
-@media screen and (min-width: 601px)and (min-width:600px) {
-    #contact-us-vertical .office-title {
-        font-size:36px
-    }
-}
-
-@media screen and (min-width: 601px)and (min-width:985px) {
-    #contact-us-vertical .office-title {
-        font-size:48px
-    }
-}
-
-@media screen and (min-width: 601px)and (max-width:780px) {
-    #contact-us-vertical .office-title {
-        font-size:2.2em
-    }
-
-    #vertical-offices .office-group .office-address,#vertical-offices .office-group .office-information {
-        width: 100%
-    }
-}
-
-@media screen and (max-width: 780px) {
-    #vertical-offices .office-group .office .office-information {
-        margin-bottom:3em
-    }
-
-    #vertical-offices .office-group .office :last-child .office-information {
-        margin-bottom: .4em
     }
 }
 
@@ -18772,11 +17455,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         display: none
     }
 
-    #submission_received .call-to-action-banner {
-        -webkit-text-decoration: none;
-        text-decoration: none
-    }
-
     .photo-card-grid {
         overflow: hidden
     }
@@ -18902,34 +17580,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
     .video_one .module-menu {
         top: 25px
-    }
-
-    .video-banner {
-        position: relative;
-        text-align: center
-    }
-
-    .video-banner .background-image-banner {
-        display: none
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .video-banner {
-        background-color:#fff
-    }
-
-    .video-banner .position--rel {
-        position: relative
-    }
-
-    .video-banner video {
-        display: none
-    }
-
-    .video-banner .background-image-banner {
-        display: block;
-        line-height: 0
     }
 }
 
@@ -19307,130 +17957,8 @@ ul.ui-autocomplete li div.ui-state-active:active {
     }
 }
 
-@media screen {
-    .book-banner {
-        height: 300px;
-        margin-top: -25px;
-        position: relative
-    }
-}
-
-@media screen and (min-width: 600px) {
-    .book-banner {
-        margin-top:-50px
-    }
-}
 
 @media screen {
-    .book-banner .placeholder-message {
-        background-color: #ededed;
-        border: 1px dashed #333;
-        padding: 120px 0;
-        text-align: center
-    }
-
-    .book-banner .full-width-image {
-        display: block;
-        height: 300px;
-        overflow: hidden;
-        position: relative;
-        width: 100%
-    }
-
-    .book-banner .cover {
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: reverse;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        bottom: 0;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: row-reverse;
-        flex-direction: row-reverse;
-        height: inherit;
-        left: 7%;
-        position: absolute;
-        right: 7%;
-        top: 0;
-        z-index: 1
-    }
-
-    .book-banner .cover .information {
-        color: #fff;
-        overflow: hidden;
-        padding-right: 30px;
-        width: 100%
-    }
-
-    .book-banner .cover img {
-        height: 260px
-    }
-}
-
-@media screen and (min-width: 1025px)and (max-width:1440px) {
-    .book-banner .cover .information .title {
-        font-size:60px
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .book-banner {
-        height:540px
-    }
-
-    .book-banner .full-width-image {
-        height: 540px;
-        max-height: 540px
-    }
-
-    .book-banner .full-width-image img {
-        height: 100%
-    }
-
-    .book-banner .cover {
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        height: inherit;
-        justify-content: center
-    }
-
-    .book-banner .cover .information {
-        overflow: visible;
-        padding-right: 0;
-        text-align: center
-    }
-
-    .book-banner .cover .information .title {
-        margin-bottom: 0
-    }
-
-    .book-banner .cover .information .author-info {
-        margin-top: 25px
-    }
-}
-
-@media screen and (min-width: 601px)and (max-width:1024px) {
-    .book-banner .cover .information .title {
-        font-size:60px
-    }
-}
-
-@media screen {
-    .bio-module .banner-image {
-        height: 224px;
-        overflow: hidden
-    }
-
-    .bio-module .banner-image img {
-        height: 100%;
-        width: 100%
-    }
 
     .bio-module .description h2 {
         font-size: 30px;
@@ -19733,10 +18261,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 @media screen and (min-width: 600px) {
-    .bio-module .banner-image {
-        height:256px
-    }
-
     .bio-module .profile-info {
         margin-top: -9%
     }
@@ -19750,9 +18274,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 @media screen and (min-width: 985px) {
-    .bio-module .banner-image {
-        height:336px
-    }
 
     .bio-module .unit-1-2--desk,.bio-module .unit-2-4--desk,.bio-module .unit-3-6--desk,.bio-module .unit-4-8--desk,.bio-module .unit-6-12--desk {
         display: inline-block;
@@ -22541,17 +21062,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         padding-left: 10px
     }
 
-    #wistia_popover_overlay {
-        background-color: rgba(0,0,0,.5);
-        background-image: url(https://static.thoughtworks.com/images/wistia_popover.gif);
-        height: 1800px;
-        left: 0;
-        opacity: 1;
-        position: fixed;
-        top: 0;
-        width: 1800px;
-        z-index: 10000
-    }
 }
 
 @media screen and (max-width: 600px) {
@@ -26705,11 +25215,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         margin: 0 0 30px 40px
     }
 
-    .unconfigured-video-banner .placeholder-message {
-        border: 1px solid #221d1f;
-        padding: 110px 0;
-        text-align: center
-    }
 
     .module-text_collection .module__padding-top {
         padding-top: 40px!important
@@ -30892,19 +29397,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 @media screen and (min-width: 781px) {
     .homepage__section-title {
         font-size:55px
-    }
-}
-
-@media screen and (min-width: 601px) {
-    .feature_summary--background {
-        background:url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/homepage-glyphs-background.png) no-repeat 50%;
-        background-size: contain
-    }
-
-    .feature_summary--wrapper {
-        border-collapse: separate;
-        border-spacing: 25px 0;
-        display: table
     }
 }
 
@@ -41506,9 +39998,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         width: 98%
     }
 
-    #onetrust-consent-sdk,#radar>#radar-plot,.hero-banner,.input-sheet__logo,.radar-legends,.ui-helper-hidden-accessible,main>:not(#pdf-cover-page):not(#radar) {
-        display: none!important
-    }
 }
 
 @media print and (orientation: landscape) {
@@ -41521,12 +40010,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
     #pdf-cover-page .pdf-title {
         margin: 12mm 24mm 10mm;
         width: calc(100% - 48mm)
-    }
-}
-
-@media print and (orientation: portrait) {
-    #pdf-cover-page .pdf-banner-image {
-        height:50%
     }
 }
 

@@ -1,11 +1,14 @@
 package HTML
 
 import (
+	"embed"
 	"html/template"
 	"log"
 	"os"
-	//"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/HTML/scripts"
 )
+
+//go:embed css/style.css
+var styleCSS embed.FS
 
 var htmlFileName string = "index"
 
@@ -17,13 +20,10 @@ func GenerateHtml(csvData string) {
 	<head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link href="./js/images/favicon.ico" rel="icon" />
-	<link rel="preconnect" href="https://rsms.me/" />
-	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-	<link href="./js/stylesheets/style.css" rel="stylesheet"/>
-	<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap" rel="stylesheet" />
+	<link href="../src/HTML/images/favicon.ico" rel="icon" />
+	<style>
+		{{.CSS}}
+	</style>
 	</head>
 
 	<body>
@@ -51,12 +51,28 @@ func GenerateHtml(csvData string) {
 
 	<!-- this script builds the radar with the go generated csv file -->
 	<script>
-		require(['./js/remakeJS.js'], function(Factory) {
-			Factory({{.}}).build(); //{{.}} refers to the csvData
+		require(['./HTML/js/renderingTechRadar.js'], function(Factory) {
+			Factory({{.CSV}}).build(); //{{.}} refers to the csvData
 		})
 	</script>
 	</html>
 	`
+
+	// Read the content of the CSS file
+	cssContent, err := styleCSS.ReadFile("css/style.css")
+	if err != nil {
+		log.Fatalf("failed to read embedded CSS file: %v", err)
+	}
+
+	// Create a template data structure to hold both CSS and CSV data
+	data := struct {
+		CSS template.CSS
+		CSV string
+	}{
+		CSS: template.CSS(cssContent),
+		CSV: csvData,
+	}
+
 	// Make and parse the HTML template
 	t, err := template.New(htmlFileName).Parse(tmpl)
 	if err != nil {
@@ -71,10 +87,8 @@ func GenerateHtml(csvData string) {
 	}
 	defer file.Close()
 
-	//script := scripts.Print()
-
 	//execute the html and data
-	err = t.Execute(file, csvData)
+	err = t.Execute(file, data)
 	if err != nil {
 		panic(err)
 	}

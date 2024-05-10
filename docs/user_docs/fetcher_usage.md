@@ -12,6 +12,9 @@ For multiple repos:
 ```bash
 ./Tech_Radar-<OS> fetch <Url> <Branch> <path/to/whitelist> <Url_1> <Branch_1> <path/to/whitelist1>
 ```
+
+*Note: on Windows the example ./Tech_Radar-\<OS\> should be written as .\Tech_Radar-\<OS\>. Note the slash "/" becoming different like so: "\\"*
+
 *The Url must be a valid public git repository otherwise it will not work*
 
 The whitelist file should be a file containing filepaths to either files or folders you would like the fetcher to grab from e.g:

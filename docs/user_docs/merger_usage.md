@@ -23,6 +23,8 @@ When wanting to merge `./data/file0.csv` and `./data/file1.csv`, run the followi
 ./Tech_radar-<OS> merge ./data/file0.csv ./data/file1.csv
 ```
 
+*Note: on Windows the example ./Tech_Radar-\<OS\> should be written as .\Tech_Radar-\<OS\>. Note the slash "/" becoming different like so: "\\"*
+
 ### Merge flags
 `--cache || -c` Flag for merging all files in the cache the `./cache` directory. This is used instead of the individual file paths.
 

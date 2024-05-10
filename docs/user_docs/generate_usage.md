@@ -20,3 +20,5 @@ If we want to generate a tech radar from the `./data/technology_data.csv` file w
 ```bash
 ./Tech_radar-<OS> generate ./data/technology_data.csv
 ```
+
+*Note: on Windows the example ./Tech_Radar-\<OS\> should be written as .\Tech_Radar-\<OS\>. Note the slash "/" becoming different like so: "\\"*

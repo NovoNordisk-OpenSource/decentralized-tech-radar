@@ -22,3 +22,6 @@ define([
 ```
 
 The defined libraries in the example above are linked in <mark style="background-color: #69a8f5"> ./src/HTML/js/requireConfig.js </mark>. The library and usage of requireJS in placed in <mark style="background-color: #69a8f5"> ./src/HTML/makeHtml.go</mark> after the closing body tag in the html template.
+
+## Updating Thoughtworks radar
+Since Thoughtworks radar is build on having container or starting a server, which then make it hard to update  is depended on 

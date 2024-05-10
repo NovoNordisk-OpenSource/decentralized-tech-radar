@@ -29,19 +29,17 @@ The quadrant and ring names of the tech radar is available to be changed in the 
 
 Example:
 ```
-  const quadrantNames =
-    '["Techniques", "Platforms", "Tools", "Languages & Frameworks"]';
-  const ringNames = '["Adopt", "Trial", "Assess", "Hold"]';
+const quadrantNames = '["Techniques", "Platforms", "Tools", "Languages & Frameworks"]';
+const ringNames = '["Adopt", "Trial", "Assess", "Hold"]';
 ```
 
 ## Thoughtworks one file JS
-The original Thoughtworks tech radar is build on having a Docker container or a Webpack to start a server. In this version of the Tech Radar, these technologies have been removed. Furthermore, all Thoughtworks specific javascript files have been moved into one large js file called renderingTechRadar.js.
+The original Thoughtworks tech radar is build on having a Docker container or a Webpack to start a server. Furthermore, the original Thoughtworks js files are split into their own specific "need"-case. In this version of the Tech Radar, all js files are combined into one large script file called <mark style="background-color: #69a8f5; margin:0 4px; padding: 0 4px"> ./src/HTML/js/renderingTechRadar.js </mark>.
 
 ## Updating Thoughtworks radar
-In the original Thoughtworks tech radar, the js files are split into their own specific "need"-case. In this version of the Tech Radar, all js files are combined into one large script file called <mark style="background-color: #69a8f5; margin:0 4px; padding: 0 4px"> ./src/HTML/js/renderingTechRadar.js </mark>. Inside renderingTechRadar.js comments are inserted before each block of code, showcasing which Thoughtworks js file the code originated from. To update the Tech Radar properly, locate the commented code block you seek and update them from the Thoughtworks js file.
+Inside renderingTechRadar.js comments outline each block of code, showcasing which Thoughtworks js file the code originated from. To update the Tech Radar properly, locate the commented code block you seek and update them from the Thoughtworks js file.
 
 ## Updating Thoughtworks radar with a library or script
-
 To add a library or another script to the Tech Radar you can add it by using requireJS. First, add you script link or library link inside <mark style="background-color: #69a8f5; margin:0 4px; padding: 0 4px"> ./src/HTML/js/requireConfig.js </mark>.
 
 Example:
@@ -67,4 +65,31 @@ define([
 ```
 
 ## Code structure
-Given that the javascript is in one file, ere
+Given the one file of javascript, here is list of how the code is placed. 
+
+Refernces to file from Thoughtworks and correspondent code line:
+```
+1.  js/config.js                              (line 24-48) 
+2.  js/graphing/config.js                     (line: 53-118)
+3.  js/models/quadrant.js                     (line: 123-146)
+4.  js/models/radar.js                        (line: 151-250)
+5.  js/models/ring.js                         (line: 256-268)
+6.  js/models/blip.js                         (line: 273-341)
+7.  js/util/mathUtils.js                      (line: 346-348)
+8.  js/util/htmlUtils.js                      (line: 353-364)
+9.  js/util/stringUtil.js                     (line: 369-379)
+10. js/graphing/components/quadrants.js       (line: 385-1128)
+11. js/graphing/components/quadrantTables.js  (line: 1133-1405)
+12. js/graphing/blips.js                      (line: 1410-1835)
+13. js/util/ringCalculator.js                 (line: 1840-1865)
+14. js/graphing/components/quadrantSubnav.js  (line: 1870-1986)
+15. js/util/autoComplete.js                   (line: 1991-2063)
+16. js/graphing/components/search.js          (line: 2068-2103)
+17. js/graphing/components/buttons.js         (line: 2108-2116)
+18. js/graphing/pdfPage.js                    (line: 2121-2134)
+19. js/util/urlUtils.js                       (line: 2139-2166)
+20. js/graphing/components/banner.js          (line: 2171-2202)
+21. js/util/queryParamProcessor.js            (line: 2207-2221)
+22. js/graphing/radar.js                      (line: 2226-3237)
+23. js/util/factory.js                        (line: 3242-3374)
+```

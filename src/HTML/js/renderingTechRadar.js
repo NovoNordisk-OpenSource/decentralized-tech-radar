@@ -17,7 +17,7 @@ define([
   "jquery-autocomplete",
 ], function facModel(d3, d3tip, d3col, d3sel, Chance, _, $, AutoComplete) {
   
-  
+
   /**
    * ROOT JS: js/config.js
    */
@@ -1988,7 +1988,6 @@ define([
   /**
    * UTIL: js/util/autoComplete.js
    */
-  
   const featureToggles2 = mainConfig().featureToggles;
   $.widget("custom.radarcomplete", $.ui.autocomplete, {
     _create: function () {
@@ -2066,7 +2065,6 @@ define([
   /**
    * COMPONENTS: js/graphing/components/search.js
    */
-
   const AutoCompleteSearch = AutoComplete1;
 
   function renderSearch(radarHeader, quadrants) {
@@ -2107,7 +2105,6 @@ define([
   /**
    * COMPONENTS: js/graphing/components/buttons.js
    */
-
   function renderButtons(radarFooter) {
     const buttonsRow = radarFooter.append("div").classed("buttons", true);
 
@@ -2226,7 +2223,6 @@ define([
   /**
    * GRAPHING: js/graphing/radar.js
    */
-
   const MIN_BLIP_WIDTH = 12;
 
   const GraphingRadar = function (size, gRadar) {

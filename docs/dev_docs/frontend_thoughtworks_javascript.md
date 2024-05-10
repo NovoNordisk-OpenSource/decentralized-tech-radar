@@ -64,10 +64,19 @@ define([
 ], function facModel(YourReferencedScriptName, ... ) { ...
 ```
 
+## Updating Tech Radar Images
+To update the images navigate to <mark style="background-color: #69a8f5; margin:0 4px; padding: 0 4px"> ./src/HTML/js/renderingTechRadar.js </mark>. Search for "/HTML/images/" and replace the url with your image path.
+
+Example image url path: 
+```
+.attr("src", "./src/HTML/images/existing.svg")
+```
+
 ## Code structure
 Given the one file of javascript, here is list of how the code is placed. 
 
-Refernces to file from Thoughtworks and correspondent code line:
+References to files from Thoughtworks and their correspondent code lines:
+
 ```
 1.  js/config.js                              (line 24-48) 
 2.  js/graphing/config.js                     (line: 53-118)

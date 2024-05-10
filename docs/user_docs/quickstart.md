@@ -18,7 +18,12 @@ Mac:
 
 Windows:
 ```bash
-.\Tech_Radar-<OS> fetch <git-url> <branch> <path/to/whitelistfile> [git-url2] [branch2] [path/to/whitelistfile2] ...
+.\Tech_Radar-<OS> fetch <git-url> <branch> <path\to\whitelistfile> [git-url2] [branch2] [path\to\whitelistfile2] ...
+```
+
+Example with windows:
+```bash
+.\Tech_Radar-windows.exe fetch https://github.com/Agile-Arch-Angels/decentralized-tech-radar_dev/ main whitelist.txt ...
 ```
 
 
@@ -50,7 +55,7 @@ Windows:
 Example:  
 ![Gif of merging using the CLI](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/main/docs/images/quickstart_gifs/Merging.gif)
 
-The merger also includes a cache flag this will run the merger using the cache folder generated from the fetcher (If the cache is located next to the program):
+The merger also includes a cache flag. This will merge all files located in the cache folder:
 
 Mac:
 ```bash
@@ -61,6 +66,7 @@ Windows:
 ```bash
 .\Tech_Radar-<OS> merge --cache
 ```
+
 
 ## The Generator
 The generator takes a merged CSV file and generates a tech radar HTML file from it. This can then be opened in a web browser.

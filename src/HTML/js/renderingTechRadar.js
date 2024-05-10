@@ -49,8 +49,8 @@ define([
   
   /** 
    * GRAPHING: js/graphing/config.js
-  */
-
+   * Change your quadrant names and ring names here
+   */
   const quadrantSize = 512;
   const quadrantGap = 32;
 
@@ -119,7 +119,7 @@ define([
   }
 
   /** 
-   * MODELS: js/models/quadrant.js'
+   * MODELS: js/models/quadrant.js
   */
   const Quadrant = function (name) {
     var self, blips;
@@ -147,8 +147,8 @@ define([
   };
 
   /** 
-   * MODELS: js/models/radar.js'
-  */   
+   * MODELS: js/models/radar.js
+   */   
   const Radar = function () {
     const featureToggles1 = mainConfig().featureToggles;
 
@@ -251,7 +251,7 @@ define([
   };
 
   /**
-   * MODELS: js/models/ring.js'  
+   * MODELS: js/models/ring.js 
    */
   const Ring = function (name, order) {
     var self = {};
@@ -362,7 +362,10 @@ define([
   function getElementHeight(element) {
     return element.node().getBoundingClientRect().height;
   }
-  // UTIL:                        js/util/stringUtil.js                       IN
+  
+  /**
+   * UTIL: js/util/stringUtil.js  
+   */
   function getRingIdString(ringName) {
     return ringName.replaceAll(/[^a-zA-Z0-9]/g, "-").toLowerCase();
   }
@@ -1123,9 +1126,10 @@ define([
     window.removeEventListener("scroll", quadrantScrollHandlerReference);
     scrollFlag = false;
   }
-
-  // COMPONENTS:                  js/graphing/components/quadrantTables.js
-
+  
+  /**
+   * COMPONENTS: js/graphing/components/quadrantTables.js
+   */
   function fadeOutAllBlips() {
     d3.selectAll("g > a.blip-link").attr("opacity", 0.3);
   }

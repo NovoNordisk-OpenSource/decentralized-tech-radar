@@ -1,6 +1,40 @@
 # Welcome to Tech_Radar quickstart guide
-In this guide you will find the essential commands for the program. The program is split into 3 primary commands: Fetcher, Merger, and Generator.
+In this guide you will see how to install and setup the program as well as find the essential commands for the program. The program is split into 3 primary commands: Fetcher, Merger, and Generator.
 
+# Installation and setup
+To install the program: 
+- Go to the latest release on the repository and download the version that fits your operating system. 
+- Extract the contents of the downloaded folder into the directory on the computer where you would like it to be. You should now have a directory containing the following file tree: 
+```
+Directory/
+|- Tech_Radar-<os>(.exe)
+|- HTML/
+    |- images/
+        |- Different image files
+        ...
+    |- js/
+        |- renderingTechRadar.js
+        |- requireConfig.js
+        |- libraries/
+            |- Different .js files
+            ...
+```
+Remember to give the give the binary execution rights on your system.
+
+You should now be able to run the Tech_Radar program. Running the command:
+```bash
+./Tech_Radar-<os>
+```
+or 
+```bash
+.\Tech_Radar-<os>
+```
+on Windows. Should result in the following being printed to the terminal:
+
+![Image of root command output](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/blob/main/docs/images/quickstart_gifs/root-output.PNG)
+
+
+# Commands
 ## Legend for this guide
 When running commands, you will see...
 **<...>** : Arrows indicate required arguments.

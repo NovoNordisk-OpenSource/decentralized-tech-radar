@@ -97,19 +97,6 @@
     padding-top: 200px
 }
 
-.input-sheet .input-sheet__banner {
-    background-color: #eee;
-    background-image: url(/images/tech-radar-landing-page-wide.png);
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: table;
-    margin: 0 auto;
-    min-height: 285px;
-    text-align: center;
-    width: 100%
-}
-
 .input-sheet .input-sheet__form {
     margin: 0 auto;
     padding-top: 30px;
@@ -399,7 +386,7 @@ header {
 
 #alternative-buttons .search-radar {
     background-color: inherit;
-    background-image: url(/images/search-logo-2x.svg);
+    background-image: url(../src/HTML/images/search-logo-2x.svg);
     background-position: 10px;
     background-repeat: no-repeat;
     border: 1px solid #aaa
@@ -854,7 +841,7 @@ footer p {
 }
 
 .search-container__input {
-    background: #edf1f3 url(../images/search-active-wave.svg) no-repeat 98%;
+    background: #edf1f3 url(../src/HTML/images/search-active-wave.svg) no-repeat 98%;
     color: #163c4d;
     font-family: Inter,sans-serif;
     height: 48px;
@@ -1610,7 +1597,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .all-quadrants-mobile .all-quadrants-mobile--btn:after {
-    content: url(/images/arrow-white-icon.svg);
+    content: url(../src/HTML/images/arrow-white-icon.svg);
     margin: 4px 4px 0
 }
 
@@ -16715,107 +16702,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 @media screen {
-    .radar-header.radar-edition-2020-10 {
-        background-color: #f4f5f8
-    }
-
-    .radar-header.radar-edition-2020-10 .radar-header-small__title .radar-header__date,.radar-header.radar-edition-2020-10 .radar-header__title .radar-header__date {
-        color: #ef5ba1
-    }
-
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph {
-        background-color: #f4f5f8;
-        background-image: url(https://static.thoughtworks.com/images/radar/2020-10/tech-radar-202010-landing-page-small.jpg);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        max-width: 100%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-10/tech-radar-202010-landing-page-ipad-wide.jpg)
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-10/tech-radar-202010-landing-page-wide.jpg)
-    }
-}
-
-@media screen {
-    .radar-header.radar-edition-2020-10 .radar-header__radar-glyph .radar-header__radar-headline .radar-header__subtitle,.radar-header.radar-edition-2020-10 .radar-header__radar-glyph .radar-header__radar-headline a {
-        color: #fff!important
-    }
-
-    .radar-header.radar-edition-2021-04 {
-        background-color: #f4f5f8
-    }
-
-    .radar-header.radar-edition-2021-04 .radar-header-small__title .radar-header__date,.radar-header.radar-edition-2021-04 .radar-header__title .radar-header__date {
-        color: #ef5ba1
-    }
-
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph {
-        background-color: #f4f5f8;
-        background-image: url(https://static.thoughtworks.com/images/radar/2021-04/tech-radar-202104-landing-page-small.jpg);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        max-width: 100%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2021-04/tech-radar-202104-landing-page-ipad-wide.jpg)
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2021-04/tech-radar-202104-landing-page-wide.jpg)
-    }
-}
-
-@media screen {
-    .radar-header.radar-edition-2021-04 .radar-header__radar-glyph .radar-header__radar-headline .radar-header__subtitle,.radar-header.radar-edition-2021-04 .radar-header__radar-glyph .radar-header__radar-headline a {
-        color: #fff!important
-    }
-
-    .radar-header.radar-edition-2020-05 {
-        background-color: #f4f5f8
-    }
-
-    .radar-header.radar-edition-2020-05 .radar-header-small__title .radar-header__date,.radar-header.radar-edition-2020-05 .radar-header__title .radar-header__date {
-        color: #ef5ba1
-    }
-
-    .radar-header.radar-edition-2020-05 .radar-header__radar-glyph {
-        background-color: #f4f5f8;
-        background-image: url(https://static.thoughtworks.com/images/radar/2020-05/tech-radar-202005-landing-page-small.jpg);
-        background-position: 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        max-width: 100%
-    }
-}
-
-@media screen and (min-width: 985px) {
-    .radar-header.radar-edition-2020-05 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-05/tech-radar-202005-landing-page-ipad-wide.jpg)
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .radar-header.radar-edition-2020-05 .radar-header__radar-glyph {
-        background-image:url(https://static.thoughtworks.com/images/radar/2020-05/tech-radar-202005-landing-page-wide.jpg)
-    }
-}
-
-@media screen {
     .radar-header.radar-edition-2020-05 .radar-header__radar-glyph .radar-header__radar-headline .radar-header__subtitle,.radar-header.radar-edition-2020-05 .radar-header__radar-glyph .radar-header__radar-headline a {
         color: #fff!important
     }
@@ -21176,17 +21062,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
         padding-left: 10px
     }
 
-    #wistia_popover_overlay {
-        background-color: rgba(0,0,0,.5);
-        background-image: url(https://static.thoughtworks.com/images/wistia_popover.gif);
-        height: 1800px;
-        left: 0;
-        opacity: 1;
-        position: fixed;
-        top: 0;
-        width: 1800px;
-        z-index: 10000
-    }
 }
 
 @media screen and (max-width: 600px) {
@@ -29522,19 +29397,6 @@ ul.ui-autocomplete li div.ui-state-active:active {
 @media screen and (min-width: 781px) {
     .homepage__section-title {
         font-size:55px
-    }
-}
-
-@media screen and (min-width: 601px) {
-    .feature_summary--background {
-        background:url(https://67fb162d391b3c725e9d-210fd98f9f4ad5bac2f98cc8e61aaae5.ssl.cf2.rackcdn.com/images/homepage-glyphs-background.png) no-repeat 50%;
-        background-size: contain
-    }
-
-    .feature_summary--wrapper {
-        border-collapse: separate;
-        border-spacing: 25px 0;
-        display: table
     }
 }
 

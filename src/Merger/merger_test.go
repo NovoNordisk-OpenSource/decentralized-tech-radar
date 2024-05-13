@@ -7,6 +7,8 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	"go.uber.org/zap"
 )
 
 var csvfile1 string = `name,ring,quadrant,isNew,moved,description
@@ -85,6 +87,7 @@ func cleanSomeCsv(count int) {
 
 func cleanUp(count int) {
 	cleanSomeCsv(count)
+	os.Remove(("Merge_log.txt"))
 	os.Remove("Merged_file.csv")
 	os.RemoveAll("./cache")
 }
@@ -143,9 +146,17 @@ func TestDuplicateRemoval(t *testing.T) {
 	// Arrange other variables to be used
 	var set = make(map[string][]string)
 	var buf bytes.Buffer
+	
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Fatalf("can't initialize zap logger: %v", err)
+	}
+	defer logger.Sync()
+	sugar := logger.Sugar()
+
 
 	// Act to call scanFile that calls duplicateRemoval() on each line
-	scanFile(file, &buf, set)
+	Fcfs{}.scanFile(file, &buf, set, sugar)
 
 	// Assert
 	bufferString := buf.String()
@@ -159,7 +170,7 @@ func TestReadCsvData(t *testing.T) {
 	defer cleanUp(2)
 
 	var buf bytes.Buffer
-	ReadCsvData(&buf, "./testFile1.csv", "./testFile2.csv")
+	Fcfs{}.MergeFiles(&buf, "./testFile1.csv", "./testFile2.csv")
 
 	csv1, err := os.ReadFile("./testFile1.csv")
 	if err != nil {
@@ -199,7 +210,7 @@ func TestMergeCSV(t *testing.T) {
 	mergeTestFiles := append([]string{}, testFiles[0], testFiles[1])
 
 	// Call function
-	err := MergeCSV(mergeTestFiles)
+	err := MergeCSV(mergeTestFiles, Fcfs{})
 	if err != nil {
 		t.Fatalf("MergeCSV gave an error: %v", err)
 	}
@@ -239,7 +250,7 @@ func TestMergeFromFolder(t *testing.T) {
 	os.Rename(testFiles[0], "./cache/"+testFiles[0])
 	os.Rename(testFiles[1], "./cache/"+testFiles[1])
 
-	err = MergeFromFolder("./cache")
+	err = MergeFromFolder("./cache", Fcfs{})
 	if err != nil {
 		t.Fatal(err)
 	}

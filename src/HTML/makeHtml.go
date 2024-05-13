@@ -48,8 +48,8 @@ func GenerateHtml(csvData string) {
 			</div>
 		</main>
 	</body>
-	<script src="./HTML/js/libraries/require.js"></script>
-	<script src="./HTML/js/requireConfig.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+	<script src="./js/requireConfig.js"></script>
 
 	<!-- this script builds the radar with the go generated csv file -->
 	<script>

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/NovoNordisk-OpenSource/decentralized-tech-radar/Verifier"
 	"go.uber.org/zap"
@@ -121,4 +122,19 @@ func zapLogger(f *os.File) *zap.SugaredLogger {
 
 }
 
+// Create the string and write it to the buffer
+func bufferWriter(buffer *bytes.Buffer, blips map[string]map[string]byte) error {
+	var sb strings.Builder
+	for line, intMap := range blips {
+		sb.WriteString(line)       // Write the main line
+		for atag := range intMap { // Write the repos (doesn't run if no URLs in the internal map)
+			sb.WriteString("<br>")
+			sb.WriteString(atag)
+		}
+		sb.WriteRune('\n')
+	}
 
+	buffer.WriteString(sb.String())
+
+	return nil
+}

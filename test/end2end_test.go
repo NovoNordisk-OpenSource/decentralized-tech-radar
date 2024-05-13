@@ -208,5 +208,6 @@ func TestRemCmd(t *testing.T) {
 	// Check if csv DOES NOT contain the removed line.
 	if strings.Contains(string(readTestFile), "TestBlip2,Adopt,Platforms,false,0,Also a description") {
 		t.Error("1: ForTesting1.csv contains TestBlip2 in Platforms")
+
 	}
 }

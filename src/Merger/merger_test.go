@@ -155,11 +155,9 @@ func TestDuplicateRemoval(t *testing.T) {
 	}
 	defer logger.Sync()
 	sugar := logger.Sugar()
-	
-	var buf bytes.Buffer
 
 	// Act to call scanFile that calls duplicateRemoval() on each line
-	Fcfs{}.scanFile(file, &buf, set, sugar)
+	Fcfs{}.scanFile(file, set, sugar)
 
 	// Assert
 	for line := range blips {

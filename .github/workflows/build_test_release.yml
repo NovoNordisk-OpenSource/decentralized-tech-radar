@@ -39,25 +39,26 @@ jobs:
         shell: bash
         run: |
           # Rename the binary to include exe extension
+          mkdir -p ./dist/HTML
           mv ./dist/Tech_Radar-windows ./dist/Tech_Radar-windows.exe
           
           # Copy JS folder to dist
-          cp -r src/HTML/js ./dist/js
-          cp -r src/HTML/css ./dist/css
-          cp -r src/HTML/images ./dist/img
+          cp -r src/HTML/js ./dist/HTML/js
+          cp -r src/HTML/images ./dist/HTML/images
+
 
           tag=$(git describe --tags --abbrev=0)
           #linux build
           release_name_linux="Tech_Radar-$tag-linux"
-          tar -C ./dist -czvf "${release_name_linux}.tar.gz" Tech_Radar-linux ./js
+          tar -C ./dist -czvf "${release_name_linux}.tar.gz" Tech_Radar-linux ./HTML
 
           #windows build
           release_name_win="Tech_Radar-$tag-win"
-          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows.exe ./js
+          tar -C ./dist -czvf "${release_name_win}.tar.gz" Tech_Radar-windows.exe ./HTML
 
           #mac build
           release_name_mac="Tech_Radar-$tag-mac"
-          tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin ./js
+          tar -C ./dist -czvf "${release_name_mac}.tar.gz" Tech_Radar-darwin ./HTML
 
       - name: Release project
         uses: softprops/action-gh-release@v2

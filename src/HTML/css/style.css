@@ -457,7 +457,7 @@ header div {
 }
 
 header div span {
-    font-family: Inter,sans-serif;
+    font-family: "Noto Sans", sans-serif;
     font-weight: 630;
     margin-right: 5px
 }
@@ -495,7 +495,7 @@ footer {
 }
 
 footer p {
-    font-family: Inter,sans-serif;
+    font-family: "Noto Sans", sans-serif;
     font-size: 16px!important;
     font-weight: 400;
     margin: 30px auto auto;
@@ -537,7 +537,8 @@ footer p {
         flex-direction: row;
         font-size: 1.25rem;
         height: 60px;
-        justify-content: center
+        justify-content: center;
+        background: #001965;
     }
 }
 
@@ -688,7 +689,9 @@ footer p {
         overflow: hidden;
         padding: 15px 40px;
         text-overflow: ellipsis;
-        white-space: nowrap
+        white-space: nowrap;
+        background-color: #001965;
+        color:#fff;
     }
 
     .quadrant-subnav__list {
@@ -722,13 +725,13 @@ footer p {
 
     .quadrant-subnav__list-item:not(.active-item):hover {
         color: #bd4257;
-        -webkit-text-decoration: underline;
-        text-decoration: underline;
+        -webkit-text-decoration: none;
+        text-decoration: none;
         text-underline-offset: 6px
     }
 
     .quadrant-subnav__list-item:not(.active-item):hover>* {
-        color: #bd4257
+        color: #E6553F
     }
 }
 
@@ -843,7 +846,7 @@ footer p {
 .search-container__input {
     background: #edf1f3 url(../src/HTML/images/search-active-wave.svg) no-repeat 98%;
     color: #163c4d;
-    font-family: Inter,sans-serif;
+    font-family: "Noto Sans", sans-serif;
     height: 48px;
     margin-bottom: 30px;
     scroll-margin-top: 60px
@@ -873,7 +876,7 @@ ul.ui-autocomplete li div {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    font-family: Inter,sans-serif;
+    font-family: "Noto Sans", sans-serif;
     font-size: 16px;
     height: 48px;
     padding-left: 16px
@@ -1151,7 +1154,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .buttons__wave-btn {
-    background-color: #163c4d
+    background-color: #001965
 }
 
 .buttons__flamingo-btn {
@@ -1359,22 +1362,22 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 #radar svg#radar-plot circle.first,#radar svg#radar-plot path.first,#radar svg#radar-plot polygon.first,#radar svg#radar-plot rect.first {
-    fill: #47a1ad;
+    fill: #005AD2;
     stroke: none
 }
 
 #radar svg#radar-plot circle.second,#radar svg#radar-plot path.second,#radar svg#radar-plot polygon.second,#radar svg#radar-plot rect.second {
-    fill: #cc850a;
+    fill: #EAAB00;
     stroke: none
 }
 
 #radar svg#radar-plot circle.third,#radar svg#radar-plot path.third,#radar svg#radar-plot polygon.third,#radar svg#radar-plot rect.third {
-    fill: #6b9e78;
+    fill: #3F9C35;
     stroke: none
 }
 
 #radar svg#radar-plot circle.fourth,#radar svg#radar-plot path.fourth,#radar svg#radar-plot polygon.fourth,#radar svg#radar-plot rect.fourth {
-    fill: #e16a7c;
+    fill: #E6553F;
     stroke: none
 }
 
@@ -1619,19 +1622,19 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .all-quadrants-mobile #first-quadrant-mobile {
-    background-color: #47a1ad
+    background-color: #005AD2
 }
 
 .all-quadrants-mobile #second-quadrant-mobile {
-    background-color: #cc850a
+    background-color: #EAAB00
 }
 
 .all-quadrants-mobile #third-quadrant-mobile {
-    background-color: #6b9e78
+    background-color: #3F9C35
 }
 
 .all-quadrants-mobile #fourth-quadrant-mobile {
-    background-color: #e16a7c
+    background-color: #E6553F
 }
 
 @media screen and (min-width: 360px) {
@@ -1749,7 +1752,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 .blip-list__item-container__name-value {
     display: inline-block;
-    font-family: Inter,sans-serif;
+    font-family: "Noto Sans", sans-serif;
     font-size: 1rem;
     pointer-events: none;
     width: 90%
@@ -2000,7 +2003,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     .tooltipster-default .tooltipster-content {
-        font-family: Arial,sans-serif;
+        font-family: "Noto Sans", sans-serif;
         font-size: 14px;
         line-height: 16px;
         overflow: hidden;
@@ -3051,7 +3054,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     h1,h2,h3,h4,h5,h6 {
-        font-family: Open Sans,Microsoft YaHei,Hiragino Sans GB,Hiragino Sans GB W3,å¾®è½¯é›…é»‘,Helvetica Neue,Arial,sans-serif;
+        font-family: "Noto Sans", sans-serif;
         font-weight: 400;
         line-height: 1.6em;
         margin: 0 0 20px;
@@ -3412,7 +3415,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
     }
 
     .callout,.lead-line-black {
-        font-family: Open Sans,FangSong,ä»¿å®‹,STFangSong,åŽæ–‡ä»¿å®‹,serif;
+        font-family: "Noto Sans", sans-serif;
         font-size: 22px;
         line-height: 1.3em
     }
@@ -3537,7 +3540,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 @media screen {
     .author-and-date {
         color: #221d1f;
-        font-family: Open Sans,FangSong,ä»¿å®‹,STFangSong,åŽæ–‡ä»¿å®‹,serif;
+        font-family: "Noto Sans", sans-serif;
         font-size: 18px
     }
 
@@ -3633,7 +3636,8 @@ ul.ui-autocomplete li div.ui-state-active:active {
         -moz-box-sizing: border-box;
         color: #666;
         display: inline-block;
-        font-family: Open Sans,Microsoft YaHei,Hiragino Sans GB,Hiragino Sans GB W3,å¾®è½¯é›…é»‘,Helvetica Neue,Arial,sans-serif;
+        /*font-family: Open Sans,Microsoft YaHei,Hiragino Sans GB,Hiragino Sans GB W3,å¾®è½¯é›…é»‘,Helvetica Neue,Arial,sans-serif;*/
+        font-family: "Noto Sans", sans-serif;
         font-size: 16px;
         height: 2.4em;
         margin-bottom: 5px;
@@ -4199,7 +4203,8 @@ ul.ui-autocomplete li div.ui-state-active:active {
         font-weight: 100;
         line-height: 1.6em;
         margin: 0;
-        padding: 0
+        padding: 0;
+        overflow-x: hidden;
     }
 }
 
@@ -40073,7 +40078,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     body h2 {
-        font-family: Inter,serif;
+        font-family: "Noto Sans", sans-serif;
         font-size: 1.25rem;
         font-weight: 630;
         letter-spacing: normal;
@@ -40113,7 +40118,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 
 @media screen {
     body p {
-        font-family: Inter,sans-serif;
+        font-family: "Noto Sans", sans-serif;
         font-size: 1rem
     }
 }

@@ -16,3 +16,6 @@ The fetcher runs using Go functions, meaning it runs asynchronously. This allows
 
 ### Automatic Caching
 The fetcher caches fetched CSV files in a folder named `cache`. The caching works for any folder depth so long as a CSV file is present
+
+### Auto append Repository URLs
+The fetcher will automatically append urls to the CSV files after verifying that they have no formatting errors. 

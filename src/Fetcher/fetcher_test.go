@@ -2,6 +2,7 @@ package Fetcher
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strings"
 	"testing"
@@ -68,10 +69,12 @@ func TestFetchFilesValidArguments(t *testing.T) {
 		template_lines = append(template_lines, scanner.Text())
 	}
 
+	
+
 	expected_lines := []string{"name,ring,quadrant,isNew,moved,description",
-	"Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-	"web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.",
-	"react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit."}
+	fmt.Sprintf("Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url),
+	fmt.Sprintf("web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url),
+	fmt.Sprintf("react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url)}
 
 	for i := range expected_lines {
 		if !(expected_lines[i] == template_lines[i]) {

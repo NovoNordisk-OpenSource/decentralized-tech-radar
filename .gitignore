@@ -8,6 +8,8 @@ src/cache
 test/cache
 test/specfile.txt
 **/Merged_file.csv
+src/*.csv
+src/*.txt
 
 # https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 .vscode/*

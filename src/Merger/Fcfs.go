@@ -13,13 +13,14 @@ import (
 )
 
 // Map of alternative names for the same blip
-var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
+// var alt_names = make(map[string]string) //{"golang":"Go","go-lang:Go","cpp":"C++","csharp":"C#","cs":"C#","python3":"Python","py":"Python"}
 
 var dup_count = 0 // Counter for duplicates
 
 var filepaths_set = make(map[string]string) // Map of names to filepaths (name -> filepath) to keep track of which file the name was picked from
 
 type Fcfs struct{}
+var blipRepos = make(map[string]map[string]byte)
 
 var blipRepos = make(map[string]map[string]byte)
 
@@ -45,13 +46,13 @@ func (f Fcfs) MergeFiles(buffer *bytes.Buffer, filepaths ...string) error {
 		}
 
 		defer file.Close()
-		f.scanFile(file, buffer, set, sugar) // Calls duplicateRemoval on each line with the logger
+		f.scanFile(file, set, sugar) // Calls duplicateRemoval on each line with the logger
 	}
 	bufferWriter(buffer, blipRepos)
 	return nil
 }
 
-func (f Fcfs) scanFile(file *os.File, buffer *bytes.Buffer, set map[string][]string, sugar *zap.SugaredLogger) {
+func (f Fcfs) scanFile(file *os.File, set map[string][]string, sugar *zap.SugaredLogger) {
 	scanner := bufio.NewScanner(file)
 
 	// Skip header
@@ -138,6 +139,11 @@ func (f Fcfs) duplicateRemovalWithoutUrl(name, line, filename string, set map[st
 			filepaths_set[name] = filename           // Add the name to the filepaths set
 			blipRepos[line] = make(map[string]byte) // Add line to the pseudo buffer (dumb map of map thing)
 		} else {
+			atags := strings.Split(splitLine[1], "<br>") // Get all the repos
+
+			for _, atag := range atags {
+				blipRepos[blipInfo][atag] = 0 // the repos to the pseudo buffer
+			}
 			return fmt.Errorf(line)
 		}
 	} else { // Blip with current name is not in blip set

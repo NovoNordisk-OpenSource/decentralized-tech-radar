@@ -40,7 +40,7 @@ The original Thoughtworks tech radar is build on having a Docker container or a 
 Inside renderingTechRadar.js comments outline each block of code, showcasing which Thoughtworks js file the code originated from. To update the Tech Radar properly, locate the commented code block you seek and update them from the Thoughtworks js file.
 
 ## Updating Thoughtworks radar with a library or script
-To add a library or another script to the Tech Radar you can add it by using requireJS. First, add you script link or library link inside <mark style="background-color: #69a8f5; margin:0 4px; padding: 0 4px"> ./src/HTML/js/requireConfig.js </mark>.
+To add a library or another script to the Tech Radar you can add it by using requireJS. First, add your script link or library link inside <mark style="background-color: #69a8f5; margin:0 4px; padding: 0 4px"> ./src/HTML/js/requireConfig.js </mark>.
 
 Example:
 ```

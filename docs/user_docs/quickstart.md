@@ -3,7 +3,7 @@ In this guide you will see how to install and setup the program as well as find 
 
 # Installation and setup
 To install the program: 
-- Go to the latest release on the repository and download the version that fits your operating system. 
+- Go to the latest release on the [repository](https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar/releases) for this program, and download the version that fits your operating system. 
 - Extract the contents of the downloaded folder into the directory on the computer where you would like it to be. You should now have a directory containing the following file tree: 
 ```
 Directory/

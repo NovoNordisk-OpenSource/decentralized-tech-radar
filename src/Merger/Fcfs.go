@@ -22,8 +22,6 @@ var filepaths_set = make(map[string]string) // Map of names to filepaths (name -
 type Fcfs struct{}
 var blipRepos = make(map[string]map[string]byte)
 
-var blipRepos = make(map[string]map[string]byte)
-
 func (f Fcfs) MergeFiles(buffer *bytes.Buffer, filepaths ...string) error {
 	// Map functions as a set (name -> quadrant)
 	var set = make(map[string][]string)
@@ -130,20 +128,13 @@ func (f Fcfs) duplicateRemovalWithoutUrl(name, line, filename string, set map[st
 	// 	//TODO: Figure out how to handle numbers in names
 	// 	name = alt_names[strings.ToLower(name)]
 	// }
-
 	if set[name] != nil {
 		// Skips the name + first comma and does the same forward search for next comma
 		quadrant := strings.Split(line, ",")[2]
 		if !(slices.Contains(set[name], quadrant)) { // If blip name not in quadrant
 			set[name] = append(set[name], quadrant) // Add quadrant to blip set
-			filepaths_set[name] = filename           // Add the name to the filepaths set
 			blipRepos[line] = make(map[string]byte) // Add line to the pseudo buffer (dumb map of map thing)
 		} else {
-			atags := strings.Split(splitLine[1], "<br>") // Get all the repos
-
-			for _, atag := range atags {
-				blipRepos[blipInfo][atag] = 0 // the repos to the pseudo buffer
-			}
 			return fmt.Errorf(line)
 		}
 	} else { // Blip with current name is not in blip set

@@ -129,7 +129,6 @@ func (f Fcfs) duplicateRemovalWithoutUrl(name, line, filename string, set map[st
 	// 	//TODO: Figure out how to handle numbers in names
 	// 	name = alt_names[strings.ToLower(name)]
 	// }
-
 	if set[name] != nil {
 		// Skips the name + first comma and does the same forward search for next comma
 		quadrant := strings.Split(line, ",")[2]

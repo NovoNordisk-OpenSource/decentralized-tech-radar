@@ -231,7 +231,6 @@ func TestMergeCSV(t *testing.T) {
 	defer contentFile.Close()
 
 	scanner := bufio.NewScanner(contentFile)
-
 	for scanner.Scan() {
 		line := scanner.Text()
 		if !strings.Contains(correctMerge, line) {

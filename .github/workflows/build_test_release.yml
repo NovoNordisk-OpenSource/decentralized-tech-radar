@@ -46,7 +46,6 @@ jobs:
           cp -r src/HTML/js ./dist/HTML/js
           cp -r src/HTML/images ./dist/HTML/images
 
-
           tag=$(git describe --tags --abbrev=0)
           #linux build
           release_name_linux="Tech_Radar-$tag-linux"

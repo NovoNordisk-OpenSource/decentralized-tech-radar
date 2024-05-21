@@ -386,7 +386,7 @@ header {
 
 #alternative-buttons .search-radar {
     background-color: inherit;
-    background-image: url(../src/HTML/images/search-logo-2x.svg);
+    background-image: url(./HTML/images/search-logo-2x.svg);
     background-position: 10px;
     background-repeat: no-repeat;
     border: 1px solid #aaa
@@ -844,7 +844,7 @@ footer p {
 }
 
 .search-container__input {
-    background: #edf1f3 url(../src/HTML/images/search-active-wave.svg) no-repeat 98%;
+    background: #edf1f3 url(./HTML/images/search-active-wave.svg) no-repeat 98%;
     color: #163c4d;
     font-family: Inter,sans-serif;
     height: 48px;
@@ -1600,7 +1600,7 @@ ul.ui-autocomplete li div.ui-state-active:active {
 }
 
 .all-quadrants-mobile .all-quadrants-mobile--btn:after {
-    content: url(../src/HTML/images/arrow-white-icon.svg);
+    content: url(./HTML/images/arrow-white-icon.svg);
     margin: 4px 4px 0
 }
 

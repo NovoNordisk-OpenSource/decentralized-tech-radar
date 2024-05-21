@@ -55,7 +55,7 @@ define([
   const quadrantGap = 32;
 
   const quadrantNames =
-    '["Language", "Infrastructure", "Datastore", "Data management"]';
+    '["Techniques", "Platforms", "Tools", "Languages & Frameworks"]';
   const ringNames = '["Adopt", "Trial", "Assess", "Hold"]';
 
   const getQuadrants = () => {

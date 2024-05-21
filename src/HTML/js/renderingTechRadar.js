@@ -55,7 +55,7 @@ define([
   const quadrantGap = 32;
 
   const quadrantNames =
-    '["Language", "Infrastructure", "Datastore", "Data management"]';
+    '["Techniques", "Platforms", "Tools", "Languages & Frameworks"]';
   const ringNames = '["Adopt", "Trial", "Assess", "Hold"]';
 
   const getQuadrants = () => {
@@ -915,7 +915,7 @@ define([
 
     const newImage = legendsContainer
       .append("img")
-      .attr("src", "../src/HTML/images/new.svg")
+      .attr("src", "./HTML/images/new.svg")
       .attr("width", "37px")
       .attr("height", "37px")
       .attr("alt", "new blip legend icon")
@@ -923,7 +923,7 @@ define([
 
     const existingImage = legendsContainer
       .append("img")
-      .attr("src", "../src/HTML/images/existing.svg")
+      .attr("src", "./HTML/images/existing.svg")
       .attr("width", "37px")
       .attr("height", "37px")
       .attr("alt", "existing blip legend icon")
@@ -938,7 +938,7 @@ define([
       .attr("class", "all-quadrants-mobile--btn")
       .style(
         "background-image",
-        `url('../src/HTML/images/${quadrant.order}-quadrant-btn-bg.svg')`
+        `url('./HTML/images/${quadrant.order}-quadrant-btn-bg.svg')`
       )
       .attr("id", quadrant.order + "-quadrant-mobile")
       .append("div")

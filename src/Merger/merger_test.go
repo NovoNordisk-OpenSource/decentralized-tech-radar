@@ -13,29 +13,29 @@ import (
 )
 
 var csvfile1 string = `name,ring,quadrant,isNew,moved,description
-Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Infrastructure,false,2,An IDE
-Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
+Go,Adopt,Languages & frameworks,true,0,Its a programming Language
+Visual Studio Code,Trial,Platforms,false,2,An IDE
+Dagger IO,Assess,Tools,true,1,Its a workflow thing`
 
 var csvfile2 string = `name,ring,quadrant,isNew,moved,description
-Python,Hold,Language,false,0,Its a programming Language
-Visual Studio,Trial,Infrastructure,false,1,An IDE
-Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
+Python,Hold,Languages & frameworks,false,0,Its a programming Language
+Visual Studio,Trial,Platforms,false,1,An IDE
+Dagger IO,Assess,Tools,true,1,Its a workflow thing`
 
 var correctMerge string = `name,ring,quadrant,isNew,moved,description
-Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Infrastructure,false,2,An IDE
-Visual Studio,Trial,Infrastructure,false,1,An IDE
-Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
-Python,Hold,Language,false,0,Its a programming Language`
+Go,Adopt,Languages & frameworks,true,0,Its a programming Language
+Visual Studio Code,Trial,Platforms,false,2,An IDE
+Visual Studio,Trial,Platforms,false,1,An IDE
+Dagger IO,Assess,Tools,true,1,Its a workflow thing
+Python,Hold,Languages & frameworks,false,0,Its a programming Language`
 
 // The strings below are used exclusively to test
 // ReadCsvFile's majority-vote-based tool-duplication deletion.
 
 var csvfile3 string = `name,ring,quadrant,isNew,moved,description
-Go,Trial,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Infrastructure,false,2,An IDE
-Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
+Go,Trial,Languages & frameworks,true,0,Its a programming Language
+Visual Studio Code,Trial,Platforms,false,2,An IDE
+Dagger IO,Assess,Tools,true,1,Its a workflow thing`
 
 // TODO: Discuss handling ties.
 //var csvfile4 string = `name,ring,quadrant,isNew,moved,description
@@ -44,10 +44,10 @@ Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
 //Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing`
 
 var correctMergeMajority string = `name,ring,quadrant,isNew,moved,description
-Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Infrastructure,false,2,An IDE
-Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
-Python,Hold,Language,false,0,Its a programming Language`
+Go,Adopt,Languages & frameworks,true,0,Its a programming Language
+Visual Studio Code,Trial,Platforms,false,2,An IDE
+Dagger IO,Assess,Tools,true,1,Its a workflow thing
+Python,Hold,Languages & frameworks,false,0,Its a programming Language`
 
 var oldTestFiles []string = []string{"testFile1.csv", "testFile2.csv"}
 var testFiles []string = []string{"testFile1.csv", "testFile2.csv", "testFile3.csv"}
@@ -119,9 +119,9 @@ func TestDuplicateRemoval(t *testing.T) {
 	}()
 
 	// Arrange input
-	var csvfile0 string = "Go,Adopt,Language,true,0,Its a programming Language\n" +
-		"Go,Adopt,Language,true,0,Its a programming Language\n" +
-		"Python,Hold,Language,false,0,Its a programming Language\n"
+	var csvfile0 string = "Go,Adopt,Languages & frameworks,true,0,Its a programming Language\n" +
+		"Go,Adopt,Languages & frameworks,true,0,Its a programming Language\n" +
+		"Python,Hold,Languages & frameworks,false,0,Its a programming Language\n"
 
 	err := os.WriteFile(filename, []byte(csvfile0), 0644)
 	if err != nil {
@@ -142,8 +142,8 @@ func TestDuplicateRemoval(t *testing.T) {
 	}()
 
 	// Arrange expected output
-	var expectedString string = "Go,Adopt,Language,true,0,Its a programming Language\n" +
-		"Python,Hold,Language,false,0,Its a programming Language\n"
+	var expectedString string = "Go,Adopt,Languages & frameworks,true,0,Its a programming Language\n" +
+		"Python,Hold,Languages & frameworks,false,0,Its a programming Language\n"
 
 	// Arrange other variables to be used
 	var set = make(map[string][]string)
@@ -192,11 +192,11 @@ func TestReadCsvData(t *testing.T) {
 		t.Errorf("csvFile2 does not match expected output.\nExpected: %s \n Actual: %s", csvfile2, csv2)
 	}
 
-	correctString := `Go,Adopt,Language,true,0,Its a programming Language
-Visual Studio Code,Trial,Infrastructure,false,2,An IDE
-Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
-Python,Hold,Language,false,0,Its a programming Language
-Visual Studio,Trial,Infrastructure,false,1,An IDE`
+	correctString := `Go,Adopt,Languages & frameworks,true,0,Its a programming Language
+Visual Studio Code,Trial,Platforms,false,2,An IDE
+Dagger IO,Assess,Tools,true,1,Its a workflow thing
+Python,Hold,Languages & frameworks,false,0,Its a programming Language
+Visual Studio,Trial,Platforms,false,1,An IDE`
 
 	bufferString := buf.String()
 	if strings.Compare(bufferString, correctString) == 0 {

@@ -70,11 +70,11 @@ func TestFetchFilesValidArguments(t *testing.T) {
 	}
 
 	
-
+	//TODO: This really should have been done using a variable
 	expected_lines := []string{"name,ring,quadrant,isNew,moved,description",
-	fmt.Sprintf("Python,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url),
-	fmt.Sprintf("web,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url),
-	fmt.Sprintf("react,hold,language,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url)}
+	fmt.Sprintf("Python,hold,Languages & Frameworks,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url),
+	fmt.Sprintf("web,hold,Languages & Frameworks,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url),
+	fmt.Sprintf("react,hold,Languages & Frameworks,false,0,Lorem ipsum dolor sit amet consectetur adipiscing elit.<br>Repos:<br> <a href=%s>decentralized-tech-radar</a>", url)}
 
 	for i := range expected_lines {
 		if !(expected_lines[i] == template_lines[i]) {

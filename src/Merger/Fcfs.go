@@ -20,6 +20,7 @@ var dup_count = 0 // Counter for duplicates
 var filepaths_set = make(map[string]string) // Map of names to filepaths (name -> filepath) to keep track of which file the name was picked from
 
 type Fcfs struct{}
+
 var blipRepos = make(map[string]map[string]byte)
 
 func (f Fcfs) MergeFiles(buffer *bytes.Buffer, filepaths ...string) error {
@@ -133,6 +134,7 @@ func (f Fcfs) duplicateRemovalWithoutUrl(name, line, filename string, set map[st
 		quadrant := strings.Split(line, ",")[2]
 		if !(slices.Contains(set[name], quadrant)) { // If blip name not in quadrant
 			set[name] = append(set[name], quadrant) // Add quadrant to blip set
+			filepaths_set[name] = filename           // Add the name to the filepaths set
 			blipRepos[line] = make(map[string]byte) // Add line to the pseudo buffer (dumb map of map thing)
 		} else {
 			return fmt.Errorf(line)

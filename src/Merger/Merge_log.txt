@@ -1,0 +1,8 @@
+Duplicate overwrite 3:
+	Line 3:Dagger IO,Assess,Infrastructure,true,1,Its a workflow thing
+	Picked: cache\testFile1.csv
+	Not-Picked: cache\testFile2.csv
+
+csv
+	Not-Picked: ./testFile2.csv
+

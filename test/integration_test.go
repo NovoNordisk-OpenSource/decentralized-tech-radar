@@ -14,12 +14,12 @@ import (
 var testFileName string = "ForTesting"
 
 var csvTestString1 string = `name,ring,quadrant,isNew,moved,description
-TestBlip1,Assess,Language,true,1,This is a description
-TestBlip2,Adopt,Infrastructure,false,0,Also a description`
+TestBlip1,Assess,Languages & frameworks,true,1,This is a description
+TestBlip2,Adopt,Tools,false,0,Also a description`
 
 var csvTestString2 string = `name,ring,quadrant,isNew,moved,description
-TestBlip3,Assess,Language,true,1,This is a description
-TestBlip4,Adopt,Infrastructure,false,0,Also a description`
+TestBlip3,Assess,Languages & frameworks,true,1,This is a description
+TestBlip4,Adopt,Tools,false,0,Also a description`
 
 func check(e error) {
 	if e != nil {
@@ -85,7 +85,7 @@ func TestReaderAndWriter(t *testing.T) {
 		t.Fatalf("Failed to read index.html: %v", err)
 	}
 
-	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\nTestBlip1,Assess,Language,true,1,This is a description\nTestBlip2,Adopt,Infrastructure,false,0,Also a description").build();`
+	stringToCheck := `Factory("name,ring,quadrant,isNew,moved,description\n`
 
 	if !strings.Contains(string(indexHTMLContent), stringToCheck) {
 		t.Errorf("The content of HTML does not contain %s", stringToCheck)

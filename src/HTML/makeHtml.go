@@ -20,7 +20,7 @@ func GenerateHtml(csvData string) {
 	<head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link href="../src/HTML/images/favicon.ico" rel="icon" />
+	<link href="./HTML/images/favicon.ico" rel="icon" />
 	<style>
 		{{.CSS}}
 	</style>
@@ -44,12 +44,12 @@ func GenerateHtml(csvData string) {
 			</div>
 			<div class="all-quadrants-mobile show-all-quadrants-mobile"></div>
 			<div class="graph-footer">
-				<p class="agree-terms">Visit the Novo Nordisk <a href="https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar">Tech Radar open source on Github</a>. This tech radar was heavily inspired by Thoughtworks.</p>
+				<p class="agree-terms">Visit the Novo Nordisk <a href="https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar">Tech Radar open source on Github</a>. This tech radar was heavily inspired by <a href="https://github.com/thoughtworks/build-your-own-radar/">Thoughtworks</a>.</p>
 			</div>
 		</main>
 	</body>
-	<script src="./HTML/js/libraries/require.js"></script>
-	<script src="./HTML/js/requireConfig.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+	<script src="./js/requireConfig.js"></script>
 
 	<!-- this script builds the radar with the go generated csv file -->
 	<script>

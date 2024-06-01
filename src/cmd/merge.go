@@ -25,7 +25,8 @@ Example of command usage: 'merge C://Program/MyCSVFile.csv C://Program/MyCSVFile
 			}
 		} else {
 			if len(args) < 2 {
-				panic("Not enough arguments have been provided.")
+				fmt.Println("Error: Not enough arguments have been provided. At least 2 required.")
+				return
 			}
 			err := Merger.MergeCSV(args, Merger.Fcfs{})
 			if err != nil {

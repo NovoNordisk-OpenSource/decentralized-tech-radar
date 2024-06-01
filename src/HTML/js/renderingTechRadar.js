@@ -17,7 +17,7 @@ define([
   "jquery-autocomplete",
 ], function facModel(d3, d3tip, d3col, d3sel, Chance, _, $, AutoComplete) {
   
-  
+
   /**
    * ROOT JS: js/config.js
    */
@@ -49,8 +49,8 @@ define([
   
   /** 
    * GRAPHING: js/graphing/config.js
-  */
-
+   * Change your quadrant names and ring names here
+   */
   const quadrantSize = 512;
   const quadrantGap = 32;
 
@@ -119,7 +119,7 @@ define([
   }
 
   /** 
-   * MODELS: js/models/quadrant.js'
+   * MODELS: js/models/quadrant.js
   */
   const Quadrant = function (name) {
     var self, blips;
@@ -147,8 +147,8 @@ define([
   };
 
   /** 
-   * MODELS: js/models/radar.js'
-  */   
+   * MODELS: js/models/radar.js
+   */   
   const Radar = function () {
     const featureToggles1 = mainConfig().featureToggles;
 
@@ -251,7 +251,7 @@ define([
   };
 
   /**
-   * MODELS: js/models/ring.js'  
+   * MODELS: js/models/ring.js 
    */
   const Ring = function (name, order) {
     var self = {};
@@ -362,7 +362,10 @@ define([
   function getElementHeight(element) {
     return element.node().getBoundingClientRect().height;
   }
-  // UTIL:                        js/util/stringUtil.js                       IN
+  
+  /**
+   * UTIL: js/util/stringUtil.js  
+   */
   function getRingIdString(ringName) {
     return ringName.replaceAll(/[^a-zA-Z0-9]/g, "-").toLowerCase();
   }
@@ -1123,9 +1126,10 @@ define([
     window.removeEventListener("scroll", quadrantScrollHandlerReference);
     scrollFlag = false;
   }
-
-  // COMPONENTS:                  js/graphing/components/quadrantTables.js
-
+  
+  /**
+   * COMPONENTS: js/graphing/components/quadrantTables.js
+   */
   function fadeOutAllBlips() {
     d3.selectAll("g > a.blip-link").attr("opacity", 0.3);
   }
@@ -1984,7 +1988,6 @@ define([
   /**
    * UTIL: js/util/autoComplete.js
    */
-  
   const featureToggles2 = mainConfig().featureToggles;
   $.widget("custom.radarcomplete", $.ui.autocomplete, {
     _create: function () {
@@ -2062,7 +2065,6 @@ define([
   /**
    * COMPONENTS: js/graphing/components/search.js
    */
-
   const AutoCompleteSearch = AutoComplete1;
 
   function renderSearch(radarHeader, quadrants) {
@@ -2103,7 +2105,6 @@ define([
   /**
    * COMPONENTS: js/graphing/components/buttons.js
    */
-
   function renderButtons(radarFooter) {
     const buttonsRow = radarFooter.append("div").classed("buttons", true);
 
@@ -2222,7 +2223,6 @@ define([
   /**
    * GRAPHING: js/graphing/radar.js
    */
-
   const MIN_BLIP_WIDTH = 12;
 
   const GraphingRadar = function (size, gRadar) {

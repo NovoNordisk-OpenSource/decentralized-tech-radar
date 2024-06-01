@@ -59,7 +59,7 @@ For mac:
 	
 
 For windows:
-./Tech_Radar-windows merge .\cache\specfile.csv .\cache\specfile2.csv
+.\Tech_Radar-windows merge .\cache\specfile.csv .\cache\specfile2.csv
 	
 
 Note: To merge, this is how we write it in the command prompt: 

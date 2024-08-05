@@ -46,3 +46,6 @@ src/*.txt
 # Go workspace file
 go.work
 go.work.sum
+
+# Mac
+.DS_Store

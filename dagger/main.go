@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"os"
+	"time"
 
 	"dagger.io/dagger"
 	"github.com/rs/zerolog/log"
@@ -43,21 +44,34 @@ func GenerateTechRadar(ctx context.Context) error {
 	}
 	defer client.Close()
 
-	runner := client.Container().From("alpine:3.20.1").
-		WithExec([]string{"apk", "add", "git"}).
-		WithExec([]string{"git", "version"}).
-		WithExec([]string{"sh", "-c", "ls -l > test.txt"}).
-		WithExec([]string{"cat", "test.txt"})
+	// runner := client.Container().From("alpine:3.20.1").
+	// runner := client.Container().From("python:3.12.2-bookworm")
+	runner := client.Container().From("golang:1.22.5-bullseye").WithEnvVariable("CACHEBUSTER", time.Now().String())
+	// WithExec([]string{"apk", "add", "git"}).
+
+	printOut(runner.WithExec([]string{"git", "version"}).Stdout(ctx))
 
 	runner = runner.
-		WithExec([]string{"git", "clone", "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar.git"})
+		WithExec([]string{"git", "clone", "https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar.git"}).
+		WithExec([]string{"ls", "decentralized-tech-radar"})
+
+	runner = runner.
+		WithWorkdir("decentralized-tech-radar/src").
+		WithExec([]string{"go", "mod tidy"}).
+		WithExec([]string{"go", "build"}).
+		WithExec([]string{"./decentralized-tech-radar"})
 
 	_, err = runner.
-		WithExec([]string{"ls", "decentralized-tech-radar"}).
-		Export(ctx, "test.txt")
+		Export(ctx, "decentralized-tech-radar/src/decentralized-tech-radar")
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func printOut(o string, err error) {
+	if err == nil {
+		log.Info().Str("output", o).Msg("Output:")
+	}
 }

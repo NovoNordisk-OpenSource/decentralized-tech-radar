@@ -44,10 +44,8 @@ func GenerateTechRadar(ctx context.Context) error {
 	}
 	defer client.Close()
 
-	// runner := client.Container().From("alpine:3.20.1").
-	// runner := client.Container().From("python:3.12.2-bookworm")
-	runner := client.Container().From("golang:1.22.5-bullseye").WithEnvVariable("CACHEBUSTER", time.Now().String())
-	// WithExec([]string{"apk", "add", "git"}).
+	runner := client.Container().From("golang:1.22.5-bullseye").
+		WithEnvVariable("CACHEBUSTER", time.Now().String())
 
 	printOut(runner.WithExec([]string{"git", "version"}).Stdout(ctx))
 
@@ -57,9 +55,15 @@ func GenerateTechRadar(ctx context.Context) error {
 
 	runner = runner.
 		WithWorkdir("decentralized-tech-radar/src").
-		WithExec([]string{"go", "mod tidy"}).
+		WithDirectory("input", client.Host().Directory("input")).
+		WithExec([]string{"ls", "-la"}).
+		WithExec([]string{"cat", "input/whitelist.txt"}).
+		WithExec([]string{"go", "mod", "tidy"}).
 		WithExec([]string{"go", "build"}).
-		WithExec([]string{"./decentralized-tech-radar"})
+		WithExec([]string{"./decentralized-tech-radar"}).
+		WithExec([]string{"./decentralized-tech-radar", "fetch", "https://github.com/nn-dma/generate-verification-report/", "main", "input/whitelist.txt"}).
+		WithExec([]string{"ls", "cache"}).
+		WithExec([]string{"bash", "-c", "for f in cache/*.csv; do echo $f; cat $f; done"})
 
 	_, err = runner.
 		Export(ctx, "decentralized-tech-radar/src/decentralized-tech-radar")

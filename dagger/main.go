@@ -63,10 +63,20 @@ func GenerateTechRadar(ctx context.Context) error {
 		WithExec([]string{"./decentralized-tech-radar"}).
 		WithExec([]string{"./decentralized-tech-radar", "fetch", "https://github.com/nn-dma/generate-verification-report/", "main", "input/whitelist.txt"}).
 		WithExec([]string{"ls", "cache"}).
-		WithExec([]string{"bash", "-c", "for f in cache/*.csv; do echo $f; cat $f; done"})
+		WithExec([]string{"bash", "-c", "for f in cache/*.csv; do echo $f; cat $f; done"}).
+		WithExec([]string{"./decentralized-tech-radar", "merge", "--cache"}).
+		WithExec([]string{"ls", "cache"}).
+		WithExec([]string{"ls"}).
+		WithExec([]string{"cat", "Merge_log.txt"}).
+		WithExec([]string{"./decentralized-tech-radar", "generate", "Merged_file.csv"}).
+		WithExec([]string{"ls"}).
+		WithExec([]string{"mkdir", "output"}).
+		WithExec([]string{"cp", "index.html", "output"}).
+		WithExec([]string{"cp", "-r", "HTML", "output"})
 
 	_, err = runner.
-		Export(ctx, "decentralized-tech-radar/src/decentralized-tech-radar")
+		Directory("output").
+		Export(ctx, "output")
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,3 @@
+https://github.com/nn-dma/generate-verification-report main
+https://github.com/innersource-nn/qms-cli main
+https://github.com/NovoNordisk-OpenSource/decentralized-tech-radar main

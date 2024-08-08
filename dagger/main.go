@@ -61,7 +61,7 @@ func GenerateTechRadar(ctx context.Context) error {
 		WithExec([]string{"go", "mod", "tidy"}).
 		WithExec([]string{"go", "build"}).
 		WithExec([]string{"./decentralized-tech-radar"}).
-		WithExec([]string{"./decentralized-tech-radar", "fetch", "https://github.com/nn-dma/generate-verification-report/", "main", "input/whitelist.txt"}).
+		WithExec([]string{"./decentralized-tech-radar", "fetch", "--repo-file=input/repos.txt", "--whitelist=input/whitelist.txt"}).
 		WithExec([]string{"ls", "cache"}).
 		WithExec([]string{"bash", "-c", "for f in cache/*.csv; do echo $f; cat $f; done"}).
 		WithExec([]string{"./decentralized-tech-radar", "merge", "--cache"}).
@@ -72,7 +72,11 @@ func GenerateTechRadar(ctx context.Context) error {
 		WithExec([]string{"ls"}).
 		WithExec([]string{"mkdir", "output"}).
 		WithExec([]string{"cp", "index.html", "output"}).
-		WithExec([]string{"cp", "-r", "HTML", "output"})
+		WithExec([]string{"cp", "-r", "HTML", "output"}).
+		WithExec([]string{"rm", "-rf", "output/HTML/html_test.go"}).
+		WithExec([]string{"rm", "-rf", "output/HTML/makeHtml.go"}).
+		WithExec([]string{"ls", "HTML"}).
+		WithExec([]string{"ls", "output/HTML"})
 
 	_, err = runner.
 		Directory("output").

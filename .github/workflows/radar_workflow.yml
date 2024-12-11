@@ -15,7 +15,7 @@ jobs:
         # with:
         #     repository: NovoNordisk-OpenSource/decentralized-tech-radar_dev
         #     ref: main
-      - uses: robinraju/release-downloader@v1.10
+      - uses: robinraju/release-downloader@v1.11
         with:
             latest: true
             fileName: 'Tech_Radar-v*.*.*-linux.tar.gz'
